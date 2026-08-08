@@ -1,9 +1,13 @@
 \section{Objetivo general}
-Diseñar e implementar una librería npm que integre un pipeline de ingeniería de características y un modelo híbrido de aprendizaje automático capaz de detectar amenazas conocidas y anomalías estadísticas en endpoints Node.js en tiempo de ejecución, para dar a startups sin equipo de seguridad una herramienta accesible de protección a nivel de capa de aplicación sin comprometer el rendimiento.
+Diseñar e implementar una librería npm que integre un pipeline de ingeniería de características y un modelo híbrido de aprendizaje automático, capaz de detectar y clasificar amenazas conocidas y anomalías estadísticas correspondientes a variantes desconocidas de los vectores cubiertos en endpoints Node.js en tiempo de ejecución, con el propósito de proveer a startups tecnológicas sin equipo de seguridad dedicado una herramienta accesible de protección a nivel de capa de aplicación que no comprometa el rendimiento del servidor anfitrión.
 
 \section{Objetivos específicos}
 \begin{itemize}
-\item Implementar un pipeline de ingeniería de características que se ejecute de forma asíncrona mediante \textit{worker\_threads}, con una latencia adicional máxima de 5 ms por petición.
-\item Desarrollar un modelo híbrido compuesto por un Random Forest y un Isolation Forest, alcanzando un F1-score mínimo de 0.80 en al menos 3 de las 4 categorías de ataque para el Random Forest, y un recall mínimo del 50\% con un máximo de 10\% de falsos positivos para el Isolation Forest, ambos evaluados sobre un conjunto de prueba bloqueado.
-\item Lograr una detección mínima del 80\% de los payloads de ataque por categoría en un entorno controlado, manteniendo un sobrecosto de latencia media del servidor que no exceda los 15 ms respecto a la línea base, o del 10\% en entornos de producción representativos con latencia base mayor o igual a 100 ms.
+
+\item Construir, durante la fase de desarrollo de la librería (20 de junio -- 1 de agosto de 2026), un pipeline de ingeniería de características que extraiga y vectorice atributos cuantificables del tráfico HTTP de forma asíncrona mediante \textit{worker\_threads}, verificando que su ejecución no introduzca una latencia adicional superior a 5~ms por petición en el servidor anfitrión.
+
+\item Evaluar, al cierre de la fase de entrenamiento del modelo (19 de junio de 2026), un modelo híbrido compuesto por Random Forest e Isolation Forest sobre un conjunto de prueba bloqueado, demostrando que el componente supervisado alcanza un F1-score mínimo de 0.80 en al menos tres de las cuatro categorías de ataque cubiertas, y que el componente no supervisado alcanza una tasa de detección de anomalías mínima del 50\% con una tasa de falsos positivos máxima del 10\%.
+
+\item Evaluar, durante la fase de pruebas del sistema (2 de agosto -- 30 de septiembre de 2026), el desempeño integral de la librería integrada como middleware, verificando que la detección de payloads representativos alcance al menos el 80\% por cada una de las cuatro categorías de ataque cubiertas en un entorno de prueba controlado, sin elevar la latencia media del servidor más de 15~ms respecto a la línea base sin protección.
+
 \end{itemize}
