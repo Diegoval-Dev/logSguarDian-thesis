@@ -1,0 +1,59 @@
+\input{0-datos_estudiante}
+
+\documentclass[11pt, letterpaper]{report}
+\usepackage[spanish, es-nodecimaldot, es-noquoting]{babel}
+\selectlanguage{spanish}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+\input{0-datos_estudiante}
+\input{1-opciones_adicionales}
+
+\usepackage{xcolor}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{graphicx}
+\usepackage{xfrac}
+\usepackage{float}
+\usepackage[hypertexnames=false]{hyperref}
+\usepackage[font=small]{caption}
+\usepackage{subcaption}
+\usepackage{xpatch}
+\usepackage{emptypage}
+\usepackage{hyphenat}
+\usepackage{fancyhdr}
+\usepackage[backend=biber, style=ieee]{biblatex}
+\addbibresource{m-bibliografia.bib}
+\usepackage[percent]{overpic}
+\usepackage{chngcntr}
+
+\usepackage[top=1in, left=1.5in, right=1in, bottom=1in]{geometry}
+\usepackage[Sonny]{fncychap}
+
+\graphicspath{ {figuras/} }
+\definecolor{uvg-green}{RGB}{17,71,52}
+\counterwithout{figure}{chapter}
+\counterwithout{table}{chapter}
+\counterwithout{equation}{chapter}
+
+\input{2-paquetes_y_comandos_usuario}
+
+\pagestyle{plain}
+\emergencystretch=3em
+
+\begin{document}
+
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+\chapter{Marco teórico}
+\input{i-marco_teorico}
+
+\newpage
+\chapter{\bibname}
+\printbibliography[heading=none]
+
+\end{document}
