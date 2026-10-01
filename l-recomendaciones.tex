@@ -7,7 +7,7 @@ La motivación de esta exploración es directa: cada cambio al pipeline de extra
 Las ocho fases del pipeline son las siguientes:
 
 \begin{enumerate}
-    \item \textbf{Recolección de telemetría.} Un endpoint dedicado recibe únicamente el vector de 75 características de cada petición clasificada, nunca el payload crudo, siguiendo el mismo patrón de notificación asíncrona sin bloqueo (\textit{fire-and-forget}) ya empleado por el sistema de webhooks de la librería.
+    \item \textbf{Recolección de telemetría.} Un endpoint dedicado recibe únicamente el vector de 76 características de cada petición clasificada, nunca el payload crudo, siguiendo el mismo patrón de notificación asíncrona sin bloqueo (\textit{fire-and-forget}) ya empleado por el sistema de webhooks de la librería.
     \item \textbf{Simulación de flota.} Múltiples fuentes simuladas envían telemetría de forma concurrente para poblar un corpus de validación representativo de un despliegue con varios clientes.
     \item \textbf{Agrupamiento de anomalías.} El componente no supervisado (Isolation Forest) y un algoritmo de agrupamiento por densidad (DBSCAN) se aplican sobre el espacio de 63 características que consume el modelo no supervisado, para aislar patrones estadísticamente atípicos sin necesidad de una etiqueta previa.
     \item \textbf{Curación humana.} Una interfaz de línea de comandos presenta los grupos resultantes para revisión manual y genera un archivo con el mismo esquema que consume el script de unificación del corpus de entrenamiento del proyecto.
