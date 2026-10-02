@@ -1,0 +1,331 @@
+\chapter{Resultados}
+
+Este capítulo presenta las mediciones obtenidas al evaluar logSguarDian, organizadas según los tres objetivos específicos del trabajo y la evaluación de interpretabilidad. Cada sección reporta los valores medidos, la condición bajo la cual se midieron y su fuente en el repositorio del proyecto. Las rutas de archivo se expresan relativas a la raíz de dicho repositorio. La interpretación de los valores y su relación con los criterios de aceptación se reserva para el capítulo de Conclusiones.
+
+\section{Resultados del objetivo específico 1: pipeline de ingeniería de características}
+
+El pipeline de ingeniería de características extrae 76 características por petición, de las cuales 69 alimentan al componente Random Forest y 63 al componente Isolation Forest (\texttt{training/results/v11\_test\_results.json}). Esta sección reporta la latencia del extractor en aislamiento y el sobrecosto absoluto del middleware completo en los entornos donde se midió.
+
+\subsection{Latencia del extractor en aislamiento}
+
+La Tabla \ref{tabla:res-extractor} presenta la latencia de la función \texttt{extractFeatureVector()} para cada una de las cinco clases de tráfico y para el tráfico mixto. El benchmark (\texttt{benchmarks/extractor.bench.js}) mide de forma serial, descarta 200 iteraciones de calentamiento, ejecuta 2\,000 iteraciones por \textit{fixture} y toma el tiempo con \texttt{process.hrtime.bigint()}. El hardware fue Node v25.6.0 sobre darwin/arm64 (Apple Silicon). La medición se realiza en el hilo principal y no incluye la ejecución dentro de \textit{worker\_threads}.
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabular}{|l|r|r|r|r|}
+\hline
+\textbf{Fixture} & \textbf{p50 (ms)} & \textbf{p95 (ms)} & \textbf{p99 (ms)} & \textbf{Throughput (req/s)} \\ \hline
+\texttt{benign} & 0.0067 & 0.0092 & 0.0326 & 132\,602 \\ \hline
+\texttt{sqli} & 0.0058 & 0.0065 & 0.0276 & 158\,356 \\ \hline
+\texttt{xss} & 0.0063 & 0.0083 & 0.0265 & 144\,689 \\ \hline
+\texttt{path\_traversal} & 0.0044 & 0.0061 & 0.0226 & 200\,739 \\ \hline
+\texttt{cmdi} & 0.0055 & 0.0073 & 0.0250 & 164\,435 \\ \hline
+\textbf{Mixto (\textit{round-robin})} & \textbf{0.0059} & \textbf{0.0082} & \textbf{0.0261} & \textbf{156\,924} \\ \hline
+\end{tabular}
+\caption{Latencia del extractor de características en aislamiento, por \textit{fixture}.}
+\label{tabla:res-extractor}
+\par\smallskip\footnotesize Fuente: \texttt{docs/results.md}, sección F1.8, benchmark \texttt{benchmarks/extractor.bench.js}. Elaboración propia.
+\end{table}
+
+\subsection{Sobrecosto absoluto del middleware completo}
+
+La Tabla \ref{tabla:res-overhead} reúne las mediciones de latencia p95 con y sin el middleware activo en cada entorno donde se midió. Las filas difieren en entorno, escala de datos y compilación del middleware, por lo que cada una declara esas condiciones. Las filas de Docker más Postgres usan la aplicación de referencia (Express y Postgres) con el flujo de navegación benigno de Artillery (\texttt{attack-sim/artillery-baseline.yml}, 60~s, 20 solicitudes por segundo). La fila de Node.js sobre WSL2 usa el benchmark de \texttt{packages/core/bench} (Artillery, 50 solicitudes por segundo, 30~s, 3\,000 solicitudes por corrida, Node.js v22.5.1, Windows 11 con WSL2, 9 de julio de 2026) con resolución de 1~ms. La fila de microbenchmark mide una función Express sin aplicación detrás.
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabular}{|p{3.6cm}|p{3.4cm}|r|r|r|}
+\hline
+\textbf{Entorno} & \textbf{Compilación del middleware} & \textbf{p95 sin middleware (ms)} & \textbf{p95 con middleware (ms)} & \textbf{$\Delta$p95 absoluto (ms)} \\ \hline
+Node.js sobre WSL2, Artillery & Versión de julio de 2026 (modo \textit{monitor}) & 1 & 1 & 0 \\ \hline
+Microbenchmark sintético (función Express) & Registro asíncrono sin ventana de gracia (PR \#53) & 0.116 & 0.300 & 0.184$^{\dagger}$ \\ \hline
+Aplicación real con Postgres, sin Docker & \textit{Worker pool} con ventana de gracia, sin registro asíncrono & 3 & 6 & 3$^{\dagger}$ \\ \hline
+Docker y Postgres, 10 filas & \textit{Worker pool} con ventana de gracia, sin registro asíncrono & 5.0 & 12.8 & 7.8$^{\dagger}$ \\ \hline
+Docker y Postgres, 10 filas & Diseño híbrido (ventana de gracia y cola de escritura por lotes) & $\approx$5 & $\approx$12--14 & $\approx$7--9 \\ \hline
+Docker y Postgres, 2\,010 filas & Diseño híbrido (ventana de gracia y cola de escritura por lotes) & 13.67 & 23--28 & 9.33--14.33$^{\dagger}$ \\ \hline
+\end{tabular}
+\caption{Latencia p95 con y sin middleware y diferencia absoluta, por entorno medido.}
+\label{tabla:res-overhead}
+\par\smallskip\footnotesize $^{\dagger}$ Diferencia calculada como p95 con middleware menos p95 sin middleware; la fuente reporta ambos valores y no la diferencia.\\
+Fuente: \texttt{docs/results.md}, secciones A19 y F6.5; \texttt{docs/vulnerable-app-evaluation/config2-latency-evaluation.md}, secciones Final latency y Config 2 Final Status. Elaboración propia.
+\end{table}
+
+La Tabla \ref{tabla:res-overhead} reporta la latencia p95 con y sin middleware, y su diferencia $\Delta$p95 frente al límite de 15~ms fijado en el objetivo específico 3.
+
+Como evidencia complementaria de inferencia, dos mediciones independientes documentan la latencia a nivel de componente, en contextos distintos que no deben compararse entre sí. Durante la instrumentación de la fase de \textit{grace-window} (250 peticiones muestreadas), el tiempo medio de \texttt{session.run()} fue de 0.026~ms para Random Forest y 0.978~ms para Isolation Forest, con un tiempo medio de espera en cola (extracción y cola) de 0.038~ms y 0.052~ms, respectivamente (\texttt{docs/results.md}, líneas 445--460). Por separado, una ejecución de 60~s bajo carga sostenida midió el tiempo de inferencia por llamada de Isolation Forest en un rango de 2.99~ms a 3.22~ms de media (aproximadamente 2.9--3.2~ms, con p95 de 5.0--6.0~ms) a lo largo de diez segmentos cronológicos consecutivos, sin mostrar un patrón de crecimiento sostenido (\texttt{docs/results.md}, líneas 550--560; \texttt{docs/vulnerable-app-evaluation/config2-latency-evaluation.md}, línea 452).
+
+\section{Resultados del objetivo específico 2: modelo híbrido Random Forest e Isolation Forest}
+
+La evaluación del modelo híbrido se ejecutó una sola vez sobre el conjunto de prueba bloqueado, con 57\,481 filas, el 26 de septiembre de 2026 (\texttt{training/evaluate\_test.py}). Se evaluaron los modelos \texttt{rf\_v11} e \texttt{if\_v10} en su forma ONNX publicada en npm (\texttt{rf.onnx} e \texttt{if.onnx} ejecutados con \texttt{onnxruntime}), no los archivos \texttt{.pkl}. El archivo \texttt{training/splits/test.lock.sha256} coincidió con el \textit{hash} registrado antes de ejecutar cualquier inferencia (\texttt{7486c258\ldots 4fd9}). Todos los valores de esta sección provienen de \texttt{training/results/v11\_test\_results.json}.
+
+\subsection{Random Forest}
+
+La Tabla \ref{tabla:res-rf} presenta la precisión, el \textit{recall}, el F1-score y el AUC-ROC de Random Forest por clase. El AUC-ROC se calculó con el método uno contra el resto (\texttt{roc\_auc\_score}, \texttt{multi\_class='ovr'}). El F1-score macro fue de 0.9776, la exactitud global de 0.9932 y el F1-score ponderado de 0.9933. El AUC-ROC por clase estuvo entre 0.99899 (\texttt{path\_traversal}) y 0.99998 (\texttt{benign}).
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabular}{|l|r|r|r|r|r|}
+\hline
+\textbf{Clase} & \textbf{Precisión} & \textbf{\textit{Recall}} & \textbf{F1-score} & \textbf{Soporte} & \textbf{AUC-ROC} \\ \hline
+\texttt{benign} & 0.9984 & 0.9985 & 0.9984 & 14\,886 & 0.99998 \\ \hline
+\texttt{cmdi} & 0.9015 & 0.9475 & 0.9239 & 1\,468 & 0.99901 \\ \hline
+\texttt{path\_traversal} & 0.9853 & 0.9798 & 0.9826 & 2\,529 & 0.99899 \\ \hline
+\texttt{sqli} & 0.9955 & 0.9956 & 0.9956 & 34\,107 & 0.99982 \\ \hline
+\texttt{xss} & 0.9950 & 0.9804 & 0.9877 & 4\,491 & 0.99930 \\ \hline
+\textbf{Promedio macro} & \textbf{0.9751} & \textbf{0.9804} & \textbf{0.9776} & \textbf{57\,481} & --- \\ \hline
+\end{tabular}
+\caption{Métricas de Random Forest (\texttt{rf\_v11}) por clase sobre el conjunto de prueba bloqueado.}
+\label{tabla:res-rf}
+\par\smallskip\footnotesize Fuente: \texttt{training/results/v11\_test\_results.json}. Elaboración propia.
+\end{table}
+
+\subsection{Isolation Forest}
+
+La Tabla \ref{tabla:res-if} presenta las métricas de Isolation Forest (\texttt{if\_v10}) sobre el mismo conjunto de prueba. Una petición se considera detectada como anomalía cuando su puntaje supera el umbral de 0.004205941820353609, congelado en \texttt{training/models/if\_v10\_metadata.json} y no recalibrado contra el conjunto de prueba. Las clases de ataque (42\,595 filas) se tratan como positivas y la clase \texttt{benign} (14\,886 filas) como negativa. La matriz de confusión resultante fue: 38\,868 verdaderos positivos, 3\,727 falsos negativos, 813 falsos positivos y 14\,073 verdaderos negativos.
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabular}{|l|r|}
+\hline
+\textbf{Métrica} & \textbf{Valor} \\ \hline
+\textit{Recall} global & 0.9125 \\ \hline
+Tasa de falsos positivos & 0.0546 \\ \hline
+Precisión & 0.9795 \\ \hline
+\textit{Recall} en \texttt{cmdi} & 0.9564 \\ \hline
+\textit{Recall} en \texttt{path\_traversal} & 0.9968 \\ \hline
+\textit{Recall} en \texttt{sqli} & 0.8954 \\ \hline
+\textit{Recall} en \texttt{xss} & 0.9802 \\ \hline
+\end{tabular}
+\caption{Métricas de Isolation Forest (\texttt{if\_v10}) sobre el conjunto de prueba bloqueado.}
+\label{tabla:res-if}
+\par\smallskip\footnotesize Fuente: \texttt{training/results/v11\_test\_results.json}. Elaboración propia.
+\end{table}
+
+\subsection{Paridad entre scikit-learn y ONNX}
+
+La Tabla \ref{tabla:res-paridad} presenta la diferencia máxima observada entre la salida de los modelos en scikit-learn y la de sus versiones ONNX, calculada sobre 1\,000 muestras con \textit{opset} 17.
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabular}{|l|l|r|}
+\hline
+\textbf{Modelo} & \textbf{Magnitud comparada} & \textbf{Diferencia máxima} \\ \hline
+Random Forest (\texttt{rf\_v11}) & Probabilidad por clase & $1.01 \times 10^{-7}$ \\ \hline
+Isolation Forest (\texttt{if\_v10}) & Puntaje de anomalía & $2.42 \times 10^{-7}$ \\ \hline
+\end{tabular}
+\caption{Diferencia máxima de salida entre scikit-learn y ONNX sobre 1\,000 muestras. El reporte registra \texttt{parity\_passed: true}.}
+\label{tabla:res-paridad}
+\par\smallskip\footnotesize Fuente: \texttt{training/models/parity\_report.json}. Elaboración propia.
+\end{table}
+
+\section{Resultados del objetivo específico 3: evaluación integrada en las configuraciones 1, 2, 3a y 3b}
+
+La evaluación integrada se ejecutó sobre una aplicación Express y Postgres deliberadamente vulnerable (\texttt{logSguarDian-vulnerable-project}), en cuatro configuraciones: Config 1, sin protección; Config 2, solo logSguarDian; Config 3a, solo \textit{Web Application Firewall} (ModSecurity v3 con OWASP CRS en nivel de paranoia 1 y modo de bloqueo); y Config 3b, ModSecurity más logSguarDian en capas. En las configuraciones con logSguarDian, los modelos desplegados fueron \texttt{rf\_v10} e \texttt{if\_v9}, con \texttt{RF\_THRESHOLD} de 0.35. La evaluación de Config 1, 2, 3a y 3b (rondas de julio-agosto de 2026) se ejecutó sobre la generación de modelos vigente en ese momento, \texttt{rf\_v10}/\texttt{if\_v9}. Las métricas de Random Forest e Isolation Forest reportadas en las secciones anteriores de este capítulo corresponden a la generación posterior, \texttt{rf\_v11}/\texttt{if\_v10}, resultado del reentrenamiento del 30 de agosto de 2026 (PR~\#66), cuyas métricas de prueba se re-derivaron en el PR~\#79. Los resultados de esta sección no fueron re-ejecutados contra esa generación posterior. Las rutas de archivo de esta sección se expresan relativas a \texttt{docs/} del repositorio del proyecto.
+
+\subsection{Config 1: aplicación sin protección}
+
+La Tabla \ref{tabla:res-config1} resume los vectores de ataque ejecutados contra la aplicación sin ningún componente de seguridad, con la prueba de concepto de \texttt{curl} de cada vector y capturando la respuesta real.
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabular}{|l|l|r|}
+\hline
+\textbf{Categoría} & \textbf{Vectores probados} & \textbf{Vectores comprometidos} \\ \hline
+Inyección SQL & Evasión de autenticación; exfiltración con \texttt{UNION} & 2/2 \\ \hline
+XSS almacenado & Campo de biografía; contenido de publicación & 2/2 \\ \hline
+\textit{Path traversal} & Descarga de adjuntos & 1/1 \\ \hline
+Inyección de comandos & Utilidad de administración \texttt{ping} & 1/1 \\ \hline
+\textbf{Total} & & \textbf{6/6} \\ \hline
+\end{tabular}
+\caption{Vectores de ataque comprometidos en Config 1, sin protección.}
+\label{tabla:res-config1}
+\par\smallskip\footnotesize Fuente: \texttt{baseline-config1.md}, sección 5 (ejecutado el 24 de julio de 2026). Elaboración propia.
+\end{table}
+
+En el vector de inyección de comandos, \texttt{whoami} devolvió \texttt{root}.
+
+\subsection{Config 2: solo logSguarDian}
+
+La Tabla \ref{tabla:res-config2-cobertura} presenta la cobertura por categoría de Config 2 sobre 100 payloads por categoría (\texttt{attack-sim/payloads/*.json}), disparados contra el \textit{endpoint} que corresponde a cada vulnerabilidad con el middleware activo en modo \texttt{block}. Se contabilizó como bloqueada la respuesta HTTP 403 del middleware.
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabular}{|l|r|r|r|}
+\hline
+\textbf{Categoría} & \textbf{Bloqueados} & \textbf{Total} & \textbf{Cobertura} \\ \hline
+\texttt{sqli} & 100 & 100 & 100.0\,\% \\ \hline
+\texttt{xss} & 100 & 100 & 100.0\,\% \\ \hline
+\texttt{path\_traversal} & 93 & 100 & 93.0\,\% \\ \hline
+\texttt{cmdi} & 100 & 100 & 100.0\,\% \\ \hline
+\end{tabular}
+\caption{Cobertura de detección por categoría en Config 2, 100 payloads por categoría.}
+\label{tabla:res-config2-cobertura}
+\par\smallskip\footnotesize Fuente: \texttt{vulnerable-app-evaluation/config2-latency-evaluation.md}, secciones \textit{Final coverage} y \textit{Config 2 Final Status}. Elaboración propia.
+\end{table}
+
+El recuento de eventos de bloqueo en la base de detección de logSguarDian (393) coincide con el total de respuestas 403 de la tabla. Las 3\,600 peticiones benignas de cada corrida de latencia respondieron 200 o 302, sin ninguna respuesta 403.
+
+La Tabla \ref{tabla:res-config2-latencia} reporta el criterio relativo de latencia, definido como $\Delta$p95 expresado como porcentaje de la línea base sin middleware. Es una medida distinta del $\Delta$p95 absoluto de la Tabla \ref{tabla:res-overhead}. Cada medición usa el flujo benigno de Artillery (\texttt{attack-sim/artillery-baseline.yml}, 60~s, 20 solicitudes por segundo) sobre Docker y Postgres, y las filas difieren en la compilación del middleware y en la escala de datos.
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabular}{|p{4.6cm}|p{2.4cm}|r|r|r|}
+\hline
+\textbf{Compilación del middleware} & \textbf{Datos sembrados} & \textbf{p95 sin middleware (ms)} & \textbf{p95 con middleware (ms)} & \textbf{$\Delta$p95 relativo} \\ \hline
+Un solo \textit{worker} (\texttt{rf\_v9}/\texttt{if\_v8}) & 10 filas & 4.0 & 14.6 & +265.8\,\% \\ \hline
+\textit{Worker pool} (\texttt{rf\_v10}/\texttt{if\_v9}), medición inicial & 10 filas & 5.0 & 10.6 & +111.3\,\% \\ \hline
+\textit{Worker pool} (\texttt{rf\_v10}/\texttt{if\_v9}), umbral de IF corregido (6 corridas) & 10 filas & 5.0 & 12.8 & +156.7\,\% \\ \hline
+Diseño híbrido (ventana de gracia y cola de escritura por lotes) & 2\,010 filas & 13.67 & 23--28 & +70.2\,\% \\ \hline
+\end{tabular}
+\caption{Criterio relativo de latencia ($\Delta$p95 como porcentaje de la línea base) de Config 2, por compilación del middleware.}
+\label{tabla:res-config2-latencia}
+\par\smallskip\footnotesize Fuente: \texttt{vulnerable-app-evaluation/config2-latency-evaluation.md}, secciones \textit{Latency Results}, \textit{Comparison across iterations}, \textit{Final latency}, \textit{Definitive comparison} y \textit{Config 2 Final Status}. Elaboración propia.
+\end{table}
+
+Las tres mediciones con 10 filas sembradas arrojaron un $\Delta$p95 relativo de +111.3\,\% a +265.8\,\% frente al criterio de $\Delta$p95 $\leq$ 10\,\% definido en la evaluación; la medición con 2\,010 filas arrojó +70.2\,\%.
+
+\subsection{Config 3a y Config 3b: corpus pequeño}
+
+En las Rondas 1 y 2, ejecutadas con el \textit{stack} en capas y ModSecurity en modo de bloqueo, el corpus fue de 23 payloads: los 9 casos de ataque de las Configs 1 y 2 y 14 variantes diseñadas para evadir las reglas de firmas de CRS. ModSecurity respondió 403 a los 9 casos originales y a las 14 variantes (23/23), y ninguna petición llegó a la aplicación (\texttt{vulnerable-app-evaluation/config3b-results.md}, secciones \textit{Round 1} y \textit{Round 2}).
+
+En la Ronda 3, con \texttt{MODSEC\_RULE\_ENGINE} en \texttt{DetectionOnly}, de modo que CRS registra pero no bloquea y toda petición llega a la aplicación, los 23 payloads se reejecutaron contra logSguarDian. La auditoría de CRS registró que habría bloqueado los 23. El resultado inicial fue de 16/23 bloqueados por logSguarDian (la cifra original del documento fuente, 21/23, resultó aritméticamente inconsistente con el detalle de 7 casos no detectados que el propio documento reporta; se corrigió a 16/23, consistente con 16+7=23, sin re-medición porque los datos crudos de esa ronda ya no existen); los 7 no detectados eran de XSS y se habían enviado como \texttt{multipart/form-data}. Tras montar un \textit{parser} multipart global antes del middleware, 23/23 devolvieron \texttt{verdict: block}, confirmado en \texttt{detection\_events}. Dos payloads (traversal de rutas y una inyección de comandos) se bloquearon con una clase asignada distinta de la esperada (\texttt{config3b-results.md}, sección \textit{Round 3}).
+
+\subsection{Config 3a y Config 3b: corpus grande}
+
+La Ronda 4 ejecutó las cuatro configuraciones contra 590 payloads de SecLists (rama \texttt{master}), deduplicados y muestreados aleatoriamente con semilla 42 hasta un máximo de 200 por categoría: 77 de \texttt{sqli}, 113 de \texttt{xss}, 200 de \texttt{path\_traversal} y 200 de \texttt{cmdi}. La Tabla \ref{tabla:res-config3-corpus} presenta los payloads bloqueados por configuración y categoría.
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabular}{|l|r|r|r|r|}
+\hline
+\textbf{Categoría} & \textbf{Config 1 (sin protección)} & \textbf{Config 2 (solo logSguarDian)} & \textbf{Config 3a (solo WAF, PL1)} & \textbf{Config 3b (en capas)} \\ \hline
+\texttt{sqli} (77) & 0/77 (0.0\,\%) & 76/77 (98.7\,\%) & 66/77 (85.7\,\%) & 77/77 (100.0\,\%) \\ \hline
+\texttt{xss} (113) & 0/113 (0.0\,\%) & 110/113 (97.3\,\%) & 110/113 (97.3\,\%) & 113/113 (100.0\,\%) \\ \hline
+\texttt{path\_traversal} (200) & 0/200 (0.0\,\%) & 197/200 (98.5\,\%) & 174/200 (87.0\,\%) & 197/200 (98.5\,\%) \\ \hline
+\texttt{cmdi} (200) & 0/200 (0.0\,\%) & 200/200 (100.0\,\%) & 200/200 (100.0\,\%) & 200/200 (100.0\,\%) \\ \hline
+\textbf{Total (590)} & \textbf{0/590 (0.0\,\%)} & \textbf{583/590 (98.8\,\%)} & \textbf{550/590 (93.2\,\%)} & \textbf{587/590 (99.5\,\%)} \\ \hline
+\end{tabular}
+\caption{Payloads bloqueados por configuración y categoría sobre el corpus de 590 payloads de SecLists.}
+\label{tabla:res-config3-corpus}
+\par\smallskip\footnotesize Fuente: \texttt{vulnerable-app-evaluation/config3b-results.md}, sección \textit{Round 4}. Elaboración propia.
+\end{table}
+
+De los 40 ataques que CRS en nivel de paranoia 1 no bloqueó en Config 3a (590 menos 550), la atribución de los bloqueos de Config 3b por firma de respuesta (el encabezado \texttt{X-Powered-By: Express} aparece solo en bloqueos de la capa de aplicación) registró 37 capturados por logSguarDian tras pasar el WAF. Tres payloads pasaron ambas capas: las cadenas \texttt{\string~/.gtkrc}, \texttt{/proc/filesystems} y \texttt{\string~/.atfp\_history}, de la categoría \texttt{path\_traversal}.
+
+\section{Resultados de interpretabilidad: análisis SHAP}
+
+El análisis de interpretabilidad se calculó con \texttt{shap.TreeExplainer} sobre el modelo \texttt{rf\_v11} (\texttt{training/models/rf\_v11.pkl}) y la partición de validación (\texttt{training/splits/val.parquet}), con las características de entrada del modelo seleccionadas por nombre. El \textit{script} es \texttt{training/results/shap\_analysis.py}, y los reportes y figuras de esta sección están en \texttt{training/results/}. La importancia global de una característica para una clase es la media del valor absoluto de su valor SHAP sobre la partición de validación, para la salida de esa clase.
+
+\subsection{Importancia global por clase}
+
+La Tabla \ref{tabla:res-shap-global} presenta, para cada una de las cinco clases, las tres características de mayor importancia global y la posición (entre las diez primeras) de \texttt{ua\_length} y \texttt{ua\_present}. Las Figuras \ref{fig:shap-benign} a \ref{fig:shap-cmdi} muestran las diez características de mayor importancia de cada clase.
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabular}{|l|p{6.6cm}|c|c|}
+\hline
+\textbf{Clase} & \textbf{Tres características de mayor importancia (media $|$SHAP$|$)} & \textbf{Posición de \texttt{ua\_length}} & \textbf{Posición de \texttt{ua\_present}} \\ \hline
+\texttt{benign} & \texttt{ua\_length} (0.08659); \texttt{ua\_present} (0.05109); \texttt{path\_depth} (0.03777) & 1 & 2 \\ \hline
+\texttt{sqli} & \texttt{ua\_length} (0.07342); \texttt{sqli\_keyword\_density} (0.05159); \texttt{ua\_present} (0.03683) & 1 & 3 \\ \hline
+\texttt{xss} & \texttt{alert\_function\_present} (0.03458); \texttt{xss\_marker\_density} (0.0274); \texttt{html\_tag\_count} (0.02689) & 5 & 8 \\ \hline
+\texttt{path\_traversal} & \texttt{traversal\_sequence\_count} (0.05172); \texttt{special\_char\_ratio} (0.03731); \texttt{ua\_length} (0.03207) & 3 & 4 \\ \hline
+\texttt{cmdi} & \texttt{method\_is\_get} (0.02554); \texttt{ua\_length} (0.02122); \texttt{subshell\_count} (0.01584) & 2 & 9 \\ \hline
+\end{tabular}
+\caption{Características de mayor importancia SHAP global por clase de \texttt{rf\_v11} y posición de las características de \textit{User-Agent}.}
+\label{tabla:res-shap-global}
+\par\smallskip\footnotesize Fuente: \texttt{training/results/shap\_global\_report.json}. Elaboración propia.
+\end{table}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.85\textwidth]{shap_global_benign.png}
+\caption{Importancia SHAP global, clase \texttt{benign}.}
+\label{fig:shap-benign}
+\par\smallskip\footnotesize Fuente: elaboración propia, \texttt{training/results/shap\_analysis.py}.
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.85\textwidth]{shap_global_sqli.png}
+\caption{Importancia SHAP global, clase \texttt{sqli}.}
+\label{fig:shap-sqli}
+\par\smallskip\footnotesize Fuente: elaboración propia, \texttt{training/results/shap\_analysis.py}.
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.85\textwidth]{shap_global_xss.png}
+\caption{Importancia SHAP global, clase \texttt{xss}.}
+\label{fig:shap-xss}
+\par\smallskip\footnotesize Fuente: elaboración propia, \texttt{training/results/shap\_analysis.py}.
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.85\textwidth]{shap_global_path_traversal.png}
+\caption{Importancia SHAP global, clase \texttt{path\_traversal}.}
+\label{fig:shap-path-traversal}
+\par\smallskip\footnotesize Fuente: elaboración propia, \texttt{training/results/shap\_analysis.py}.
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.85\textwidth]{shap_global_cmdi.png}
+\caption{Importancia SHAP global, clase \texttt{cmdi}.}
+\label{fig:shap-cmdi}
+\par\smallskip\footnotesize Fuente: elaboración propia, \texttt{training/results/shap\_analysis.py}.
+\end{figure}
+
+En la lista de diez características de \texttt{cmdi} no figuran \texttt{shell\_command\_count} ni \texttt{pipe\_count}.
+
+\subsection{Explicaciones locales}
+
+Las Figuras \ref{fig:shap-local-no-ua} y \ref{fig:shap-local-with-ua} presentan la explicación local de dos peticiones \texttt{GET /profile}, una sin \textit{User-Agent} y otra con él, y la Figura \ref{fig:shap-local-sqli} la de una petición de \texttt{sqli} del conjunto de prueba de extremo a extremo (\texttt{e2e/fixtures/test\_payloads.jsonl}). En cada caso el valor SHAP corresponde a la clase de mayor probabilidad predicha, y el valor base es 0.2000. La Tabla \ref{tabla:res-shap-local} reporta los valores SHAP de \texttt{ua\_present} y \texttt{ua\_length} en los tres casos.
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabular}{|l|l|r|r|r|}
+\hline
+\textbf{Caso} & \textbf{Clase predicha (probabilidad)} & \textbf{Valor de \texttt{ua\_present}; SHAP} & \textbf{Valor de \texttt{ua\_length}; SHAP} & \textbf{Mayor contribución (SHAP)} \\ \hline
+\texttt{GET /profile} sin \textit{User-Agent} & \texttt{xss} (0.650) & 0; $+0.0596$ & 0; $+0.0678$ & \texttt{path\_length} ($+0.1008$) \\ \hline
+\texttt{GET /profile} con \textit{User-Agent} & \texttt{benign} (0.533) & 1; $-0.0498$ & 75; $-0.0327$ & \texttt{special\_char\_ratio} ($+0.0566$) \\ \hline
+Petición de \texttt{sqli} del conjunto de extremo a extremo & \texttt{sqli} (0.999) & 1; $+0.0485$ & 68; $+0.1136$ & \texttt{ua\_length} ($+0.1136$) \\ \hline
+\end{tabular}
+\caption{Valores SHAP locales de las características de \textit{User-Agent} y mayor contribución, para la clase predicha de cada caso.}
+\label{tabla:res-shap-local}
+\par\smallskip\footnotesize Fuente: valores SHAP recalculados con \texttt{training/results/shap\_analysis.py} sobre \texttt{rf\_v11}; figuras en \texttt{training/results/shap\_local\_*.png}. Elaboración propia.
+\end{table}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{shap_local_profile_no_ua.png}
+\caption{Explicación local de \texttt{GET /profile} sin \textit{User-Agent} (clase \texttt{xss}).}
+\label{fig:shap-local-no-ua}
+\par\smallskip\footnotesize Fuente: elaboración propia, \texttt{training/results/shap\_analysis.py}.
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{shap_local_profile_with_ua.png}
+\caption{Explicación local de \texttt{GET /profile} con \textit{User-Agent} (clase \texttt{benign}).}
+\label{fig:shap-local-with-ua}
+\par\smallskip\footnotesize Fuente: elaboración propia, \texttt{training/results/shap\_analysis.py}.
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{shap_local_attack_sqli.png}
+\caption{Explicación local de una petición de \texttt{sqli} detectada (clase \texttt{sqli}).}
+\label{fig:shap-local-sqli}
+\par\smallskip\footnotesize Fuente: elaboración propia, \texttt{training/results/shap\_analysis.py}.
+\end{figure}
