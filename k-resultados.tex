@@ -191,6 +191,12 @@ Diseño híbrido (ventana de gracia y cola de escritura por lotes) & 2\,010 fila
 
 Las tres mediciones con 10 filas sembradas arrojaron un $\Delta$p95 relativo de +111.3\,\% a +265.8\,\% frente al criterio de $\Delta$p95 $\leq$ 10\,\% definido en la evaluación; la medición con 2\,010 filas arrojó +70.2\,\%.
 
+\noindent\textbf{Experimento independiente de latencia en Linux nativo.} En la ejecución del 26 de septiembre de 2026 en GitHub Actions, sobre Ubuntu Linux nativo (\texttt{ubuntu-latest}) y con contenedores Docker sobre Linux, sin Docker Desktop/macOS, el $\Delta$p95 relativo fue de +485.1\,\% en el escenario normal, +278.1\,\% en el escenario de ataque y +10,174.6\,\% en el escenario de volumen con 2\,010 filas sembradas. Este experimento difiere de las mediciones anteriores en entorno, carga ofrecida, arnés de medición y procedencia de los artefactos. Se reporta por separado: no reemplaza ni refuta las cifras de +111.3\,\% a +265.8\,\% y +70.2\,\%, ni se promedia con ellas.
+
+El p95 de cada corrida es una aproximación calculada como promedio ponderado por conteo de los p95 de los intervalos de Artillery posteriores al calentamiento. Los resultados resumen cinco repeticiones por condición mediante la mediana de esas aproximaciones; no corresponden a un percentil exacto calculado sobre el conjunto agrupado de muestras.
+
+La procedencia de los modelos de esta ejecución presenta una brecha abierta: los artefactos \texttt{rf.onnx} e \texttt{if.onnx} incorporados en la aplicación vulnerable tienen hashes SHA-256 distintos de los artefactos canónicos del PR~\#79. Esta discrepancia no se ha resuelto y la ejecución no se ha reconfirmado con ese par canónico. Fuente: \texttt{cybersecurity-\allowbreak objectives-\allowbreak compliance.md}, sección OE3.2 y sus notas metodológica y de procedencia del modelo, en el repositorio logSguarDian.
+
 \subsection{Config 3a y Config 3b: corpus pequeño}
 
 En las Rondas 1 y 2, ejecutadas con el \textit{stack} en capas y ModSecurity en modo de bloqueo, el corpus fue de 23 payloads: los 9 casos de ataque de las Configs 1 y 2 y 14 variantes diseñadas para evadir las reglas de firmas de CRS. ModSecurity respondió 403 a los 9 casos originales y a las 14 variantes (23/23), y ninguna petición llegó a la aplicación (\texttt{vulnerable-app-evaluation/config3b-results.md}, secciones \textit{Round 1} y \textit{Round 2}).
