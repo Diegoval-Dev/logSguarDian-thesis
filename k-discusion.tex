@@ -43,12 +43,12 @@ El criterio del objetivo específico 3 ($\Delta$p95 $\leq$ 15~ms) se cumple en c
 % CALC: 15 - 12.08 = 2.92 y 15 - 12.85 = 2.15.
 No se cumple en volumen: el $\Delta$p95 es de 6\,495.46~ms y el 7.00\,\% de las peticiones termina por tiempo de espera. Esas peticiones no entran en el p95, por lo que la cifra subestima la cola.
 
-% VERIFICAR: el capítulo 8 dice que el criterio vigente del objetivo específico 3 es el $\Delta$p95 absoluto de 15 ms y que el incremento relativo es un indicador complementario (subsección~\ref{sec:config2}). No consta en el capítulo ni en Objetivos un criterio relativo del protocolo. Confirmar la fuente del criterio antes de mantener esta frase.
-% FUENTE: protocolo aprobado, objetivo específico 3 (sección 4.2.3); no está en el repositorio. Documentar en la sección de cambios respecto al protocolo (pendiente).
+% FUENTE: protocolo aprobado, sección 4.2.3 (objetivo específico 3) y Tabla 9; el protocolo no está en el repositorio
 El protocolo fijaba un incremento de hasta 10\,\% de la latencia media sobre la línea base. Esta tesis reporta el incremento relativo del p95, que fue de +485.1\,\% y +278.1\,\% en carga normal y de ataque, y no reporta la media. Con líneas base de 2.49 y 4.62~ms, el 10\,\% equivale a 0.25 y 0.46~ms. El incremento relativo del p95 se presenta como indicador complementario y no como el criterio del protocolo.
 % CALC: 10 % de 2.49 = 0.25 y 10 % de 4.62 = 0.46.
 Los datos son de una sola corrida en un ejecutor de 2 vCPU, con cinco repeticiones por condición (subsección~\ref{sec:config2}).
 
+% FUENTE: protocolo aprobado, sección 7.0.5 (restricciones del proyecto) y actividad A24; el protocolo no está en el repositorio
 La memoria aumenta 331.9, 332.0 y 375.9~MiB en ataque, normal y volumen, más del doble del límite de 150~MB (Cuadro~\ref{tabla:res-recursos}). El incremento es casi igual en normal y ataque, lo que sugiere un costo fijo asociado a la carga de los modelos. Esa interpretación no se verificó. La CPU aumenta 85.1 y 88.9 puntos porcentuales (+529.6\,\% y +614.4\,\%) en ataque y normal, frente a un límite de 15\,\%. El contenedor completo usa entre 394.8 y 459.1~MiB y no se probó en una instancia de 1~GB, para la que se fijó el límite (sección~\ref{sec:memoria-cpu}).
 
 \section{Comparación con trabajos previos}
