@@ -39,8 +39,8 @@ Pipeline de feature engineering asíncrono vía `worker_threads`, latencia adici
 Modelo híbrido RF+IF. RF: F1≥0.80 en ≥3/4 categorías. IF: recall≥50%, FP≤10%, ambos sobre test set bloqueado.
  
 **Estado: CUMPLIDO.**
-- RF (rf_v11, actual): test set — precision=0.9996, recall=0.9989. Por clase: sqli~100%, xss~99%, path_traversal~99%, cmdi F1=0.93+ (mejorado desde 0.89 con datos reales, luego reforzado con cobertura Windows/compound).
-- IF (if_v10, actual): test set — recall=0.9145-0.9154, FP=0.0532-0.0574 (ambos criterios cumplidos, calibración estabilizada con `max_samples=4096`).
+- RF (rf_v11, actual): test set (lectura del 26-09-2026, `v11_test_results.json`) — macro F1=0.9776. Por clase F1: benign 0.9984, cmdi 0.9239, path_traversal 0.9826, sqli 0.9956, xss 0.9877. (Las cifras de precision=0.9996/recall=0.9989 correspondían a rf_v3 y no aplican a v11.)
+- IF (if_v10, actual): test set (lectura del 26-09-2026) — recall=0.9125, FP=0.0546, umbral 0.004206 (ambos criterios cumplidos).
 ### Objetivo específico 3
 Detección ≥80% de payloads por categoría en entorno controlado; latencia sin elevar la media del servidor más de 15ms respecto a la línea base (criterio ajustado, ver sección 9), o más del 10% en entornos de producción representativos (latencia base ≥100ms).
  
@@ -67,7 +67,7 @@ Detección ≥80% de payloads por categoría en entorno controlado; latencia sin
 El feature extraction vive ÚNICAMENTE en `packages/extractor` (TypeScript). Python nunca recalcula features — solo consume matrices ya extraídas por el CLI del extractor TS. Cualquier implementación de features en Python invalida las métricas del modelo.
  
 ### Regla R2 (crítica, nunca violar)
-El test set se lee UNA SOLA VEZ para evaluación final, después de bloquearse con `test.lock.sha256`. Nunca se re-tunea contra resultados de test. (Excepción documentada: recalibración de umbral de IF fue leída dos veces con justificación explícita en algunos ciclos — la selección de umbral desde val no puede sobreajustar a test de la misma forma que un retraining sí podría.)
+El test set debe leerse UNA SOLA VEZ para evaluación final, después de bloquearse con `test.lock.sha256`. Nunca se re-tunea contra resultados de test. **Incumplida para rf_v11/if_v10:** el test set se leyó tres veces (24, 25 y 26 de septiembre de 2026; ver `training/results/v11_test_results.json`, ADDENDUM). El umbral de IF cambió de 0.00807 a 0.00421 entre la primera y la última lectura. Las cifras vigentes son las de la lectura del 26-09.
  
 ### Regla R3
 Cada tarea termina con un artefacto verificable (número, test que pasa, o archivo).
