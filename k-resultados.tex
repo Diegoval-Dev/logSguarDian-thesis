@@ -241,7 +241,30 @@ Config 2 se ejecutó también sobre los mismos 590 payloads con dos generaciones
 
 Para acotar el solapamiento descrito en la subsección anterior se construyó un corpus de 608 solicitudes. Contiene 200 payloads de inyección SQL generados con sqlmap, 200 de path traversal y 200 de inyección de comandos (\texttt{cmdi}). Estos dos últimos conjuntos se produjeron con generadores propios deterministas, con semilla 20260923, no derivados de SecLists. El corpus incluye además 8 marcadores de \texttt{xss} escritos a mano; no entran en la cobertura, por lo que esta categoría no se evaluó en esta ronda.
 
-Antes de incluir cada candidato se descartó toda coincidencia exacta del campo completo con el conjunto de entrenamiento. El filtro descartó 3 de 400 candidatos de path traversal, todos por coincidencia con \texttt{owasp\_logs.jsonl}, y ninguno de los 1\,995 candidatos de sqli ni de los 400 de cmdi (\texttt{attack-sim/exclusion\_report.json}). Con la normalización de \texttt{training/leakage\_check.py}, 4 de los 200 payloads de sqli coinciden por igualdad normalizada con algún campo de las particiones de entrenamiento, validación o prueba, y ninguno de path traversal ni de cmdi coincide.
+Antes de incluir cada candidato se descartó toda coincidencia exacta del campo completo con el conjunto de entrenamiento. El filtro descartó 3 de 400 candidatos de path traversal, todos por coincidencia con \texttt{owasp\_logs.jsonl}, y ninguno de los 1\,995 candidatos de sqli ni de los 400 de cmdi (\texttt{attack-sim/exclusion\_report.json}). El solapamiento con las particiones se midió con \texttt{training/leakage\_check.py} del repositorio \texttt{logSguarDian} (commit 22550ea), ejecutado en solo lectura contra \texttt{train}, \texttt{val} y \texttt{test}. Se usan dos criterios. El primero, (a), es la igualdad normalizada del campo completo: un payload coincide si su forma normalizada es igual a la de algún campo \texttt{path}, \texttt{query} o \texttt{body} de la partición. El segundo, (b), es la regla de subcadena de \texttt{round4\_vs\_split}: un payload coincide si aparece como subcadena de algún campo, con y sin normalización. La regla (b) es permisiva, por lo que sus cifras son un límite superior y no una medida de solapamiento.
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabular}{|l|l|r|r|r|r|}
+\hline
+\textbf{Categoría} & \textbf{Criterio} & \textbf{Train} & \textbf{Val} & \textbf{Test} & \textbf{Unión} \\ \hline
+\texttt{sqli} & (a) igualdad normalizada & 4 & 1 & 2 & 4 \\ \hline
+\texttt{sqli} & (b) subcadena normalizada & 4 & 1 & 2 & 4 \\ \hline
+\texttt{sqli} & (b) subcadena literal & 0 & 0 & 0 & 0 \\ \hline
+\texttt{path\_traversal} & (a) igualdad normalizada & 0 & 0 & 0 & 0 \\ \hline
+\texttt{path\_traversal} & (b) subcadena normalizada & 6 & 5 & 5 & 7 \\ \hline
+\texttt{path\_traversal} & (b) subcadena literal & 5 & 2 & 5 & 5 \\ \hline
+\texttt{cmdi} & (a) igualdad normalizada & 0 & 0 & 0 & 0 \\ \hline
+\texttt{cmdi} & (b) subcadena normalizada & 1 & 1 & 1 & 2 \\ \hline
+\texttt{cmdi} & (b) subcadena literal & 0 & 0 & 0 & 0 \\ \hline
+\end{tabular}
+\caption{Payloads de 200 por categoría que coinciden con cada partición, según el criterio de solapamiento. Unión: payloads que coinciden con al menos una partición.}
+\label{tabla:res-ronda5-solapamiento}
+\par\smallskip\footnotesize Fuente: \texttt{training/leakage\_check.py} (commit 22550ea) sobre \texttt{training/splits/} del repositorio \texttt{logSguarDian}, y \texttt{attack-sim/large\_corpus\_requests.json}. Elaboración propia.
+\end{table}
+
+Con el criterio (a), 4 de los 200 payloads de sqli coinciden con alguna partición y ninguno de path traversal ni de cmdi. Con el criterio (b), path traversal alcanza 7 coincidencias en la unión y cmdi 2; por ser un límite superior, estas cifras no deben leerse como solapamiento confirmado.
 
 El modelo validado tiene una cadena de procedencia verificable. El tarball \texttt{logsguardian-0.1.0.tgz}, que no se publicó en el registro npm, se construyó desde el commit 22550ea de \texttt{develop} del repositorio \texttt{logSguarDian}, con SHA-256 \texttt{cf1238deb33383975e12058de71c4423b22d7c5bcba5cf47241c0d0f712b0416}. Sus modelos son \texttt{rf.onnx} (\texttt{25b407e6\ldots}) e \texttt{if.onnx} (\texttt{5be28ee8\ldots}), y las sumas de verificación se comprobaron dentro del contenedor. La construcción quedó registrada en el commit 4d928b5 del repositorio \texttt{logSguarDian-vulnerable-project}. El archivo de resultados no registra el modelo; esa atribución consta en \texttt{docs/config3b-results.md} y en dicho commit.
 
