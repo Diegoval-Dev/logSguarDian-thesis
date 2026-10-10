@@ -20,3 +20,13 @@
 *.alg
 *.pdf
 .DS_Store
+*.idx
+*.ilg
+*.ind
+*.loa
+*.nav
+*.snm
+*.synctex
+*.synctex(busy)
+*.vrb
+*.xdv

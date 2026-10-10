@@ -24,3 +24,7 @@ Este resultado no se obtuvo en el primer intento: una versión anterior del payl
 Se recomienda, para quien adopte logSguarDian en un despliegue con múltiples aplicaciones cliente, evaluar la maduración de esta infraestructura complementaria --hoy una prueba de concepto verificada, no un servicio productivo-- como mecanismo de mantenimiento a largo plazo del modelo, manteniendo en todo momento la separación arquitectónica ya adoptada en este proyecto entre la librería embebida que protege la aplicación en tiempo real y la infraestructura externa que sostiene su ciclo de mejora continua.
 
 Como trabajo futuro, queda pendiente medir la memoria y la CPU por componente en el mismo entorno de medición: solo Random Forest, Random Forest más un worker de Isolation Forest, y la configuración actual de tres \texttt{worker\_threads}. Con esas mediciones debería evaluarse también \texttt{IF\_POOL\_SIZE} = 1. Este trabajo no establece el resultado de esas mediciones.
+
+\section{Ampliación del corpus benigno}\label{sec:recomendacion-corpus-benigno}
+
+Se recomienda ampliar el corpus benigno con tráfico representativo de cada aplicación objetivo y volver a medir los falsos positivos en aplicaciones de terceros con el mismo protocolo descrito en la subsección~\ref{sec:falsos-positivos}.
