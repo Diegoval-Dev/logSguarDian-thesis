@@ -307,9 +307,6 @@ Esta evaluación tiene limitaciones que acotan su alcance. Se realizó una sola 
 
 \subsection{Falsos positivos en aplicaciones de terceros}\label{sec:falsos-positivos}
 
-La validación con una startup guatemalteca, prevista en el protocolo, era opcional y no se realizó. Por recomendación del asesor, Ing. Erick Francisco Marroquín Rodríguez, el sistema se evaluó en cuatro aplicaciones vulnerables de terceros: DVNA, node-api-goat, dvws-node y OWASP Juice Shop.
-% FUENTE: la opcionalidad de la validación con startup está en el protocolo aprobado y la recomendación del asesor no consta en el repositorio; el nombre del asesor está en 0-datos_estudiante.tex (\nombreasesor).
-
 % Fuentes: docs/evidence/latency-linux-2026-09-26.tgz (solo conteos de Artillery, escenarios normal y volumen);
 % docs/cybersecurity-objectives-compliance.md:459-460 (3,600 peticiones benignas por corrida, cero 403; bloque histórico de Docker Desktop/macOS, no la corrida Linux);
 % docs/limitations.md:787-799 (addendum Juice Shop); docs/vulnerable-projects-tests/README.md y dvws-node-results.md,
@@ -478,7 +475,7 @@ De las 1\,468 filas de \texttt{cmdi} del conjunto de prueba, 261 (17.8\,\%) son 
 
 En el conjunto de entrenamiento, CAPEC aporta el 81.3\,\% de las filas de \texttt{sqli} y el 85.8\,\% de las de \texttt{path\_traversal}, y modsec-learn el 69.6\,\% de las filas \texttt{benign}. Además, 1\,221 de las 6\,853 filas de \texttt{cmdi} del entrenamiento (17.8\,\%) son sintéticas.
 
-La fuente de los datos restaurados el 23 de septiembre de 2026 no está documentada. Además, \texttt{unified.jsonl} contiene 383\,083 filas y \texttt{features.parquet} contiene 383\,202; la diferencia de 119 filas no está explicada.
+La fuente de los datos restaurados el 23 de septiembre de 2026 no está documentada. Además, \texttt{unified.jsonl} contiene 383\,083 filas y \texttt{features.parquet} contiene 383\,202; la diferencia de 119 filas corresponde a las filas de telemetría curada del pipeline de MLOps, que \texttt{unify.py} excluye y \texttt{ct\_pipeline.py} añade después.
 
 Las pruebas en aplicaciones de terceros muestran una tasa alta de bloqueo de tráfico benigno, y la contribución del User-Agent al modelo, descrita en la sección SHAP, sugiere un sesgo de representación en el corpus. El conjunto de tráfico benigno no cubre la diversidad de clientes HTTP que cabría esperar en un entorno real.
 
