@@ -1,6 +1,6 @@
 \chapter{Resultados}
 
-Este capítulo presenta las mediciones obtenidas al evaluar logSguarDian, organizadas según los tres objetivos específicos del trabajo y la evaluación de interpretabilidad. Cada sección reporta los valores medidos, la condición bajo la cual se midieron y su fuente en el repositorio del proyecto. Las rutas de archivo se expresan relativas a la raíz de dicho repositorio. La interpretación de los valores y su relación con los criterios de aceptación se reserva para el capítulo de Conclusiones.
+Este capítulo presenta las mediciones obtenidas al evaluar logSguarDian, organizadas según los tres objetivos específicos del trabajo y la evaluación de interpretabilidad. Cada sección reporta los valores medidos, la condición bajo la cual se midieron y su fuente en el repositorio del proyecto. Las rutas de archivo se expresan relativas a la raíz de dicho repositorio. La interpretación de los valores y su relación con los criterios de aceptación se reserva para el capítulo~\ref{cap:discusion}, Discusión de resultados.
 
 \section{Resultados del objetivo específico 1: pipeline de ingeniería de características}
 
@@ -301,7 +301,7 @@ Al comparar por identificador, 26 payloads de path traversal pasaron de no bloqu
 
 Esta evaluación tiene limitaciones que acotan su alcance. Se realizó una sola corrida, con 200 solicitudes por categoría. Los corpus de path traversal y cmdi son sintéticos, y la categoría \texttt{xss} no tiene un corpus limpio, por lo que su cobertura permanece en el corpus de 590 payloads. Las configuraciones 3a y 3b no se repitieron, de modo que la comparación con el WAF también permanece en ese corpus. Los resultados de la Ronda 5 con \texttt{rf\_v10}/\texttt{if\_v9} se conocieron el 24 de septiembre de 2026, y el modelo \texttt{rf\_v11}/\texttt{if\_v10} se reconstruyó el 26 de septiembre de 2026. El historial no vincula ambos hechos, por lo que esta no es una evaluación estrictamente ciega del modelo reconstruido. Por último, la mejora de path traversal entre ambas corridas, de 85.0\,\% a 95.0\,\%, no se explica en este capítulo; el desglose por codificación de ambas corridas está pendiente.
 
-\subsection{Falsos positivos en aplicaciones de terceros}
+\subsection{Falsos positivos en aplicaciones de terceros}\label{sec:falsos-positivos}
 
 % Fuentes: docs/evidence/latency-linux-2026-09-26.tgz (solo conteos de Artillery, escenarios normal y volumen);
 % docs/cybersecurity-objectives-compliance.md:459-460 (3,600 peticiones benignas por corrida, cero 403; bloque histórico de Docker Desktop/macOS, no la corrida Linux);
@@ -459,7 +459,7 @@ Petición de \texttt{sqli} del conjunto de extremo a extremo & \texttt{sqli} (0.
 \par\smallskip\footnotesize Fuente: elaboración propia, \texttt{training/results/shap\_analysis.py}.
 \end{figure}
 
-\section{Limitaciones de los resultados}
+\section{Limitaciones de los resultados}\label{sec:limitaciones}
 
 La regla R2 no se cumplió para la generación vigente. El conjunto de prueba se leyó tres veces para \texttt{rf\_v11}/\texttt{if\_v10}, el 24, el 25 y el 26 de septiembre de 2026, y las cifras de este capítulo corresponden a la lectura del 26 de septiembre. La sección de Recolección, procesamiento y validación de datos describe las tres lecturas.
 

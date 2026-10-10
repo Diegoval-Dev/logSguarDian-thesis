@@ -1,0 +1,76 @@
+\chapter{Discusión de resultados}\label{cap:discusion}
+
+Este capítulo interpreta los resultados del capítulo de Resultados frente a los criterios de aceptación de los tres objetivos específicos. No introduce mediciones nuevas.
+
+\section{Pipeline de ingeniería de características}
+
+El extractor cumple el criterio del objetivo específico 1. El p95 mixto del ciclo de ida y vuelta a un \texttt{worker\_threads} es de 0.0273~ms (Cuadro~\ref{tabla:res-extractor}), frente al límite de 5~ms. La medición aísla la extracción y excluye la inferencia, el registro de eventos y la respuesta HTTP.
+
+% VERIFICAR: "más de 400 veces" no figura en el capítulo 8. Es un cociente derivado: 12.08/0.0273 = 442 y 12.85/0.0273 = 471. La afirmación se sostiene, pero la cifra debe confirmarse.
+El incremento de latencia de extremo a extremo en Linux es de 12.08~ms en carga normal y de 12.85~ms en carga de ataque, más de 400 veces el costo del extractor (subsección~\ref{sec:config2}). La extracción no explica el sobrecosto del middleware. El middleware crea tres \texttt{worker\_threads}, dos de Isolation Forest y uno de Random Forest (sección~\ref{sec:memoria-cpu}), comunica los hilos por mensajes y persiste cada evento en SQLite.
+% VERIFICAR: la comunicación por mensajes y la persistencia de cada evento en SQLite no constan en el capítulo 8 ni en las limitaciones. Confirmar contra el código de logSguarDian antes de aceptar la frase.
+Este trabajo no midió el costo de cada componente por separado, y su atribución queda como trabajo futuro.
+
+\section{Modelo híbrido}
+
+El Random Forest supera el F1 de 0.80 en las cuatro clases de ataque. El macro es de 0.9776, con un mínimo de 0.9239 en \texttt{cmdi} (Cuadro~\ref{tabla:res-rf}). El Isolation Forest alcanza un \textit{recall} de 91.25\,\% con una tasa de falsos positivos de 5.46\,\%, frente a un mínimo de 50\,\% y un máximo de 10\,\% (Cuadro~\ref{tabla:res-if}). Ambos criterios del objetivo específico 2 se cumplen con margen.
+
+Estas cifras miden la separación entre clases dentro del corpus. Tres hechos acotan su lectura como estimación del desempeño en producción. El conjunto de prueba de \texttt{rf\_v11} se leyó tres veces, el 24, el 25 y el 26 de septiembre de 2026, y se reporta la última lectura, la más baja (0.9776, frente a 0.9843 en la primera).
+% VERIFICAR: el valor 0.9843 de la primera lectura no figura en el capítulo 8. Tampoco consta que la última lectura sea la más baja: el capítulo solo reporta las cifras de la lectura del 26 de septiembre. Confirmar con training/results/v11_test_results.json y los commits 3086318 y fc47a5b.
+El F1 se calcula por argmax y no incluye el umbral de decisión de 0.35, calibrado con \texttt{rf\_v3} y sin recalibrar para \texttt{rf\_v11} (sección~\ref{sec:limitaciones}). Además, 261 de las 1\,468 filas de \texttt{cmdi} del conjunto de prueba (17.8\,\%) son sintéticas, y \texttt{cmdi} es la clase de menor F1.
+
+El Isolation Forest no bloquea peticiones, porque el diseño reserva esa decisión al Random Forest. Su criterio se cumple como detector individual, pero no se midió cuántos de los ataques que el Random Forest deja pasar marca como anómalos.
+
+\section{Falsos positivos y generalización}
+
+En la aplicación de referencia, ninguna petición benigna de Artillery recibió un 403. El escenario normal envió 6\,300 solicitudes por repetición, incluido el calentamiento (subsección~\ref{sec:config2}). Con cadenas de User-Agent de navegadores reales se bloquearon 13 de 15 combinaciones (subsección~\ref{sec:config2}).
+
+En cuatro aplicaciones de terceros, el modelo bloqueó entre 92.5\,\% y 100\,\% del tráfico benigno con un User-Agent de navegador (subsección~\ref{sec:falsos-positivos}). Las muestras son pequeñas: 5 peticiones en DVNA, 40 en dvws-node y 50 valores enviados a una sola ruta en node-api-goat. En OWASP Juice Shop, con 312 peticiones, el bloqueo fue de 97.1\,\%. Con \texttt{curl}, Juice Shop bajó a 39.4\,\%, y con el User-Agent por defecto de Node, dvws-node bajó a 75\,\%.
+
+El User-Agent amplifica el bloqueo, pero no lo explica por completo: con \texttt{curl}, Juice Shop sigue bloqueando el 39.4\,\%. El análisis SHAP (Cuadro~\ref{tabla:res-shap-global}) coincide: \texttt{ua\_length} es la característica de mayor contribución en las clases \texttt{benign} y \texttt{sqli}. Solo el 0.4\,\% de las filas benignas del corpus tiene un User-Agent largo, frente a entre 33.3\,\% y 97.7\,\% en las clases de ataque. El modelo aprendió esa diferencia del corpus. Una explicación consistente con los datos es que el corpus benigno no representa el tráfico de aplicaciones reales. Este trabajo no la verificó con un corpus benigno alternativo.
+
+\section{Cobertura en la evaluación integrada}
+
+Con el corpus sin solapamiento (Cuadro~\ref{tabla:res-ronda5}), la cobertura supera el 80\,\% en \texttt{sqli}, \texttt{path\_traversal} y \texttt{cmdi} con ambos pares de modelos. Con el paquete publicado (\texttt{rf\_v10}/\texttt{if\_v9}) es de 100\,\%, 85.0\,\% y 91.5\,\%, y con \texttt{rf\_v11}/\texttt{if\_v10} es de 99.5\,\%, 95.0\,\% y 96.0\,\%. El corpus es el mismo en ambas corridas, así que la diferencia de 10 puntos en \texttt{path\_traversal} corresponde al cambio de modelo, y su explicación está pendiente. Con el paquete publicado, el límite inferior del intervalo de Wilson (79.4\,\%) queda bajo el criterio, por lo que el cumplimiento con ese par es frágil (subsección~\ref{sec:ronda5}). La Ronda 5 no es una evaluación estrictamente ciega del modelo reconstruido: los resultados con el paquete publicado se conocieron el 24 de septiembre y el modelo vigente se reconstruyó el 26, y el historial no vincula ambos hechos.
+
+La Ronda 5 no incluye XSS. La cobertura de esa categoría proviene del corpus de 590 payloads de SecLists (Cuadro~\ref{tabla:res-config3-corpus}): 97.3\,\%, y 97.2\,\% al excluir las coincidencias con el entrenamiento. En ese corpus, los 200 payloads de \texttt{cmdi} coinciden con datos de entrenamiento, y su cobertura de 100\,\% no es evidencia de generalización. En \texttt{sqli}, \texttt{xss} y \texttt{path\_traversal} la cobertura cambia como máximo 0.1 puntos al excluir las coincidencias (subsección~\ref{sec:solapamiento-corpus}).
+
+Sobre esos 590 payloads, ModSecurity (CRS, nivel de paranoia 1) bloqueó 93.2\,\%, logSguarDian 98.8\,\% y ambos en capas 99.5\,\%. De los 40 ataques que el WAF no bloqueó (11 de \texttt{sqli}, 3 de \texttt{xss} y 26 de \texttt{path\_traversal}), logSguarDian bloqueó 37. Los tres restantes pasaron ambas capas, y ninguno de los 40 es de \texttt{cmdi}. La comparación no se repitió con el corpus de la Ronda 5.
+
+\section{Latencia, memoria y CPU}
+
+El criterio del objetivo específico 3 ($\Delta$p95 $\leq$ 15~ms) se cumple en carga normal (12.08~ms) y de ataque (12.85~ms), con márgenes de 2.92 y 2.15~ms.
+% VERIFICAR: los márgenes de 2.92 y 2.15 ms (15 − 12.08 y 15 − 12.85) no figuran en el capítulo 8 ni en las limitaciones. La aritmética es correcta.
+No se cumple en volumen: el $\Delta$p95 es de 6\,495.46~ms y el 7.00\,\% de las peticiones termina por tiempo de espera. Esas peticiones no entran en el p95, por lo que la cifra subestima la cola.
+
+% VERIFICAR: el capítulo 8 dice que el criterio vigente del objetivo específico 3 es el $\Delta$p95 absoluto de 15 ms y que el incremento relativo es un indicador complementario (subsección~\ref{sec:config2}). No consta en el capítulo ni en Objetivos un criterio relativo del protocolo. Confirmar la fuente del criterio antes de mantener esta frase.
+El criterio relativo del protocolo no se cumple (+485.1\,\% y +278.1\,\% en carga normal y de ataque).
+% VERIFICAR: el umbral de 10 % no figura en el capítulo 8 ni en Objetivos. Los valores de 0.25 y 0.46 ms son derivados de ese 10 % sobre las líneas base de 2.49 y 4.62 ms; no aparecen en el capítulo 8.
+Con líneas base de 2.49 y 4.62~ms, el 10\,\% equivale a 0.25 y 0.46~ms. Se reporta como indicador complementario. Los datos son de una sola corrida en un ejecutor de 2 vCPU, con cinco repeticiones por condición (subsección~\ref{sec:config2}).
+
+La memoria aumenta 331.9, 332.0 y 375.9~MiB en ataque, normal y volumen, más del doble del límite de 150~MB (Cuadro~\ref{tabla:res-recursos}). El incremento es casi igual en normal y ataque, lo que sugiere un costo fijo asociado a la carga de los modelos. Esa interpretación no se verificó. La CPU aumenta 85.1 y 88.9 puntos porcentuales (+529.6\,\% y +614.4\,\%) en ataque y normal, frente a un límite de 15\,\%. El contenedor completo usa entre 394.8 y 459.1~MiB y no se probó en una instancia de 1~GB, para la que se fijó el límite (sección~\ref{sec:memoria-cpu}).
+
+\section{Comparación con trabajos previos}
+
+IntelliWAF \parencite{shinde2026intelliwaf} combina un Random Forest y un Isolation Forest con reglas y limitación de tasa, y opera como proxy inverso externo a la aplicación. Reporta una exactitud de 91.5\,\% del Random Forest sobre CSIC 2010 (61\,065 muestras) y no reporta latencia de detección. Este trabajo difiere en la arquitectura, embebida en el proceso de la aplicación, y en el papel del Isolation Forest, que no participa en el bloqueo. Las diferencias de conjunto de datos y de métrica impiden comparar cifras de detección.
+
+\section{Cumplimiento de los objetivos}
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabular}{|p{2.2cm}|p{4.2cm}|p{4.8cm}|p{2.8cm}|}
+\hline
+\textbf{Objetivo} & \textbf{Criterio} & \textbf{Resultado} & \textbf{Estado} \\ \hline
+OE1 & Extractor $\leq$ 5~ms por petición & 0.0273~ms (ida y vuelta al \textit{worker}) & Cumple \\ \hline
+OE2 & F1 $\geq$ 0.80 en al menos 3 de 4 clases & 4 de 4 (mínimo 0.9239) & Cumple \\ \hline
+OE2 & \textit{Isolation Forest}: \textit{recall} $\geq$ 50\,\%, falsos positivos $\leq$ 10\,\% & 91.25\,\% y 5.46\,\% & Cumple \\ \hline
+OE3 & Cobertura $\geq$ 80\,\% por categoría & 99.5, 95.0 y 96.0\,\% en \texttt{sqli}, \texttt{path\_traversal} y \texttt{cmdi}; XSS: 97.3\,\% sobre el corpus de 590 & Cumple; XSS sin corpus limpio \\ \hline
+OE3 & $\Delta$p95 $\leq$ 15~ms & 12.08~ms (normal) y 12.85~ms (ataque) & Cumple; volumen no cumple \\ \hline
+Protocolo & Memoria adicional $\leq$ 150~MB & +332~MiB & No cumple \\ \hline
+Protocolo & $\Delta$CPU $\leq$ 15\,\% & +530\,\% a +614\,\% & No cumple \\ \hline
+\end{tabular}
+\caption{Cumplimiento de los criterios de aceptación por objetivo específico y criterio del protocolo.}
+\label{tabla:disc-cumplimiento}
+\par\smallskip\footnotesize Fuente: capítulo de Resultados (Cuadros~\ref{tabla:res-extractor}, \ref{tabla:res-rf}, \ref{tabla:res-if}, \ref{tabla:res-ronda5}, \ref{tabla:res-config3-corpus} y \ref{tabla:res-recursos}, y subsección~\ref{sec:config2}). Elaboración propia.
+\end{table}
