@@ -22,7 +22,7 @@ La posición de logSguarDian dentro de la cadena de middleware de Express no es 
 
 La arquitectura con la que históricamente se ha contrastado un RASP es el cortafuegos de aplicación web (WAF) de arquitectura perimetral, ejemplificado en este proyecto por ModSecurity operando con el OWASP Core Rule Set (CRS). Un WAF de este tipo se despliega como proxy inverso frente al servidor de aplicaciones e inspecciona cada petición mediante un conjunto de reglas de coincidencia de patrones y funciones de normalización, entre ellas la decodificación de URL, la remoción de espacios redundantes y la detección de sintaxis SQL mediante análisis léxico (\textit{libinjection}), antes de reenviarla o bloquearla \parencite{owaspcrs2024}. Su fortaleza es la cobertura inmediata de firmas de ataque conocidas sin requerir instrumentación de la aplicación protegida; su limitación estructural es que opera sin visibilidad del contexto interno de la aplicación --no conoce el modelo de datos, la lógica de negocio ni el resultado real de procesar la petición-- y que su eficacia depende de que el atacante no logre evadir las reglas de normalización y coincidencia mediante técnicas de ofuscación del payload.
 
-La Tabla \ref{cuadro:waf_vs_rasp} contrasta ambas arquitecturas en las dimensiones relevantes para la decisión de diseño de este proyecto y para la interpretación de la Configuración~3 de la evaluación, en la cual ambas arquitecturas operan en capas sobre el mismo tráfico.
+El Cuadro \ref{cuadro:waf_vs_rasp} contrasta ambas arquitecturas en las dimensiones relevantes para la decisión de diseño de este proyecto y para la interpretación de la Configuración~3 de la evaluación, en la cual ambas arquitecturas operan en capas sobre el mismo tráfico.
 
 \begin{table}[h]
 \small
