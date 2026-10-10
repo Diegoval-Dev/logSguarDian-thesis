@@ -292,6 +292,16 @@
 	\addcontentsline{toc}{chapter}{Lista de cuadros}
 \fi
 
+% LISTA DE ABREVIATURAS Y SIGLAS
+% ------------------------------------------------------------------------------
+\ifdefined\CAPabreviaturas
+	\newpage
+	\cleardoublepage\phantomsection
+	\chapter*{Lista de abreviaturas y siglas}
+	\input{abreviaturas}
+	\addcontentsline{toc}{chapter}{Lista de abreviaturas y siglas}
+\fi
+
 % RESUMEN
 % ------------------------------------------------------------------------------
 \ifdefined\CAPresumen
