@@ -63,7 +63,7 @@ Docker y Postgres, 2\,010 filas & Diseño híbrido (ventana de gracia y cola de 
 \end{adjustbox}
 \caption{Latencia p95 con y sin middleware y diferencia absoluta, por entorno medido.}
 \label{tabla:res-overhead}
-\par\smallskip\footnotesize $^{\dagger}$ Diferencia calculada como p95 con middleware menos p95 sin middleware; la fuente reporta ambos valores y no la diferencia.\\
+\par\smallskip\footnotesize $^{\dagger}$ Diferencia calculada como p95 con middleware menos p95 sin middleware; la fuente reporta ambos valores y no la diferencia. Las compilaciones con ventana de gracia corresponden a versiones anteriores del middleware; la versión vigente resuelve la respuesta sin esperar al Isolation Forest y actualiza el registro con su puntaje tardío (\texttt{packages/core/src/middleware.ts}, rama \texttt{develop}).\\
 Fuente: \texttt{docs/results.md}, secciones A19 y F6.5; \texttt{docs/config2-latency-evaluation.md}, secciones Final latency y Config 2 Final Status. Elaboración propia.
 \end{table}
 
