@@ -1,1 +1,119 @@
-% TODO: Anexos
+\section{Revalidación del umbral de decisión de Random Forest y aporte de Isolation Forest}\label{anexo:revalidacion-umbral}
+
+Este anexo verifica si el umbral de decisión de Random Forest se mantiene estable para la generación \texttt{rf\_v11}, y mide qué aporta Isolation Forest (\texttt{if\_v10}) a la detección cuando se combina con Random Forest. Todas las cifras provienen de la evaluación sobre el conjunto de validación, no sobre el conjunto de prueba.
+
+\subsection{Revalidación del umbral de Random Forest}
+
+El umbral \texttt{RF\_THRESHOLD = 0.35} se fijó sobre el conjunto de validación con \texttt{rf\_v3} y se mantuvo en las generaciones posteriores sin recalibración (\texttt{docs/decision-policy.md}, §2.2.1, del repositorio logSguarDian). Para \texttt{rf\_v11} se repitió el barrido sobre el conjunto de validación de 57\,481 filas, sin cambiar el valor desplegado. El autor definió el criterio de estabilidad antes de ejecutar el barrido; no consta registro en el repositorio. El criterio exige que la variación entre los umbrales 0.30 y 0.40 sea menor que 0.5 puntos porcentuales, tanto en la tasa de bloqueo benigno como en el recall global.
+
+Las variaciones observadas fueron de 0.0067 puntos porcentuales en la tasa de bloqueo benigno y de 0.056 puntos porcentuales en el recall global, por lo que el criterio se cumple. Esta lectura acota el resultado a estabilidad y no a optimalidad. Con un recall cercano a 99.9 \%, la validación discrimina poco entre los umbrales 0.20 y 0.40. El umbral no se recalibró, y la Configuración 2 y la Ronda 5 se mantienen con 0.35.
+
+El Cuadro \ref{tabla:anexo-barrido-rf} presenta el barrido completo.
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{|r|r|r|r|r|r|r|}
+\hline
+\textbf{Umbral} $T$ & \textbf{Benignos bloqueados (\%)} & \textbf{Recall global (\%)} & \textbf{\texttt{sqli}} & \textbf{\texttt{xss}} & \textbf{\texttt{path\_traversal}} & \textbf{\texttt{cmdi}} \\ \hline
+0.20 & 0.114 & 99.930 & 99.977 & 99.666 & 99.842 & 99.796 \\ \hline
+0.25 & 0.114 & 99.930 & 99.977 & 99.666 & 99.842 & 99.796 \\ \hline
+0.30 & 0.114 & 99.930 & 99.977 & 99.666 & 99.842 & 99.796 \\ \hline
+\textbf{0.35} & \textbf{0.107} & \textbf{99.908} & \textbf{99.962} & \textbf{99.644} & \textbf{99.723} & \textbf{99.796} \\ \hline
+0.40 & 0.107 & 99.873 & 99.938 & 99.577 & 99.644 & 99.659 \\ \hline
+0.45 & 0.107 & 99.775 & 99.877 & 99.443 & 99.446 & 98.978 \\ \hline
+0.50 & 0.107 & 99.634 & 99.780 & 99.354 & 99.051 & 98.093 \\ \hline
+0.55 & 0.067 & 99.364 & 99.598 & 99.043 & 98.378 & 96.594 \\ \hline
+0.60 & 0.067 & 99.117 & 99.417 & 98.798 & 97.785 & 95.436 \\ \hline
+0.65 & 0.054 & 98.742 & 99.117 & 98.397 & 97.191 & 93.733 \\ \hline
+0.70 & 0.047 & 98.296 & 98.695 & 98.063 & 96.598 & 92.643 \\ \hline
+0.75 & 0.027 & 97.610 & 98.053 & 97.506 & 95.728 & 90.872 \\ \hline
+0.80 & 0.020 & 96.774 & 97.218 & 96.794 & 95.055 & 89.373 \\ \hline
+0.85 & 0.020 & 95.976 & 96.537 & 95.569 & 94.146 & 87.330 \\ \hline
+0.90 & 0.013 & 94.858 & 95.576 & 94.166 & 92.642 & 84.128 \\ \hline
+\end{tabular}
+\end{adjustbox}
+\caption{Barrido del umbral de decisión de Random Forest (\texttt{rf\_v11}) sobre el conjunto de validación de 57\,481 filas. Las columnas por clase son recall en porcentaje.}
+\label{tabla:anexo-barrido-rf}
+\par\smallskip\footnotesize Fuente: \texttt{\_evidencia/revalidacion-umbral-if/analysis\_out.txt}, sección 1. Elaboración propia.
+\end{table}
+
+\subsection{Aporte de Isolation Forest}
+
+Con $T = 0.35$, Random Forest deja pasar 39 de los 42\,594 ataques del conjunto de validación. Isolation Forest marca 19 de esos 39 ataques: 5 de 13 de \texttt{sqli}, 10 de 16 de \texttt{xss}, 4 de 7 de \texttt{path\_traversal} y ninguno de los 3 de \texttt{cmdi} que Random Forest dejó pasar. El Cuadro \ref{tabla:anexo-aporte-if} resume estas cifras.
+
+Se evaluó una regla hipotética que bloquea una petición si cualquiera de los dos modelos la marca. Esa regla eleva el recall global de 99.908 \% a 99.953 \%. El costo es un aumento del bloqueo benigno de 0.107 \% a 5.925 \%, es decir, 866 benignos adicionales bloqueados. El umbral de Isolation Forest (0.004206) se eligió sobre este mismo conjunto de validación, por lo que estas cifras son optimistas. La regla no se desplegó.
+
+Estas cifras respaldan que Isolation Forest solo registre. Su aporte en detección es de 19 ataques frente a 42\,594, mientras que bloquear sus marcas agregaría 866 falsos positivos. Según el diseño del sistema, las marcas de Isolation Forest se registran con veredicto \texttt{pass\_anomaly} y no bloquean (\texttt{packages/core/src/middleware.ts}, líneas 243--244 y 333--337 del repositorio logSguarDian).
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{|l|r|r|}
+\hline
+\textbf{Concepto} & \textbf{Casos} & \textbf{Valor} \\ \hline
+Ataques no bloqueados por Random Forest ($T = 0.35$) & 39 de 42\,594 & --- \\ \hline
+Ataques de esos 39 marcados por Isolation Forest & 19 de 39 & --- \\ \hline
+\hspace{0.5em}\texttt{sqli} & 5 de 13 & --- \\ \hline
+\hspace{0.5em}\texttt{xss} & 10 de 16 & --- \\ \hline
+\hspace{0.5em}\texttt{path\_traversal} & 4 de 7 & --- \\ \hline
+\hspace{0.5em}\texttt{cmdi} & 0 de 3 & --- \\ \hline
+Recall global, solo Random Forest & 42\,555 de 42\,594 & 99.908 \% \\ \hline
+Recall global, regla ``RF o IF'' & 42\,574 de 42\,594 & 99.953 \% \\ \hline
+Benignos bloqueados por Random Forest & 16 de 14\,887 & 0.107 \% \\ \hline
+Benignos que Random Forest no bloquea y que Isolation Forest marca & 866 de 14\,871 & 5.82 \% \\ \hline
+Benignos marcados por Isolation Forest (tasa global) & 874 de 14\,887 & 5.87 \% \\ \hline
+Benignos bloqueados por la regla ``RF o IF'' & 882 de 14\,887 & 5.925 \% \\ \hline
+\end{tabular}
+\end{adjustbox}
+\caption{Aporte de Isolation Forest sobre el conjunto de validación con $T = 0.35$ y regla hipotética ``RF o IF''.}
+\label{tabla:anexo-aporte-if}
+\par\smallskip\footnotesize Fuente: \texttt{\_evidencia/revalidacion-umbral-if/analysis\_out.txt}, sección 2. El numerador 874 no figura en esa salida; proviene de \texttt{\_evidencia/revalidacion-umbral-if/ua\_check\_regenerado\_out.txt} (suma de 807 y 67 marcas), y la tasa de 5.871 \% coincide con \texttt{training/models/if\_v10\_metadata.json}. Elaboración propia.
+\end{table}
+
+\subsection{Dependencia de Isolation Forest respecto del User-Agent}
+
+De los 874 benignos que Isolation Forest marca en validación, 807 son filas sin User-Agent y 67 son filas con User-Agent. En las 14\,818 filas benignas sin User-Agent, la tasa de marca es de 5.45 \%. En cambio, entre las 69 filas benignas con User-Agent, Isolation Forest marca 67 (97.1 \%). Este grupo es pequeño, por lo que la tasa no permite una estimación precisa. Sin embargo, es compatible con una dependencia de Isolation Forest respecto de las características de User-Agent, que conviene vigilar (\texttt{\_evidencia/revalidacion-umbral-if/ua\_check\_regenerado\_out.txt}).
+
+\subsection{Limitaciones}
+
+Este análisis usa una sola partición de validación de 57\,481 filas. No se dispone de una segunda partición que permita medir la variación entre particiones.
+
+El umbral de Random Forest (0.35) se eligió sobre validación con \texttt{rf\_v3}. El umbral de Isolation Forest de \texttt{if\_v10} (0.004206) se eligió sobre validación como el máximo recall con tasa de falsos positivos menor o igual a 0.06 (\texttt{training/retrain\_v11\_contract69.py}, líneas 107--110). Para \texttt{rf\_v11}, el gate de validación exige al menos tres de las cuatro clases de ataque con F1 mayor o igual a 0.80 (línea 60). Sus hiperparámetros, como \texttt{n\_estimators=30} y \texttt{max\_depth=25} (línea 51), están fijados en el script, que no realiza búsqueda de hiperparámetros sobre validación.
+
+El umbral de Isolation Forest pasó de 0.00807 a 0.00421 entre las lecturas del conjunto de prueba. El umbral de 0.00807 corresponde al modelo previo al reentrenamiento, leído el 24 de septiembre de 2026. El de 0.00421 corresponde al modelo reentrenado, leído el 25 y el 26 de septiembre de 2026, y se calculó sobre validación. El historial no atribuye ese cambio al resultado de la primera lectura, pero no puede descartarse su influencia. Este hecho acota la afirmación de que el umbral se fijó solo sobre validación.
+
+Isolation Forest no se evaluó fuera de validación en este anexo. La regla R2 de la metodología impide una nueva lectura del conjunto de prueba, por lo que la regla ``RF o IF'' no se midió sobre dicho conjunto.
+
+Los scripts \texttt{analysis.py} y \texttt{part3.py} usan rutas absolutas de la máquina del autor, por lo que requieren ajustarlas para reproducirse.
+
+\subsection{Procedencia}
+
+Los modelos evaluados son \texttt{rf.onnx} e \texttt{if.onnx} del par C, descrito en la sección de pares de modelos (sección~\ref{sec:pares-modelos}). Sus sumas SHA-256 completas son las del Cuadro \ref{tabla:anexo-procedencia}. El commit del repositorio logSguarDian que produjo estos modelos es \texttt{03de50f}. El archivo \texttt{analysis\_out.txt} no registra el commit de ejecución; durante la verificación, el árbol de trabajo estaba limpio en el commit \texttt{41553a7}.
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{|l|p{0.62\linewidth}|}
+\hline
+\textbf{Archivo} & \textbf{SHA-256} \\ \hline
+\texttt{rf.onnx} (modelo, par C) & \seqsplit{25b407e649283606a231665a5a8c8ea1c2c7ad4fd0374a8945b3f119651b0870} \\ \hline
+\texttt{if.onnx} (modelo, par C) & \seqsplit{5be28ee8437643b2f13708eee1ac3175348a350ea6fb8f8daeb09bd5717f797e} \\ \hline
+\texttt{analysis\_out.txt} & \seqsplit{78dbf342acf01aacf112e76cd9fddfa95d3388de551a2c0eb1cd0901344835a4} \\ \hline
+\texttt{part3\_out.txt} & \seqsplit{a03cb07f2e3433e7dfae4ae35866abe9828c76bffb0aa6c4afe8f049d477322e} \\ \hline
+\texttt{ua\_check.txt} & \seqsplit{1027dacfbf97cc337994fbac7c989581a3fd7cd26269d1d0e5f4730081c940f7} \\ \hline
+\texttt{analysis.py} (genera \texttt{analysis\_out.txt}) & \seqsplit{7c00ad61b662f899ae5d5f2f0cc73ccc5871db149d33189a6e7f16b53ea4e7d2} \\ \hline
+\texttt{part3.py} (genera \texttt{part3\_out.txt}) & \seqsplit{78ace833702df2078090dad5d6d1c0bb3c83994e6cfd9e221c12b9ce5bd99d9f} \\ \hline
+\texttt{ua\_check\_regenerado.py} (regenera \texttt{ua\_check.txt}) & \seqsplit{56516f5f6b63d3c3886ef4a6350807c356d4c2fc49d8ea77a0207be4adcffe5f} \\ \hline
+\texttt{ua\_check\_regenerado\_out.txt} & \seqsplit{d61660015b8f763af7140987836b6b94559c025d76f2d4ff980766d5ba5fe6a6} \\ \hline
+\end{tabular}
+\end{adjustbox}
+\caption{Sumas SHA-256 de los modelos evaluados, de los archivos de evidencia y de los scripts que los generaron o regeneraron.}
+\label{tabla:anexo-procedencia}
+\par\smallskip\footnotesize Fuente: hashes de los modelos, de \texttt{training/models/} en el commit \texttt{03de50f} del repositorio logSguarDian; hashes de los archivos de evidencia y de los scripts, calculados con \texttt{shasum -a 256} sobre \texttt{\_evidencia/revalidacion-umbral-if/}. El script original que generó \texttt{ua\_check.txt} no se conserva; \texttt{ua\_check\_regenerado.py} es una regeneración que reproduce las cifras de validación de ese archivo, y su salida se guarda en \texttt{ua\_check\_regenerado\_out.txt}. La línea de \texttt{ua\_check.txt} sobre el \texttt{login} no se reproduce, porque depende de \texttt{login\_vec.json}. Elaboración propia.
+\end{table}

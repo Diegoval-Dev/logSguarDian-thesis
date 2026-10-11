@@ -1,0 +1,32 @@
+login IF score: -0.159194 (expected ~ -0.159), anomaly: True
+
+Top 10 substitutions that most RAISE the score (toward normal):
+     delta feature                             login  benign_median    new_score
+  0.059690 ua_length                        117.0000         0.0000    -0.099504
+  0.047282 method_is_post                     1.0000         0.0000    -0.111912
+  0.044014 ua_present                         1.0000         0.0000    -0.115180
+  0.030120 content_type_encoded               1.0000         0.0000    -0.129074
+  0.025688 body_entropy                       4.0408         0.0000    -0.133506
+  0.010706 method_is_get                      0.0000         1.0000    -0.148487
+  0.006422 body_length                       33.0000         0.0000    -0.152772
+  0.002959 query_param_count                  0.0000         4.0000    -0.156235
+  0.001890 payload_entropy                    4.0408         4.7603    -0.157304
+  0.001417 uppercase_ratio                    0.0000         0.0632    -0.157777
+
+Largest decreases (for context):
+ -0.000953 payload_length                    33.0000       146.0000    -0.160147
+ -0.001220 query_string_length                0.0000       132.0000    -0.160414
+ -0.003468 uri_length                         6.0000       135.0000    -0.162662
+
+all 63 replaced by benign medians: score 0.059585, anomaly: False
+
+== 3c. benign validation rows ==
+benign rows: 14887, IF flag rate: 5.871%
+method_is_post x content_type_encoded (benign):
+  post=0 ct_form=0: n= 14883 ( 99.97%) flag_rate=  5.846%
+  post=1 ct_form=1: n=     4 (  0.03%) flag_rate=100.000%
+POST with form content-type (benign): 4 = 0.027% of benign
+  of which body_length>0: 4 = 0.027% of benign; flag rate 100.000%
+all benign POST (any ct): 4
+content_type_encoded values in val: [0. 1.]
+method_is_post values in val: [0. 1.]

@@ -1,0 +1,44 @@
+rf sha256: 25b407e649283606a231665a5a8c8ea1c2c7ad4fd0374a8945b3f119651b0870
+if sha256: 5be28ee8437643b2f13708eee1ac3175348a350ea6fb8f8daeb09bd5717f797e
+parity_report threshold_if: 0.004205941820353609
+rows: 57481
+feature columns: 76
+RF features: 69 IF features: 63
+rf input: float_input [None, 69] output[1]: probabilities
+if input: float_input [None, 63] output[1]: scores
+
+== 1. RF threshold sweep ==
+    T  benign_block%  recall_global%          sqli%           xss% path_traversal%          cmdi%
+ 0.20          0.114          99.930         99.977         99.666         99.842         99.796
+ 0.25          0.114          99.930         99.977         99.666         99.842         99.796
+ 0.30          0.114          99.930         99.977         99.666         99.842         99.796
+ 0.35          0.107          99.908         99.962         99.644         99.723         99.796
+ 0.40          0.107          99.873         99.938         99.577         99.644         99.659
+ 0.45          0.107          99.775         99.877         99.443         99.446         98.978
+ 0.50          0.107          99.634         99.780         99.354         99.051         98.093
+ 0.55          0.067          99.364         99.598         99.043         98.378         96.594
+ 0.60          0.067          99.117         99.417         98.798         97.785         95.436
+ 0.65          0.054          98.742         99.117         98.397         97.191         93.733
+ 0.70          0.047          98.296         98.695         98.063         96.598         92.643
+ 0.75          0.027          97.610         98.053         97.506         95.728         90.872
+ 0.80          0.020          96.774         97.218         96.794         95.055         89.373
+ 0.85          0.020          95.976         96.537         95.569         94.146         87.330
+ 0.90          0.013          94.858         95.576         94.166         92.642         84.128
+
+Stability T=0.30 vs 0.40: |d benign_block|=0.0067 pp, |d recall_global|=0.0563 pp
+Criterion (<0.5 pp both): True
+
+== 2. IF contribution at T=0.35 ==
+RF-passed attacks: 39 of 42594
+IF flags among RF-passed attacks, total: 19
+  sqli: RF-passed=13 IF-flagged=5
+  xss: RF-passed=16 IF-flagged=10
+  path_traversal: RF-passed=7 IF-flagged=4
+  cmdi: RF-passed=3 IF-flagged=0
+(b) benign passed by RF: 14871; IF-flagged (cost): 866
+  as % of all benign: 5.817%
+(c) RF only vs RF OR IF:
+  attack recall: RF=99.908%  OR=99.953%
+  benign block: RF=0.107%  OR=5.925%
+  extra benign blocked by IF: 866
+  IF-only extra attacks caught: 19

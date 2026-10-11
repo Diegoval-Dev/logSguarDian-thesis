@@ -1,0 +1,4 @@
+benign ua_present= 0 n= 14818 pct=99.54 flag=5.446% flagged=807
+benign ua_present= 1 n=    69 pct=0.46 flag=97.101% flagged=67
+benign flagged total: 874 of 14887
+benign ua_length median 0.0 p90 0.0 p99 0.0

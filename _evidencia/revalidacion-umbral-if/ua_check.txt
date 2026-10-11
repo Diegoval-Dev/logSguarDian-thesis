@@ -1,0 +1,4 @@
+benign ua_present= 0 n= 14818 pct=99.54 flag=5.446%
+benign ua_present= 1 n= 69 pct=0.46 flag=97.101%
+benign ua_length median 0.0 p90 0.0 p99 0.0
+login ua_length 117 -> benign rows with ua_length>=117: 4 flag=100.000%
