@@ -462,3 +462,241 @@ Sin causas, con las cifras de los cuadros~\ref{tabla:loso-control} y~\ref{tabla:
 \par\smallskip\footnotesize Fuente: hashes de \texttt{\_evidencia/loso-rf-v11/} (\texttt{sha256\_inputs.txt}, \texttt{sha256\_outputs\_v5.txt}) y de los archivos de la ejecución. Código de referencia: commit \texttt{dc380e3} de logSguarDian (\texttt{origin/develop}); la corrida repetida reproduce los valores de la corrida anterior en el commit \texttt{35b7a28}, según \texttt{tables\_v5.md}. Elaboración propia.
 \end{table}
 
+\section{Reconstrucción de la query en el middleware}\label{anexo:query}
+
+Este anexo documenta un cambio en la forma en que el middleware de logSguarDian reconstruye la cadena de consulta antes de extraer las características. Es una verificación posterior a las evaluaciones de la tesis: no modifica los modelos, las métricas ni el corpus.
+
+\subsection{Historia del cambio}
+
+Hasta los commits \texttt{c3d591a} y \texttt{22550ea}, el middleware reconstruía la cadena de consulta con \texttt{URLSearchParams} sobre \texttt{req.query} (\texttt{packages/core/src/}\allowbreak\texttt{middleware.ts}, líneas 537--539 en \texttt{c3d591a} y 571--573 en \texttt{22550ea}). Express ya había decodificado una vez la consulta, de modo que esta reconstrucción volvía a codificar los signos \texttt{\%} que quedaban en los valores. El commit \texttt{25c7e64} (10 de octubre de 2026), titulado ``fix: stop double-encoding the query string before feature extraction'', toma en su lugar el fragmento de \texttt{req.originalUrl ?? req.url} posterior al primer \texttt{?} (\texttt{dc380e3:middleware.ts:581-594}). La derivación anterior solo se conserva cuando no existe ninguno de los dos campos.
+
+\subsection{Versiones medidas}
+
+El Cuadro \ref{tabla:anexo-query-versiones} enumera las versiones del middleware que se midieron. Todas las que contienen código del middleware usan \texttt{URLSearchParams}; ninguna contiene el fragmento introducido por \texttt{25c7e64}. El archivo \texttt{middleware\_log.txt} no contiene ninguna línea sobre \texttt{dist/middleware.js} de \texttt{f15a9e8}; la línea de \texttt{URLSearchParams} de ese tarball proviene de la extracción del tarball, cuyo SHA-256 coincide con el del commit.
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{|l|p{0.40\linewidth}|p{0.36\linewidth}|}
+\hline
+\textbf{Versión medida} & \textbf{Identificador y SHA-256} & \textbf{Reconstrucción de la query} \\ \hline
+Paquete publicado 0.1.0 (\texttt{c3d591a}) & Código fuente; sin tarball en el conjunto de evidencia & \texttt{URLSearchParams} (\texttt{middleware.ts}, línea 539) \\ \hline
+\texttt{core\_worktree\_0.1.0.tgz} & \seqsplit{c8b975b2577fa8e532ba418fcd5c50dc68155ed25d4a8d23f5dbcc91027ad96e} & \texttt{URLSearchParams} \\ \hline
+Commit \texttt{f15a9e8} de logSguarDian-vulnerable-project (\texttt{vendor/logsguardian-0.1.0.tgz}; ejecución de latencia en Linux) & \seqsplit{c8b975b2577fa8e532ba418fcd5c50dc68155ed25d4a8d23f5dbcc91027ad96e} & \texttt{URLSearchParams} en \texttt{dist/middleware.js} \\ \hline
+Commit \texttt{4d928b5} del mismo repositorio (\texttt{vendor/logsguardian-0.1.0.tgz}; validación) & \seqsplit{cf1238deb33383975e12058de71c4423b22d7c5bcba5cf47241c0d0f712b0416} & \texttt{URLSearchParams} en \texttt{dist/middleware.js} \\ \hline
+\texttt{core\_worktree\_0.1.0.tgz} (mismo archivo que el de \texttt{f15a9e8}) & \seqsplit{c8b975b2577fa8e532ba418fcd5c50dc68155ed25d4a8d23f5dbcc91027ad96e} & \texttt{URLSearchParams} \\ \hline
+\texttt{worktree\_vendor.tgz} (mismo archivo que el de \texttt{4d928b5}; Ronda 5) & \seqsplit{cf1238deb33383975e12058de71c4423b22d7c5bcba5cf47241c0d0f712b0416} & \texttt{URLSearchParams} \\ \hline
+\texttt{latency\_linux.tgz} (resultados de la ejecución de latencia en Linux) & \seqsplit{b96d901408547331fb4859a5dac4810abdb1caaeb2f15f3378877c2290187cec} & Contiene resultados de medición, no código del middleware \\ \hline
+\end{tabular}
+\end{adjustbox}
+\caption{Versiones del middleware medidas y forma de reconstrucción de la query en cada una.}
+\label{tabla:anexo-query-versiones}
+\par\smallskip\footnotesize Fuente: hashes calculados con \texttt{shasum -a 256} sobre los tarballes de \texttt{\_evidencia/query-v5/} (\texttt{SHA256SUMS.txt}); los commits \texttt{f15a9e8} y \texttt{4d928b5} se verificaron con \texttt{git -C} en logSguarDian-vulnerable-project, donde \texttt{vendor/logsguardian-0.1.0.tgz} tiene los mismos SHA-256; código de \texttt{c3d591a} verificado con \texttt{git show} en logSguarDian. Elaboración propia.
+\end{table}
+
+\subsection{Réplica de la Ronda 5}
+
+Se reprodujeron las 600 peticiones de la Ronda 5 (200 por clase: \texttt{sqli}, \texttt{path\_traversal} y \texttt{cmdi}) con el extractor de \texttt{dc380e3}, el modelo \texttt{rf.onnx} del par C (SHA-256 \seqsplit{25b407e649283606a231665a5a8c8ea1c2c7ad4fd0374a8945b3f119651b0870}), el umbral de decisión $T = 0.35$ y la codificación de \texttt{run\_large\_corpus.py}. Cada petición se evaluó con dos derivaciones de la query: la anterior a \texttt{25c7e64} y la de \texttt{dc380e3}. El Cuadro \ref{tabla:anexo-query-replica} resume la comparación.
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{|l|r|r|r|r|r|}
+\hline
+\textbf{Comparación} & \textbf{Filas con diferencias} & \textbf{Filas con diferencias en las 69 de RF} & \textbf{Cambios de clase} & \textbf{Cambios de decisión} & \textbf{Bloqueadas} \\ \hline
+Anterior frente a \texttt{dc380e3} & 0 & 0 & 0 & 0 & 574 de 600 en ambas versiones \\ \hline
+\end{tabular}
+\end{adjustbox}
+\caption{Réplica de la Ronda 5 (600 peticiones): diferencias en las características del vector de Random Forest, cambios de clase y de decisión con $T = 0.35$.}
+\label{tabla:anexo-query-replica}
+\par\smallskip\footnotesize Fuente: \texttt{round5\_wire\_report.json} y \texttt{round5\_wire\_stdout.txt} (salida de \texttt{requery\_dc380e3\_eval.py}). Elaboración propia.
+\end{table}
+
+Con las 600 peticiones de la réplica, la derivación de \texttt{dc380e3} no cambia ninguna característica de Random Forest, ninguna clase predicha ni ninguna decisión de bloqueo. Las cadenas de la réplica se generan con la codificación de \texttt{run\_large\_corpus.py}, que escapa \texttt{!'()*}, usa \texttt{+} para los espacios y no produce los casos del Cuadro \ref{tabla:anexo-query-casos}.
+
+El Cuadro \ref{tabla:anexo-query-casos} muestra los casos en que las dos derivaciones difieren. Son cadenas con codificaciones no canónicas.
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{|l|l|l|l|c|}
+\hline
+\textbf{Caso} & \textbf{Cadena cruda} & \textbf{Anterior} & \textbf{\texttt{dc380e3}} & \textbf{Iguales} \\ \hline
+\texttt{\%20} & \texttt{q=a\%20b} & \texttt{q=a+b} & \texttt{q=a\%20b} & No \\ \hline
+\texttt{\%21\%27\%28\%29\%2A} & \texttt{q=\%21\%27\%28\%29\%2A} & \texttt{q=\%21\%27\%28\%29*} & \texttt{q=\%21\%27\%28\%29\%2A} & No \\ \hline
+\texttt{\%zz} & \texttt{q=\%zz\%41} & \texttt{q=\%25zz\%2541} & \texttt{q=\%zz\%41} & No \\ \hline
+\texttt{\%7E} & \texttt{q=a\%7Eb} & \texttt{q=a\%7Eb} & \texttt{q=a\%7Eb} & Sí \\ \hline
+\texttt{\%252e} (doble codificación) & \texttt{q=\%252e\%252e\%252f} & \texttt{q=\%252e\%252e\%252f} & \texttt{q=\%252e\%252e\%252f} & Sí \\ \hline
+\end{tabular}
+\end{adjustbox}
+\caption{Cadenas de consulta en las que las derivaciones anterior y de \texttt{dc380e3} difieren, y casos de control en los que coinciden.}
+\label{tabla:anexo-query-casos}
+\par\smallskip\footnotesize Fuente: \texttt{cases\_old\_vs\_new.jsonl}. Elaboración propia.
+\end{table}
+
+\subsection{Limitaciones}
+
+La corrida real con el tarball bloqueó 581 de 600 peticiones (199, 190 y 192 por clase; columna de \texttt{rf\_v11}/\texttt{if\_v10} del Cuadro~\ref{tabla:res-ronda5}), por lo que la réplica no es exacta. Los scripts leen sus entradas desde rutas de \texttt{/tmp/lsg-audit/}, por lo que no son portables sin ajustes.
+
+Una comparación previa de la query almacenada contra la del middleware se descartó porque su referencia no coincidía con la que llega por la red (GET sin codificar y POST con una query construida). El desajuste entre la cadena de entrenamiento y la del middleware no se midió.
+
+Todas las evaluaciones de este documento son anteriores al commit \texttt{25c7e64}, por lo que las métricas reportadas corresponden a la derivación anterior.
+
+\subsection{Procedencia}
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{|l|p{0.62\linewidth}|}
+\hline
+\textbf{Archivo} & \textbf{SHA-256} \\ \hline
+\texttt{requery\_dc380e3.js} (script de re-derivación) & \seqsplit{2dddcdb52ba96b0bc53c109de23bd451b675b84b480434da366bbf6048071bad} \\ \hline
+\texttt{requery\_dc380e3\_eval.py} (script de evaluación) & \seqsplit{b4dc88eabb69f08fa15a50023f84a52728f78c866241d9a2721f4cef40315066} \\ \hline
+\texttt{round5\_wire\_vectors.jsonl} (entrada) & \seqsplit{bfade2f053043003162cdd710edd99d85bdf2039a3b12b4dcaa3fea506338214} \\ \hline
+\texttt{round5\_wire\_report.json} (salida) & \seqsplit{ad2ee8e8543727c954a103de7372337a53d0063a7d24fa98455907d0e6871701} \\ \hline
+\texttt{round5\_wire\_stdout.txt} (salida) & \seqsplit{d8fe3c811fed1ff22d4c8847267821065a08e6b0a5a74f8eecd302092d6f1641} \\ \hline
+\texttt{cases\_old\_vs\_new.jsonl} (salida) & \seqsplit{4421dcc7ff2f468ae39e58fd9ccbcf11271de58f5852f2e35d045233bcb046ee} \\ \hline
+\texttt{middleware\_log.txt} (\texttt{git show} de \texttt{25c7e64}) & \seqsplit{13a3d59d580f644c4aadb6963f85730687fed32ecec36c7ef7ac33625f8cc481} \\ \hline
+\texttt{rf.onnx} (modelo, par C) & \seqsplit{25b407e649283606a231665a5a8c8ea1c2c7ad4fd0374a8945b3f119651b0870} \\ \hline
+\end{tabular}
+\end{adjustbox}
+\caption{Sumas SHA-256 de los scripts, las entradas y las salidas de la réplica de la Ronda 5.}
+\label{tabla:anexo-query-procedencia}
+\par\smallskip\footnotesize Fuente: \texttt{shasum -a 256} sobre \texttt{\_evidencia/query-v5/}; verificadas contra \texttt{SHA256SUMS.txt}. Elaboración propia.
+\end{table}
+
+\section{Métricas de rf\_v10 e if\_v9}\label{anexo:v10}
+
+Este anexo presenta las métricas de la generación v10 (Random Forest \texttt{rf\_v10} e Isolation Forest \texttt{if\_v9}), tomadas de \texttt{v10\_test\_results\_dc2aaa6.json} y del mensaje del commit \texttt{dc2aaa6} (2 de agosto de 2026). El Cuadro \ref{tabla:anexo-v10-rf} resume las métricas por clase de Random Forest sobre la partición de prueba.
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{|l|r|r|r|r|}
+\hline
+\textbf{Clase} & \textbf{Precisión} & \textbf{Recall} & \textbf{F1} & \textbf{Soporte} \\ \hline
+\texttt{benign} & 0.99805 & 0.99865 & 0.99835 & 14\,866 \\ \hline
+\texttt{cmdi} & 0.92456 & 0.94127 & 0.93284 & 1\,328 \\ \hline
+\texttt{path\_traversal} & 0.98101 & 0.98140 & 0.98121 & 2\,527 \\ \hline
+\texttt{sqli} & 0.99560 & 0.99633 & 0.99597 & 34\,103 \\ \hline
+\texttt{xss} & 0.99164 & 0.97859 & 0.98507 & 4\,484 \\ \hline
+\textbf{Macro promedio} & 0.97817 & 0.97925 & 0.97869 & 57\,308 \\ \hline
+\textbf{Exactitud} & & & 0.99361 & 57\,308 \\ \hline
+\end{tabular}
+\end{adjustbox}
+\caption{Métricas de \texttt{rf\_v10} sobre la partición de prueba (57\,308 filas).}
+\label{tabla:anexo-v10-rf}
+\par\smallskip\footnotesize Fuente: \texttt{v10\_test\_results\_dc2aaa6.json}, sección \texttt{rf\_v10\_test}. Elaboración propia.
+\end{table}
+
+El Cuadro \ref{tabla:anexo-v10-if} presenta el recall por clase de Isolation Forest, junto con las cifras de validación que registra el mensaje del commit \texttt{dc2aaa6}. El umbral de decisión de \texttt{if\_v9} es $0.002486040118540811$ (\texttt{docs/decision-policy.md}, línea 440, del repositorio logSguarDian).
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{|l|r|r|}
+\hline
+\textbf{Clase} & \textbf{Recall (prueba)} & \textbf{Recall (validación)} \\ \hline
+\texttt{sqli} & 0.89948 & No registrado \\ \hline
+\texttt{xss} & 0.97993 & No registrado \\ \hline
+\texttt{path\_traversal} & 0.99763 & No registrado \\ \hline
+\texttt{cmdi} & 0.95482 & 0.9503 \\ \hline
+\textbf{Global} & 0.91556 & 0.9154 \\ \hline
+\end{tabular}
+\end{adjustbox}
+\caption{Recall de \texttt{if\_v9} por clase y global, sobre prueba y sobre validación.}
+\label{tabla:anexo-v10-if}
+\par\smallskip\footnotesize Fuente: \texttt{v10\_test\_results\_dc2aaa6.json} (prueba) y mensaje del commit \texttt{dc2aaa6} (validación). Elaboración propia.
+\end{table}
+
+En prueba, \texttt{if\_v9} alcanza una precisión global de 0.98064 y una tasa de falsos positivos de 0.05159. En validación, el mismo commit registra una tasa de falsos positivos de 0.0574. Las cifras de validación de \texttt{rf\_v10} registradas en el commit son un F1 de 0.9389 para \texttt{cmdi}.
+
+El objetivo específico 2 exige, al cierre del ciclo de entrenamiento del 2 de agosto de 2026 y sobre un conjunto de prueba bloqueado, un F1-score mínimo de 0.80 en al menos tres de las cuatro categorías de ataque y una tasa de detección de anomalías mínima del 50\,\% con una tasa de falsos positivos máxima del 10\,\%. Con las métricas de \texttt{rf\_v10} e \texttt{if\_v9} sobre la partición de prueba de 57\,308 filas, los criterios del objetivo se cumplen: el F1 de las cuatro categorías de ataque es de 0.93284 (\texttt{cmdi}, el mínimo), 0.98121 (\texttt{path\_traversal}), 0.99597 (\texttt{sqli}) y 0.98507 (\texttt{xss}); el recall de Isolation Forest es de 0.91556 y su tasa de falsos positivos de 0.05159. Las cifras no son comparables con las de \texttt{rf\_v11}, por tratarse de otra partición.
+
+Las métricas de v10 y las de v11 no son comparables, por tres razones:
+
+\begin{itemize}
+\item La partición de prueba de v10 tiene 57\,308 filas y su lock es \seqsplit{6c5f253d99f23309ae34f5c4badcf4635dee06bf3fadc592c6cfb5a2319cfad8} (commit \texttt{b43de9c}). La de v11 tiene 57\,481 filas y lock \seqsplit{7486c258692a3cc66fa0ef74087255b904a9ea4d41c8646bb7c0784b15aa4fd9}. El Cuadro \ref{tabla:anexo-locks-soporte} detalla la diferencia de soporte por clase.
+\item El JSON de v10 no registra el lock ni el hash de la partición con que se evaluó.
+\item La lectura única por generación que atribuye \texttt{docs/model-comparison.md} (líneas 100--102) no consta en los registros revisados. El registro de \texttt{rf\_v11} documenta tres lecturas de \texttt{test.parquet} (24, 25 y 26 de septiembre de 2026) en \texttt{docs/decision-policy.md} (línea 51) y en la nota \texttt{eval\_note} de \texttt{packages/core/data/class\_metrics.json}.
+\end{itemize}
+
+\section{Procedencia de las particiones de prueba}\label{anexo:locks}
+
+El conjunto de prueba se fija mediante un lock: el hash SHA-256 de un archivo que registra un identificador por fila. Cada lock se escribe en \texttt{training/splits/test.lock.sha256}, y la evaluación final lo recalcula antes de inferir. El Cuadro \ref{tabla:anexo-locks-cadena} resume la cadena de locks del repositorio, tomada de \texttt{git log --all -- training/splits/test.lock.sha256}.
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{|l|l|l|l|l|}
+\hline
+\textbf{Commit} & \textbf{Fecha} & \textbf{Lock antes} & \textbf{Lock después} & \textbf{Propósito} \\ \hline
+\texttt{cc00c3c} & 11 jun 2026 & (no existía) & \texttt{3beeaba4\ldots} & Creación del pipeline \\ \hline
+\texttt{df62619} & 23 jul 2026 & \texttt{3beeaba4\ldots} & \texttt{d1a2a284\ldots} & Antes de \texttt{v3} \\ \hline
+\texttt{6867f28} & 24 jul 2026 & \texttt{d1a2a284\ldots} & \texttt{7df5adb8\ldots} & Antes de \texttt{v4} \\ \hline
+\texttt{59990ca} & 24 jul 2026 & \texttt{7df5adb8\ldots} & \texttt{ee4b85db\ldots} & Antes de \texttt{v6} \\ \hline
+\texttt{5dc7c06} & 25 jul 2026 & \texttt{ee4b85db\ldots} & \texttt{251716bb\ldots} & Antes de \texttt{v8} \\ \hline
+\texttt{fa46bdd} & 26 jul 2026 & \texttt{251716bb\ldots} & \texttt{4a5e0b97\ldots} & Antes de \texttt{v9} \\ \hline
+\texttt{b43de9c} & 2 ago 2026 & \texttt{4a5e0b97\ldots} & \texttt{6c5f253d\ldots} & Antes de \texttt{v10} \\ \hline
+\texttt{8cbe6c9} & 30 ago 2026 & \texttt{6c5f253d\ldots} & \texttt{a3140ab3\ldots} & Antes de \texttt{v11} \\ \hline
+\texttt{6d1fa68}, \texttt{72aabd6}, \texttt{f15e7cc} & 23 sep 2026 & \texttt{a3140ab3\ldots} & \texttt{7486c258\ldots} & Re-fijación de \texttt{rf\_v11} restaurado \\ \hline
+\end{tabular}
+\end{adjustbox}
+\caption{Cadena de locks del conjunto de prueba. Los tres commits del 23 de septiembre aplican el mismo cambio de lock.}
+\label{tabla:anexo-locks-cadena}
+\par\smallskip\footnotesize Fuente: \texttt{lock\_history.md} (\texttt{git log} sobre \texttt{training/splits/test.lock.sha256} en el repositorio logSguarDian). El mensaje del commit \texttt{6d1fa68} es ``chore(training): re-lock test set to match the restored rf\_v11 generation''. Elaboración propia.
+\end{table}
+
+El lock de cada generación se escribe con el método de \texttt{training/split.py} (líneas 150--155): el SHA-256 de la concatenación, separada por saltos de línea, de los identificadores \texttt{\_row\_hash} ordenados. \texttt{evaluate\_test.py} (líneas 165--173) recalcula el mismo valor. Según la auditoría, este método reproduce \seqsplit{7486c258692a3cc66fa0ef74087255b904a9ea4d41c8646bb7c0784b15aa4fd9} sobre \texttt{test.parquet} con 57\,481 filas. El archivo \texttt{test.parquet} no está versionado en el repositorio, por lo que esa reproducción no se repitió en este anexo. El hash del archivo de bytes (\seqsplit{3e93b7763732cbd5e23738fba5514d64b826d37635ccdf7f6ee941bce3cfe608}) no es comparable con el lock.
+
+El Cuadro \ref{tabla:anexo-locks-soporte} muestra la diferencia de soporte entre la partición de v10 y la de v11.
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{|l|r|r|}
+\hline
+\textbf{Clase} & \textbf{Soporte en v10} & \textbf{Diferencia en v11} \\ \hline
+\texttt{benign} & 14\,866 & $+20$ \\ \hline
+\texttt{cmdi} & 1\,328 & $+140$ \\ \hline
+\texttt{path\_traversal} & 2\,527 & $+2$ \\ \hline
+\texttt{sqli} & 34\,103 & $+4$ \\ \hline
+\texttt{xss} & 4\,484 & $+7$ \\ \hline
+\textbf{Total} & 57\,308 & $+173$ \\ \hline
+\end{tabular}
+\end{adjustbox}
+\caption{Soporte por clase de la partición de prueba de v10 y diferencia observada en la de v11.}
+\label{tabla:anexo-locks-soporte}
+\par\smallskip\footnotesize Fuente: \texttt{v10\_test\_results\_dc2aaa6.json} (soporte de v10) y diferencias reportadas por la auditoría de particiones. Elaboración propia.
+\end{table}
+
+No consta el motivo del cambio de partición del 23 de septiembre de 2026, ni la fuente de los datos restaurados para la generación \texttt{rf\_v11}.
+
+\subsection{Procedencia}
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{|l|p{0.62\linewidth}|}
+\hline
+\textbf{Archivo} & \textbf{SHA-256} \\ \hline
+\texttt{lock\_history.md} & \seqsplit{b0ce4ce3a4fc73f6eae0d35974bad9b089fdbe747b339713718773fdd22a90fd} \\ \hline
+\texttt{lock\_commits.txt} & \seqsplit{ba79ba8ea0048c5d7353f69043d7a0b86efa4620288c2e704acfae30f17f2be4} \\ \hline
+\texttt{v10\_test\_results\_dc2aaa6.json} & \seqsplit{257f05f7d58b85f597485c4f65e4fcb12745cc5d58c5cf6219427b211457acb3} \\ \hline
+\end{tabular}
+\end{adjustbox}
+\caption{Sumas SHA-256 de los archivos de procedencia de las particiones de prueba.}
+\label{tabla:anexo-locks-procedencia}
+\par\smallskip\footnotesize Fuente: \texttt{shasum -a 256} sobre \texttt{\_evidencia/query-v5/}; verificadas contra \texttt{SHA256SUMS.txt}. Elaboración propia.
+\end{table}

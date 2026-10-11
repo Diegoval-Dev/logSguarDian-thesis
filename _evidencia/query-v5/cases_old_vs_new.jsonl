@@ -1,0 +1,6 @@
+{"raw":"q=a%20b","new_wire":"q=a%20b","old":"q=a+b","same":false}
+{"raw":"q=a%7Eb","new_wire":"q=a%7Eb","old":"q=a%7Eb","same":true}
+{"raw":"q=%21%27%28%29%2A","new_wire":"q=%21%27%28%29%2A","old":"q=%21%27%28%29*","same":false}
+{"raw":"q=%zz%41","new_wire":"q=%zz%41","old":"q=%25zz%2541","same":false}
+{"raw":"q=%252e%252e%252f","new_wire":"q=%252e%252e%252f","old":"q=%252e%252e%252f","same":true}
+{"raw":"q=test%22%29+AND","new_wire":"q=test%22%29+AND","old":"q=test%22%29+AND","same":true}

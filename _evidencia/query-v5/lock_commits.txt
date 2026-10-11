@@ -1,0 +1,9 @@
+@@ cc00c3c | 2026-06-11 20:49:38 -0600 | Diegoval-Dev | feat(training): fix pipeline and lock test set for training
+@@ df62619 | 2026-07-23 15:14:14 -0600 | Diegoval-Dev | lock: new test set locked before retraining v3
+@@ 6867f28 | 2026-07-24 16:14:55 -0600 | Diegoval-Dev | lock: test set locked before retraining v4
+@@ 59990ca | 2026-07-24 22:10:40 -0600 | Diegoval-Dev | lock: test set locked before retraining v6
+@@ 5dc7c06 | 2026-07-25 14:27:48 -0600 | Diegoval-Dev | lock: test set locked before retraining v8
+@@ fa46bdd | 2026-07-26 11:45:50 -0600 | Diegoval-Dev | lock: test set locked before retraining v9
+@@ b43de9c | 2026-08-02 16:49:36 -0600 | Diegoval-Dev | lock: test set locked before retraining v10
+@@ 8cbe6c9 | 2026-08-30 14:01:33 -0600 | Diegoval-Dev | lock: test set locked before retraining v11
+@@ 72aabd6 | 2026-09-23 19:19:00 -0600 | Sebastian Huertas Gomez | test(training): quantify SecLists leakage across all attack classes and the E2E fixture
