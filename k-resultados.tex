@@ -529,7 +529,7 @@ La fuente de los datos restaurados el 23 de septiembre de 2026 no está document
 
 Las pruebas en aplicaciones de terceros muestran una tasa alta de bloqueo de tráfico benigno, y la contribución del User-Agent al modelo, descrita en la sección SHAP. Este trabajo no evaluó el modelo con un corpus benigno alternativo. El conjunto de tráfico benigno no cubre la diversidad de clientes HTTP que cabría esperar en un entorno real.
 
-La contribución de Isolation Forest a la detección no se midió. Por diseño, este componente no bloquea peticiones; su salida solo enriquece los registros.
+La contribución de Isolation Forest a la detección se midió solo sobre el conjunto de validación (anexo, sección~\ref{anexo:revalidacion-umbral}). Marca 19 de los 39 ataques que Random Forest no bloquea, y bloquear sus marcas agregaría 866 falsos positivos. No se evaluó sobre el conjunto de prueba. Por diseño, este componente no bloquea peticiones; su salida solo enriquece los registros.
 
 Los datos crudos de latencia de Config 2 no constan en el repositorio: los reportes de Artillery de los experimentos en Docker no están versionados, porque \texttt{attack-sim/results/} está excluido en \texttt{.gitignore}. Las cifras de Config 2 se documentan en \texttt{docs/config2-latency-evaluation.md} del repositorio \texttt{logSguarDian-vulnerable-project}. Los reportes del experimento de latencia en Linux nativo se conservan en el artefacto de GitHub Actions \texttt{latency-benchmark-results} (id 10917957439, ejecución 36276690236), copiado a \texttt{docs/evidence/latency-linux-2026-09-26.tgz} del repositorio \texttt{logSguarDian-vulnerable-project} (rama \texttt{main}).
 
