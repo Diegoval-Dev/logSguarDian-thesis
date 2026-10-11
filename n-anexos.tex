@@ -83,7 +83,7 @@ De los 874 benignos que Isolation Forest marca en validación, 807 son filas sin
 
 Este análisis usa una sola partición de validación de 57\,481 filas. No se dispone de una segunda partición que permita medir la variación entre particiones.
 
-El umbral de Random Forest (0.35) se eligió sobre validación con \texttt{rf\_v3}. El umbral de Isolation Forest de \texttt{if\_v10} (0.004206) se eligió sobre validación como el máximo recall con tasa de falsos positivos menor o igual a 0.06 (\texttt{training/retrain\_v11\_contract69.py}, líneas 107--110). Para \texttt{rf\_v11}, el gate de validación exige al menos tres de las cuatro clases de ataque con F1 mayor o igual a 0.80 (línea 60). Sus hiperparámetros, como \texttt{n\_estimators=30} y \texttt{max\_depth=25} (línea 51), están fijados en el script, que no realiza búsqueda de hiperparámetros sobre validación.
+El umbral de Random Forest (0.35) se eligió sobre validación con \texttt{rf\_v3}. El umbral de Isolation Forest de \texttt{if\_v10} (0.004206) se eligió sobre validación como el máximo recall entre los umbrales con recall mayor o igual a 0.50 y tasa de falsos positivos menor o igual a 0.06 (\texttt{training/retrain\_v11\_contract69.py}, líneas 107--110). Para \texttt{rf\_v11}, el gate de validación exige al menos tres de las cuatro clases de ataque con F1 mayor o igual a 0.80 (línea 60). Sus hiperparámetros, como \texttt{n\_estimators=30} y \texttt{max\_depth=25} (línea 51), están fijados en el script, que no realiza búsqueda de hiperparámetros sobre validación.
 
 El umbral de Isolation Forest pasó de 0.00807 a 0.00421 entre las lecturas del conjunto de prueba. El umbral de 0.00807 corresponde al modelo previo al reentrenamiento, leído el 24 de septiembre de 2026. El de 0.00421 corresponde al modelo reentrenado, leído el 25 y el 26 de septiembre de 2026, y se calculó sobre validación. El historial no atribuye ese cambio al resultado de la primera lectura, pero no puede descartarse su influencia. Este hecho acota la afirmación de que el umbral se fijó solo sobre validación.
 
@@ -116,4 +116,210 @@ Los modelos evaluados son \texttt{rf.onnx} e \texttt{if.onnx} del par C, descrit
 \caption{Sumas SHA-256 de los modelos evaluados, de los archivos de evidencia y de los scripts que los generaron o regeneraron.}
 \label{tabla:anexo-procedencia}
 \par\smallskip\footnotesize Fuente: hashes de los modelos, de \texttt{training/models/} en el commit \texttt{03de50f} del repositorio logSguarDian; hashes de los archivos de evidencia y de los scripts, calculados con \texttt{shasum -a 256} sobre \texttt{\_evidencia/revalidacion-umbral-if/}. El script original que generó \texttt{ua\_check.txt} no se conserva; \texttt{ua\_check\_regenerado.py} es una regeneración que reproduce las cifras de validación de ese archivo, y su salida se guarda en \texttt{ua\_check\_regenerado\_out.txt}. La línea de \texttt{ua\_check.txt} sobre el \texttt{login} no se reproduce, porque depende de \texttt{login\_vec.json}. Elaboración propia.
+\end{table}
+
+\section{Casi-duplicados entre particiones}\label{anexo:casi-duplicados}
+
+Este anexo cuantifica la similitud textual de cada fila de validación, de prueba y de la Ronda 5 con el conjunto de entrenamiento, y la de cada fila de entrenamiento con el resto de ese conjunto. Es una auditoría posterior a la evaluación: no modifica el corpus, los modelos ni las métricas reportadas.
+
+\subsection{Parámetros}\label{anexo:casi-parametros}
+
+La similitud se mide sobre el texto de cada petición. Cada campo (\texttt{path}, \texttt{query} y \texttt{body}) se normaliza con decodificación \texttt{unquote\_plus}, conversión a minúsculas y colapso de espacios, y los tres campos se unen con el separador \texttt{ | }. El texto normalizado se descompone en shingles de tres caracteres, y la similitud entre dos peticiones es el índice de Jaccard exacto de sus conjuntos de shingles.
+
+Para encontrar candidatos se usa MinHash con \texttt{num\_perm=128} y LSH con bandas de \texttt{params=(8,16)}. Cada candidato se verifica con el Jaccard exacto, de modo que todo par informado con $J \geq$ umbral es un par real; los pares que el LSH omite se tratan en las limitaciones.
+
+Se usan los umbrales 0.8 y 0.9. Para cada fila, \textit{cualquiera} es el máximo de $J$ frente a todas las filas de entrenamiento, y \textit{misma clase} es el máximo frente a las filas con la misma etiqueta. En la Ronda 5, el texto de una petición \texttt{GET} es su \texttt{query} y el de una \texttt{POST} es su \texttt{body}, en la forma \texttt{param=payload}. Quedan fuera las filas sin texto bruto (82 de entrenamiento, 18 de validación y 19 de prueba), y el $n$ de cada cuadro lo refleja.
+
+\subsection{Resultados}\label{anexo:casi-resultados}
+
+Cada celda indica el número de filas con $J \geq$ umbral y su porcentaje sobre $n$. Los cuadros~\ref{tabla:anexo-casi-val}, \ref{tabla:anexo-casi-test} y \ref{tabla:anexo-casi-train} cubren las tres particiones con todas sus clases; el cuadro~\ref{tabla:anexo-casi-ronda5} cubre la Ronda 5.
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{|l|r|c|c|c|c|}
+\hline
+\textbf{Clase} & \textbf{n} & \textbf{Cualquiera $\geq$ 0.8} & \textbf{Cualquiera $\geq$ 0.9} & \textbf{Misma clase $\geq$ 0.8} & \textbf{Misma clase $\geq$ 0.9} \\ \hline
+\texttt{benign} & 14\,887 & 4\,491 (30.17\,\%) & 3\,241 (21.77\,\%) & 4\,490 (30.16\,\%) & 3\,241 (21.77\,\%) \\ \hline
+\texttt{sqli} & 34\,103 & 25\,356 (74.35\,\%) & 18\,840 (55.24\,\%) & 25\,308 (74.21\,\%) & 18\,804 (55.14\,\%) \\ \hline
+\texttt{xss} & 4\,484 & 2\,076 (46.30\,\%) & 1\,115 (24.87\,\%) & 2\,054 (45.81\,\%) & 1\,112 (24.80\,\%) \\ \hline
+\texttt{path\_traversal} & 2\,526 & 1\,751 (69.32\,\%) & 1\,287 (50.95\,\%) & 1\,704 (67.46\,\%) & 1\,253 (49.60\,\%) \\ \hline
+\texttt{cmdi} & 1\,463 & 580 (39.64\,\%) & 323 (22.08\,\%) & 542 (37.05\,\%) & 302 (20.64\,\%) \\ \hline
+\textbf{Total} & 57\,463 & 34\,254 (59.61\,\%) & 24\,806 (43.17\,\%) & 34\,098 (59.34\,\%) & 24\,712 (43.01\,\%) \\ \hline
+\end{tabular}
+\end{adjustbox}
+\caption{Casi-duplicados de la partición de validación frente al entrenamiento (57\,463 filas con texto).}
+\label{tabla:anexo-casi-val}
+\par\smallskip\footnotesize Fuente: \texttt{neardup\_v2\_results.json}, sección \texttt{val}; \texttt{tables.md}. Elaboración propia.
+\end{table}
+
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{|l|r|c|c|c|c|}
+\hline
+\textbf{Clase} & \textbf{n} & \textbf{Cualquiera $\geq$ 0.8} & \textbf{Cualquiera $\geq$ 0.9} & \textbf{Misma clase $\geq$ 0.8} & \textbf{Misma clase $\geq$ 0.9} \\ \hline
+\texttt{benign} & 14\,886 & 4\,404 (29.58\,\%) & 3\,176 (21.34\,\%) & 4\,403 (29.58\,\%) & 3\,175 (21.33\,\%) \\ \hline
+\texttt{sqli} & 34\,103 & 25\,569 (74.98\,\%) & 18\,841 (55.25\,\%) & 25\,511 (74.81\,\%) & 18\,809 (55.15\,\%) \\ \hline
+\texttt{xss} & 4\,484 & 2\,061 (45.96\,\%) & 1\,090 (24.31\,\%) & 2\,038 (45.45\,\%) & 1\,087 (24.24\,\%) \\ \hline
+\texttt{path\_traversal} & 2\,526 & 1\,788 (70.78\,\%) & 1\,314 (52.02\,\%) & 1\,749 (69.24\,\%) & 1\,290 (51.07\,\%) \\ \hline
+\texttt{cmdi} & 1\,463 & 557 (38.07\,\%) & 326 (22.28\,\%) & 523 (35.75\,\%) & 299 (20.44\,\%) \\ \hline
+\textbf{Total} & 57\,462 & 34\,379 (59.83\,\%) & 24\,747 (43.07\,\%) & 34\,224 (59.56\,\%) & 24\,660 (42.92\,\%) \\ \hline
+\end{tabular}
+\end{adjustbox}
+\caption{Casi-duplicados de la partición de prueba frente al entrenamiento (57\,462 filas con texto). Solo se comparó el texto; el conjunto de prueba no se puntuó.}
+\label{tabla:anexo-casi-test}
+\par\smallskip\footnotesize Fuente: \texttt{neardup\_v2\_results.json}, sección \texttt{test}; \texttt{tables.md}. Elaboración propia.
+\end{table}
+
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{|l|r|c|c|c|c|}
+\hline
+\textbf{Clase} & \textbf{n} & \textbf{Cualquiera $\geq$ 0.8} & \textbf{Cualquiera $\geq$ 0.9} & \textbf{Misma clase $\geq$ 0.8} & \textbf{Misma clase $\geq$ 0.9} \\ \hline
+\texttt{benign} & 69\,472 & 20\,765 (29.89\,\%) & 14\,824 (21.34\,\%) & 20\,763 (29.89\,\%) & 14\,822 (21.34\,\%) \\ \hline
+\texttt{sqli} & 159\,138 & 118\,649 (74.56\,\%) & 88\,043 (55.32\,\%) & 118\,375 (74.39\,\%) & 87\,878 (55.22\,\%) \\ \hline
+\texttt{xss} & 20\,929 & 9\,534 (45.55\,\%) & 5\,217 (24.93\,\%) & 9\,475 (45.27\,\%) & 5\,201 (24.85\,\%) \\ \hline
+\texttt{path\_traversal} & 11\,787 & 8\,257 (70.05\,\%) & 6\,035 (51.20\,\%) & 8\,044 (68.24\,\%) & 5\,930 (50.31\,\%) \\ \hline
+\texttt{cmdi} & 6\,832 & 2\,697 (39.48\,\%) & 1\,508 (22.07\,\%) & 2\,508 (36.71\,\%) & 1\,393 (20.39\,\%) \\ \hline
+\textbf{Total} & 268\,158 & 159\,902 (59.63\,\%) & 115\,627 (43.12\,\%) & 159\,165 (59.35\,\%) & 115\,224 (42.97\,\%) \\ \hline
+\end{tabular}
+\end{adjustbox}
+\caption{Casi-duplicados del entrenamiento frente a sí mismo, excluida la propia fila (268\,158 filas con texto).}
+\label{tabla:anexo-casi-train}
+\par\smallskip\footnotesize Fuente: \texttt{neardup\_v2\_results.json}, sección \texttt{train\_self}; \texttt{tables.md}. Elaboración propia.
+\end{table}
+
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{|l|r|c|c|c|c|}
+\hline
+\textbf{Clase} & \textbf{n} & \textbf{Cualquiera $\geq$ 0.8} & \textbf{Cualquiera $\geq$ 0.9} & \textbf{Misma clase $\geq$ 0.8} & \textbf{Misma clase $\geq$ 0.9} \\ \hline
+\texttt{sqli} & 200 & 0 (0.00\,\%) & 0 (0.00\,\%) & 0 (0.00\,\%) & 0 (0.00\,\%) \\ \hline
+\texttt{path\_traversal} & 200 & 0 (0.00\,\%) & 0 (0.00\,\%) & 0 (0.00\,\%) & 0 (0.00\,\%) \\ \hline
+\texttt{cmdi} & 200 & 21 (10.50\,\%) & 7 (3.50\,\%) & 21 (10.50\,\%) & 7 (3.50\,\%) \\ \hline
+\textbf{Total} & 600 & 21 (3.50\,\%) & 7 (1.17\,\%) & 21 (3.50\,\%) & 7 (1.17\,\%) \\ \hline
+\end{tabular}
+\end{adjustbox}
+\caption{Casi-duplicados de la Ronda 5 (200 peticiones por clase) frente al entrenamiento.}
+\label{tabla:anexo-casi-ronda5}
+\par\smallskip\footnotesize Fuente: \texttt{neardup\_v2\_results.json}, sección \texttt{round5}; \texttt{tables.md}. Elaboración propia.
+\end{table}
+
+Con umbral 0.8, el 59.61\,\% de las filas de validación, el 59.83\,\% de las de prueba y el 59.63\,\% de las de entrenamiento tienen al menos un vecino de cualquier clase con $J \geq 0.8$. Con la misma clase, esas cifras son 59.34\,\%, 59.56\,\% y 59.35\,\%. En la Ronda 5, 21 de las 200 peticiones de \texttt{cmdi} tienen un casi-duplicado en entrenamiento con $J \geq 0.8$; ninguna de \texttt{sqli} ni de \texttt{path\_traversal} lo tiene.
+
+\subsection{Desempeño en validación según haya o no vecino en entrenamiento}\label{anexo:casi-validacion-vecino}
+
+El cuadro separa las filas de validación según tengan o no un vecino en entrenamiento con $J \geq 0.8$. Reporta la tasa de bloqueo de benignos (falsos positivos) y el recall por clase, con su intervalo de Wilson al 95\,\%. No se reporta F1.
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{|l|l|r|c|c|}
+\hline
+\textbf{Grupo} & \textbf{Clase} & \textbf{Bloqueados/n} & \textbf{Tasa} & \textbf{IC 95\,\% (Wilson)} \\ \hline
+Con vecino & Benignos (tasa de bloqueo, FP) & 1/4\,491 & 0.0002 & [0.0000, 0.0013] \\ \hline
+Con vecino & \texttt{cmdi} (recall) & 578/580 & 0.9966 & [0.9875, 0.9991] \\ \hline
+Con vecino & \texttt{path\_traversal} (recall) & 1\,750/1\,751 & 0.9994 & [0.9968, 0.9999] \\ \hline
+Con vecino & \texttt{sqli} (recall) & 25\,354/25\,356 & 0.9999 & [0.9997, 1.0000] \\ \hline
+Con vecino & \texttt{xss} (recall) & 2\,074/2\,076 & 0.9990 & [0.9965, 0.9997] \\ \hline
+Sin vecino & Benignos (tasa de bloqueo, FP) & 15/10\,396 & 0.0014 & [0.0009, 0.0024] \\ \hline
+Sin vecino & \texttt{cmdi} (recall) & 882/883 & 0.9989 & [0.9936, 0.9998] \\ \hline
+Sin vecino & \texttt{path\_traversal} (recall) & 770/775 & 0.9935 & [0.9850, 0.9972] \\ \hline
+Sin vecino & \texttt{sqli} (recall) & 8\,736/8\,747 & 0.9987 & [0.9977, 0.9993] \\ \hline
+Sin vecino & \texttt{xss} (recall) & 2\,394/2\,408 & 0.9942 & [0.9903, 0.9965] \\ \hline
+\end{tabular}
+\end{adjustbox}
+\caption{Bloqueos y recall en validación, separados por la existencia de un vecino en entrenamiento con $J \geq 0.8$. Modelo par C (\texttt{rf.onnx} e \texttt{if.onnx}; sin F1).}
+\label{tabla:anexo-casi-vecino}
+\par\smallskip\footnotesize Fuente: \texttt{block\_gap\_counts.json} y \texttt{block\_gap\_counts.md} en \texttt{\_evidencia/casi-duplicados-v3/}. Elaboración propia.
+\end{table}
+
+Lectura acotada. Las diferencias de recall entre ambos grupos son de 0.6 puntos porcentuales o menos en todas las clases; la mayor es de 0.59 en \texttt{path\_traversal}. De los 16 falsos positivos de validación, 15 están en filas sin vecino. Con tan pocos casos, la tasa de ese grupo no se estima con precisión. El grupo ``sin vecino'' contiene además filas que sí tienen un vecino real que el LSH no encontró, cerca del 11\,\% de los pares con $J \geq 0.8$ según la medición de recall de este anexo. Por eso la brecha real entre grupos puede ser mayor que la observada. Estos datos no establecen una relación causal.
+
+\subsection{Cobertura de \texttt{cmdi} en la Ronda 5 sin los payloads con vecino}\label{anexo:casi-cobertura-cmdi}
+
+La cobertura de \texttt{cmdi} en la Ronda 5 se recalcula sin los payloads que tienen un vecino en entrenamiento. El denominador es de 200 payloads, y los timeouts, errores y respuestas HTTP 5xx cuentan como no bloqueados. El par A usa \texttt{results\_config2.json} del commit \texttt{a3aada0}, y el par C usa \texttt{results\_config2-develop-tarball-20261009.json}, añadido en el commit \texttt{4d928b5}.
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{|l|l|r|c|c|}
+\hline
+\textbf{Par} & \textbf{Subconjunto} & \textbf{Bloqueados/n} & \textbf{Cobertura} & \textbf{IC 95\,\% (Wilson)} \\ \hline
+C & Todos los payloads & 192/200 & 0.9600 & [0.923, 0.980] \\ \hline
+C & Sin $J \geq 0.8$ (excluye 21) & 171/179 & 0.9553 & [0.914, 0.977] \\ \hline
+C & Sin $J \geq 0.9$ (excluye 7) & 185/193 & 0.9585 & [0.920, 0.979] \\ \hline
+A & Todos los payloads & 183/200 & 0.9150 & [0.868, 0.946] \\ \hline
+A & Sin $J \geq 0.8$ (excluye 21) & 162/179 & 0.9050 & [0.853, 0.940] \\ \hline
+A & Sin $J \geq 0.9$ (excluye 7) & 176/193 & 0.9119 & [0.863, 0.944] \\ \hline
+\end{tabular}
+\end{adjustbox}
+\caption{Cobertura de \texttt{cmdi} en la Ronda 5, con y sin los payloads que tienen un vecino en entrenamiento.}
+\label{tabla:anexo-casi-cmdi-ronda5}
+\par\smallskip\footnotesize Fuente: \texttt{cmdi\_coverage\_v2.json} y \texttt{cmdi\_coverage\_v2.md} en \texttt{\_evidencia/casi-duplicados-v3/}, sobre los resultados de \texttt{results\_config2.json} (commit \texttt{a3aada0}) y \texttt{results\_config2-develop-tarball-20261009.json} (commit \texttt{4d928b5}). Elaboración propia.
+\end{table}
+
+Lectura acotada. Los 21 payloads de \texttt{cmdi} con vecino a $J \geq 0.8$ están todos bloqueados en ambos pares. Por eso, al excluirlos, la cobertura baja: de 96.0\,\% a 95.5\,\% en el par C, y de 91.5\,\% a 90.5\,\% en el par A. Los intervalos de los subconjuntos son amplios por su tamaño (179 y 193 payloads).
+
+\subsection{Limitaciones}\label{anexo:casi-limitaciones}
+
+Las cifras son cotas inferiores. El LSH puede omitir candidatos. Se midió su recall sobre una muestra aleatoria de 2\,000 filas de validación (semilla 42): de 1\,351 filas con un par exacto de $J \geq 0.8$, el LSH encontró 1\,206 (89.3\,\%); con $J \geq 0.9$, encontró 889 de 911 (97.6\,\%). Esa medición cubre solo validación; no se midió el recall sobre prueba ni sobre entrenamiento.
+
+Otras limitaciones:
+\begin{itemize}
+\item Se usa una sola normalización del texto y un solo tamaño de shingle (3 caracteres). Otra normalización cambiaría los valores de $J$.
+\item El muestreo de recall se hizo con un solo corte aleatorio.
+\item Solo se comparó el texto de prueba con el de entrenamiento. No se ejecutó inferencia del modelo sobre las filas casi duplicadas.
+\end{itemize}
+
+\subsection{Lectura}\label{anexo:casi-lectura}
+
+Las particiones comparten la estructura de casi-duplicados del conjunto de entrenamiento; las métricas de prueba miden desempeño en esa distribución. Este anexo describe la estructura y no establece su causa.
+
+\subsection{Procedencia}\label{anexo:casi-procedencia}
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{|l|p{0.62\linewidth}|}
+\hline
+\textbf{Archivo} & \textbf{SHA-256} \\ \hline
+\texttt{neardup\_v2.py} (script) & \seqsplit{d0879391e85e9a3d2972cab462d6207c8a62584dc40953ea30c9c2e8a17e52b7} \\ \hline
+\texttt{neardup\_v2\_results.json} & \seqsplit{f9d56b77de0e3d8788a8de3e9d179fbd7bb2324801c72e4f08ef3e40b355a8c0} \\ \hline
+\texttt{tables.md} & \seqsplit{d3620c8a155f7b9ea3aa6a75762c794509208b6475e4c177f049f4679190d8f5} \\ \hline
+\texttt{run.log} & \seqsplit{e544d48f603320008941781cdef2b55a5530e6d4fc4a5f84dfa69fadc826ccb8} \\ \hline
+\texttt{train.parquet} (entrada) & \seqsplit{979ad08b629b94e974fd80e1fa9ef8f4f146fc800151ca6cb8515898045b5592} \\ \hline
+\texttt{val.parquet} (entrada) & \seqsplit{42b6a546e672d9961e45cf75895520590267bfdeeaaa8c4df95ab6e032970ad1} \\ \hline
+\texttt{test.parquet} (entrada) & \seqsplit{3e93b7763732cbd5e23738fba5514d64b826d37635ccdf7f6ee941bce3cfe608} \\ \hline
+\texttt{unified.jsonl} (entrada) & \seqsplit{3e74be1b64daf292b44adbd1f5472858967a0079af0cdb8748771d733a0951b2} \\ \hline
+\texttt{large\_corpus\_requests.json} (entrada) & \seqsplit{32a171803259cfc4cde87cfb3cf4e740a4eef26d13b562d885ea8abdf7348b1a} \\ \hline
+\texttt{cmdi\_coverage\_v2.py} (\texttt{casi-duplicados-v3}) & \seqsplit{038476a29e4b640036b3c94b9f1be382f7ed8594d46d31ae028d9ba19f260c60} \\ \hline
+\texttt{block\_gap\_counts.py} (\texttt{casi-duplicados-v3}) & \seqsplit{bee2b350cad08a02af21de2be562106901069c654c5751cbf3185b5a23de9844} \\ \hline
+\texttt{cmdi\_coverage\_v2.json} (\texttt{casi-duplicados-v3}) & \seqsplit{27c18067f10a4263d3037520da1ee1f1bd817d11b25220e6d9509c6c30c8c9bc} \\ \hline
+\texttt{cmdi\_coverage\_v2.md} (\texttt{casi-duplicados-v3}) & \seqsplit{0c4709e9d175dbd2111bc462d7ba8be122aca45d4273fd5d5de0418737856db8} \\ \hline
+\texttt{block\_gap\_counts.json} (\texttt{casi-duplicados-v3}) & \seqsplit{64e1f288c0354247e1fb6844b16409bda3ada23cae2b7bb61e5b023c738142a8} \\ \hline
+\texttt{block\_gap\_counts.md} (\texttt{casi-duplicados-v3}) & \seqsplit{2f07a2393b45ada764a032fc54fe4655e6a3809921db6c5f2ede81cfb0e01017} \\ \hline
+\texttt{provenance.md} (\texttt{casi-duplicados-v3}) & \seqsplit{ab60e7da6227b5107a40bf950ddb4e0e77c28975120c7c6bfb7683090bad4c76} \\ \hline
+\end{tabular}
+\end{adjustbox}
+\caption{Sumas SHA-256 del script, de los resultados de la auditoría de casi-duplicados y de sus entradas.}
+\label{tabla:anexo-casi-procedencia}
+\par\smallskip\footnotesize Fuente: hashes del script, de \texttt{neardup\_v2\_results.json}, \texttt{tables.md} y \texttt{run.log} en \texttt{\_evidencia/casi-duplicados/}, y de las entradas según el registro de la ejecución del 11 de octubre de 2026 en \texttt{neardup\_v2\_results.json}. El hash de \texttt{large\_corpus\_requests.json} coincide con el archivo del commit \texttt{58033a0} del repositorio logSguarDian-vulnerable-project. La ejecución se hizo sobre el árbol de trabajo del repositorio logSguarDian en el commit \texttt{41553a7}, que estaba limpio. Ese commit es ancestro de \texttt{origin/develop} (verificado tras \texttt{git fetch origin}) y figura en la rama remota \texttt{origin/audit/config2-breakdown}. Los archivos \texttt{train}, \texttt{val}, \texttt{test} y \texttt{unified.jsonl} no están versionados en git en ese commit; se identifican por su SHA-256. Elaboración propia.
 \end{table}
