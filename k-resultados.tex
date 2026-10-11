@@ -517,6 +517,8 @@ Petición de \texttt{sqli} del conjunto de extremo a extremo & \texttt{sqli} (0.
 
 La regla R2 no se cumplió para la generación vigente. El conjunto de prueba se leyó tres veces para \texttt{rf\_v11}/\texttt{if\_v10}, el 24, el 25 y el 26 de septiembre de 2026, y las cifras de este capítulo corresponden a la lectura del 26 de septiembre. La sección de Recolección, procesamiento y validación de datos describe las tres lecturas.
 
+Las particiones de validación y prueba comparten con la de entrenamiento la estructura de casi-duplicados, y una auditoría con exclusión por fuente muestra que, para varias fuentes, la tasa de bloqueo de ataques o de falsos positivos cambia de forma marcada al excluirlas del entrenamiento (anexos, secciones \ref{anexo:casi-duplicados} y \ref{anexo:loso}).
+
 Los objetivos de calibración de Isolation Forest se endurecieron después de fallos observados en el conjunto de prueba. En \texttt{if\_v2}, la tasa de falsos positivos fue de 0.1011 frente a un límite de 0.10; en \texttt{if\_v5}, de 0.0811 frente a un objetivo interno de 0.08. El límite formal del objetivo específico 2 se mantiene en una tasa de falsos positivos de 10\,\%.
 
 El umbral de 0.35 de Random Forest se calibró sobre validación para \texttt{rf\_v3} y no se recalibró para \texttt{rf\_v11}. Como se indicó en la sección de resultados del objetivo específico 2, las métricas de prueba de Random Forest se calculan por argmax y no con este umbral.
