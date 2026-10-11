@@ -1,0 +1,21 @@
+# comando: python3 count_sources.py (lee solo la columna _source de training/splits/train.parquet y val.parquet)
+# fuente: copias locales no versionadas de logSguarDian training/splits/train.parquet y val.parquet (no existen en git)
+# columnas: _source<TAB>filas (train+val, value_counts descendente)
+capec	181486
+modsec_learn	84698
+payload_full	25262
+payloads_csv	15650
+xss_dataset	9226
+owasp_logs	3280
+seclists_cmdi	2087
+command_injection	1745
+synthetic_cmdi_minimal_context	709
+synthetic_cmdi_compound	425
+synthetic_nav	357
+synthetic_cmdi_windows	340
+synthetic_multifield	210
+synthetic_nav_ecommerce	113
+mlops_telemetry_curated	100
+synthetic_evasion	20
+patt_cmdi_curated	13
+TOTAL	325721

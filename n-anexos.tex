@@ -323,3 +323,142 @@ Las particiones comparten la estructura de casi-duplicados del conjunto de entre
 \label{tabla:anexo-casi-procedencia}
 \par\smallskip\footnotesize Fuente: hashes del script, de \texttt{neardup\_v2\_results.json}, \texttt{tables.md} y \texttt{run.log} en \texttt{\_evidencia/casi-duplicados/}, y de las entradas según el registro de la ejecución del 11 de octubre de 2026 en \texttt{neardup\_v2\_results.json}. El hash de \texttt{large\_corpus\_requests.json} coincide con el archivo del commit \texttt{58033a0} del repositorio logSguarDian-vulnerable-project. La ejecución se hizo sobre el árbol de trabajo del repositorio logSguarDian en el commit \texttt{41553a7}, que estaba limpio. Ese commit es ancestro de \texttt{origin/develop} (verificado tras \texttt{git fetch origin}) y figura en la rama remota \texttt{origin/audit/config2-breakdown}. Los archivos \texttt{train}, \texttt{val}, \texttt{test} y \texttt{unified.jsonl} no están versionados en git en ese commit; se identifican por su SHA-256. Elaboración propia.
 \end{table}
+
+\section{Generalización entre fuentes (exclusión por fuente con la configuración de rf\_v11)}\label{anexo:loso}
+
+Este anexo mide cuánto depende el desempeño del modelo de fuentes concretas del corpus. Para cada fuente $S$, se entrena un Random Forest con la configuración de \texttt{rf\_v11} sobre las filas de entrenamiento que no pertenecen a $S$, y se evalúa sobre las filas de $S$. El modelo de cada fold no es el \texttt{rf.onnx} evaluado en el capítulo de Resultados.
+
+\subsection{Protocolo}\label{anexo:loso-protocolo}
+
+El Random Forest usa los valores de \texttt{retrain\_v11\_contract69.py} (líneas 50--51 en \texttt{origin/develop}):
+
+\begin{itemize}
+\item \texttt{n\_estimators=30};
+\item \texttt{max\_depth=25};
+\item \texttt{class\_weight=balanced\_subsample};
+\item \texttt{random\_state=42}.
+\end{itemize} Las características son las 69 del contrato de producción, leídas de los archivos \texttt{parquet} ya extraídos (regla R1). El archivo \texttt{test.parquet} no se abrió (regla R2).
+
+Se auditan las fuentes con al menos 30 filas en train + val (\texttt{MIN\_ROWS = 30}, \texttt{loso\_rf\_v11.py}). De las 17 fuentes del corpus, 15 cumplen ese mínimo y son las que aparecen en los cuadros. Las dos restantes son \texttt{synthetic\_evasion} (20 filas en train + val) y \texttt{patt\_cmdi\_curated} (13 filas), según el recuento de \texttt{source\_counts.txt} (cuadro de procedencia). Ambas tienen menos de 30 filas, por lo que el script no las audita. El comentario de \texttt{training/label\_map.yaml} indica 21 payloads para \texttt{patt\_cmdi\_curated} y el recuento de train y val da 13; no consta el motivo.
+
+\subsection{Resultados por fuente}\label{anexo:loso-resultados}
+
+El cuadro~\ref{tabla:loso-fuentes} reporta, para las 15 fuentes, el bloqueo de sus ataques y la tasa de falsos positivos sobre sus benignos, con todas sus filas en train + val. Las fuentes con $n < 200$ se marcan y sus intervalos son amplios.
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{|l|r|c|r|c|r|c|}
+\hline
+\textbf{Fuente} & \textbf{n} & \textbf{n<200} & \textbf{Ataques} & \textbf{Bloqueo de ataques [IC 95\,\%]} & \textbf{Benignos} & \textbf{FP [IC 95\,\%]} \\ \hline
+\texttt{capec} & 181\,486 &  & 181\,486 & 0.960 [0.959, 0.961] & 0 & — \\ \hline
+\texttt{modsec\_learn} & 84\,698 &  & 25\,962 & 0.996 [0.996, 0.997] & 58\,736 & 0.753 [0.750, 0.757] \\ \hline
+\texttt{payload\_full} & 25\,262 &  & 9\,959 & 0.740 [0.731, 0.748] & 15\,303 & 0.003 [0.002, 0.003] \\ \hline
+\texttt{payloads\_csv} & 15\,650 &  & 10\,146 & 0.908 [0.902, 0.913] & 5\,504 & 0.266 [0.255, 0.278] \\ \hline
+\texttt{xss\_dataset} & 9\,226 &  & 6\,224 & 0.995 [0.993, 0.996] & 3\,002 & 0.949 [0.941, 0.957] \\ \hline
+\texttt{owasp\_logs} & 3\,280 &  & 3\,280 & 0.917 [0.907, 0.926] & 0 & — \\ \hline
+\texttt{seclists\_cmdi} & 2\,087 &  & 2\,087 & 0.288 [0.269, 0.308] & 0 & — \\ \hline
+\texttt{command\_injection} & 1\,745 &  & 401 & 0.509 [0.460, 0.557] & 1\,344 & 0.000 [0.000, 0.003] \\ \hline
+\texttt{synthetic\_cmdi\_minimal\_context} & 709 &  & 709 & 0.635 [0.599, 0.669] & 0 & — \\ \hline
+\texttt{synthetic\_cmdi\_compound} & 425 &  & 425 & 1.000 [0.991, 1.000] & 0 & — \\ \hline
+\texttt{synthetic\_nav} & 357 &  & 0 & — & 357 & 0.739 [0.692, 0.782] \\ \hline
+\texttt{synthetic\_cmdi\_windows} & 340 &  & 340 & 1.000 [0.989, 1.000] & 0 & — \\ \hline
+\texttt{synthetic\_multifield} & 210 &  & 210 & 0.905 [0.857, 0.938] & 0 & — \\ \hline
+\texttt{synthetic\_nav\_ecommerce} & 113 & sí & 0 & — & 113 & 0.788 [0.703, 0.853] \\ \hline
+\texttt{mlops\_telemetry\_curated} & 100 & sí & 100 & 0.970 [0.915, 0.990] & 0 & — \\ \hline
+\end{tabular}
+\end{adjustbox}
+\caption{Exclusión por fuente: bloqueo de ataques y falsos positivos benignos sobre todas las filas de cada fuente (train + val), con intervalo de Wilson al 95\,\%.}
+\label{tabla:loso-fuentes}
+\par\smallskip\footnotesize Fuente: \texttt{results.json} y \texttt{tables\_v5.md} (\texttt{\_evidencia/loso-rf-v11/}, corrida \texttt{run2}). Elaboración propia.
+\end{table}
+
+El cuadro~\ref{tabla:loso-control} compara, para las ocho fuentes grandes y sobre sus filas de validación, el modelo de la exclusión (c) con el \texttt{rf.onnx} (a) y con un control (b) que quita de entrenamiento un número aleatorio de filas igual al de la fuente, con cinco semillas.
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{|l|r|c|c|c|c|c|c|}
+\hline
+\textbf{Fuente} & \textbf{n val} & \textbf{(a) bloqueo} & \textbf{(a) FP} & \textbf{(b) bloqueo} & \textbf{(b) FP} & \textbf{(c) bloqueo} & \textbf{(c) FP} \\ \hline
+\texttt{capec} & 32\,028 & 1.000 [1.000, 1.000] & — & 1.000 [1.000, 1.000] & — & 0.960 [0.958, 0.962] & — \\ \hline
+\texttt{modsec\_learn} & 14\,947 & 0.998 [0.997, 0.999] & 0.001 [0.000, 0.001] & 0.998 [0.998, 0.998] & 0.001 [0.001, 0.001] & 0.997 [0.995, 0.998] & 0.760 [0.752, 0.768] \\ \hline
+\texttt{payload\_full} & 4\,459 & 0.998 [0.994, 0.999] & 0.000 [0.000, 0.002] & 0.997 [0.997, 0.998] & 0.000 [0.000, 0.000] & 0.737 [0.716, 0.757] & 0.001 [0.000, 0.003] \\ \hline
+\texttt{payloads\_csv} & 2\,761 & 0.998 [0.994, 0.999] & 0.004 [0.002, 0.011] & 0.997 [0.996, 0.998] & 0.005 [0.004, 0.006] & 0.906 [0.892, 0.919] & 0.270 [0.243, 0.299] \\ \hline
+\texttt{xss\_dataset} & 1\,628 & 0.990 [0.982, 0.994] & 0.002 [0.000, 0.011] & 0.991 [0.991, 0.993] & 0.000 [0.000, 0.000] & 0.993 [0.986, 0.996] & 0.945 [0.923, 0.962] \\ \hline
+\texttt{owasp\_logs} & 578 & 0.990 [0.978, 0.995] & — & 0.994 [0.993, 0.995] & — & 0.915 [0.890, 0.935] & — \\ \hline
+\texttt{seclists\_cmdi} & 368 & 1.000 [0.990, 1.000] & — & 1.000 [1.000, 1.000] & — & 0.299 [0.254, 0.348] & — \\ \hline
+\texttt{command\_injection} & 308 & 0.958 [0.883, 0.986] & 0.000 [0.000, 0.016] & 0.952 [0.944, 0.972] & 0.000 [0.000, 0.000] & 0.563 [0.448, 0.673] & 0.000 [0.000, 0.016] \\ \hline
+\end{tabular}
+\end{adjustbox}
+\caption{Validación de cada fuente grande: (a) \texttt{rf.onnx} par C; (b) control de mismo tamaño, media [mín, máx] de 5 semillas; (c) exclusión de la fuente. Los corchetes de (a) y (c) son intervalos de Wilson al 95\,\%.}
+\label{tabla:loso-control}
+\par\smallskip\footnotesize Fuente: \texttt{tables\_v5.md}, sección 2 (\texttt{\_evidencia/loso-rf-v11/}). El control se describe en \texttt{control\_wilson\_audit.py}. Elaboración propia.
+\end{table}
+
+\subsection{Composición de payload\_full}\label{anexo:loso-payload-full}
+
+El cuadro~\ref{tabla:loso-payload-full} muestra la clase que el modelo de exclusión de \texttt{payload\_full} asigna a sus filas \texttt{sqli}. El 74.2\,\% se asigna a \texttt{cmdi}, de las cuales el 99.4\,\% se bloquea. El 25.8\,\% se asigna a \texttt{benign}, y ninguna se bloquea. Este cuadro describe la distribución de predicciones y no atribuye causa a ella.
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{|l|r|c|c|}
+\hline
+\textbf{Clase predicha (argmax)} & \textbf{Filas} & \textbf{\% de sqli [IC]} & \textbf{Bloqueadas / predichas [IC]} \\ \hline
+\texttt{benign} & 2\,378 & 0.258 [0.249, 0.267] & 0.000 [0.000, 0.002] \\ \hline
+\texttt{cmdi} & 6\,846 & 0.742 [0.733, 0.751] & 0.994 [0.992, 0.996] \\ \hline
+\end{tabular}
+\end{adjustbox}
+\caption{\texttt{payload\_full}: filas \texttt{sqli} de train + val ($n = 9\,224$) según la clase que predice el modelo de exclusión.}
+\label{tabla:loso-payload-full}
+\par\smallskip\footnotesize Fuente: \texttt{tables\_v5.md}, sección 3. Elaboración propia.
+\end{table}
+
+\subsection{Lectura acotada}\label{anexo:loso-lectura}
+
+Sin causas, con las cifras de los cuadros~\ref{tabla:loso-control} y~\ref{tabla:loso-fuentes}. El bloqueo de ataques de (c) frente a (a), sobre las filas de cada fuente en validación, cae de forma distinta según la fuente. Caída grande, de más de 25 puntos porcentuales: \texttt{payload\_full} (0.998 a 0.737), \texttt{seclists\_cmdi} (1.000 a 0.299) y \texttt{command\_injection} (0.958 a 0.563). Caída moderada, de 7 a 10 puntos: \texttt{owasp\_logs} (0.990 a 0.915, 7.5 puntos) y \texttt{payloads\_csv} (0.998 a 0.906, 9.2 puntos). Caída leve, de 4 puntos: \texttt{capec} (1.000 a 0.960). Sin cambio: \texttt{modsec\_learn} (0.998 a 0.997) y \texttt{xss\_dataset} (0.990 a 0.993). Los falsos positivos benignos suben al excluir \texttt{modsec\_learn} (0.001 a 0.760), \texttt{payloads\_csv} (0.004 a 0.270) y \texttt{xss\_dataset} (0.002 a 0.945). El control de mismo tamaño (b) no reproduce estas caídas: su bloqueo queda entre 0.952 y 1.000 en las ocho fuentes.
+
+\subsection{Limitaciones}\label{anexo:loso-limitaciones}
+
+\begin{itemize}
+\item El modelo de cada fold no es el \texttt{rf.onnx} evaluado. Los valores de (c) describen modelos de exclusión, no el sistema desplegado.
+\item No se midieron casi-duplicados entre fuentes. Una fuente puede tener vecinos casi idénticos en otra, lo que afecta la lectura de (c).
+\item \texttt{capec} concentra la mayor parte de \texttt{sqli} y comparte \texttt{path\_traversal} con \texttt{owasp\_logs}. Excluirla retira una parte grande de la señal de esas clases, según la composición documentada en \texttt{docs/results.md} (sección F3.6).
+\item Hay fuentes con $n < 200$ (\texttt{mlops\_telemetry\_curated}, \texttt{synthetic\_nav\_ecommerce}), cuyos intervalos son amplios.
+\item Se usa una sola configuración de hiperparámetros. Las cinco semillas se aplican solo al control (b).
+\item Solo se evalúa Random Forest. No se reporta macro F1 ni se compara con \texttt{rf\_v7}.
+\end{itemize}
+
+\subsection{Procedencia}\label{anexo:loso-procedencia}
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{|l|p{0.62\linewidth}|}
+\hline
+\textbf{Archivo} & \textbf{SHA-256} \\ \hline
+\texttt{loso\_rf\_v11.py} & \seqsplit{e9e7484715471bf35c83aabcffd5e8cc7f74a123ed34117928ca9c2bd23c4db6} \\ \hline
+\texttt{control\_wilson\_audit.py} & \seqsplit{1dbbe7db7628a11c8cfd6de79ca4f7338df06d6994a68ab0006b2f886e9a9a80} \\ \hline
+\texttt{make\_tables\_v5.py} & \seqsplit{48ac94e93436394d936d89d374e4a916892035332509d8660789c25fe57c5c29} \\ \hline
+\texttt{results.json (salida, \texttt{run2})} & \seqsplit{192811fb4900a030da8ab602f75cb9bdcc14c782469a27a4fc145370fe6be8f4} \\ \hline
+\texttt{tables\_v5.md (salida)} & \seqsplit{574f4b2b73940f74ef705d7790fa6961b2a2735dce8ad5bd46441278cef1bd4e} \\ \hline
+\texttt{sha256\_outputs\_v5.txt} & \seqsplit{03bd017abcf9236253561e4ddd1c4e8842b440fa7b947e8aa96e41d7f56ebecb} \\ \hline
+\texttt{sha256\_inputs.txt} & \seqsplit{53dc7a69695c36885bf7846d4843162ab5a2707f75a3179bdc924f5b57e2a2be} \\ \hline
+\texttt{train.parquet (entrada)} & \seqsplit{979ad08b629b94e974fd80e1fa9ef8f4f146fc800151ca6cb8515898045b5592} \\ \hline
+\texttt{val.parquet (entrada)} & \seqsplit{42b6a546e672d9961e45cf75895520590267bfdeeaaa8c4df95ab6e032970ad1} \\ \hline
+\texttt{rf.onnx (entrada, par C)} & \seqsplit{25b407e649283606a231665a5a8c8ea1c2c7ad4fd0374a8945b3f119651b0870} \\ \hline
+\texttt{loso\_results.json (referencia rf\_v7)} & \seqsplit{27672b0c7e5f78fa0fee6a602fc6dd0e9a8a9f8d0a0dc90d8ae00c6acab63646} \\ \hline
+\texttt{source\_counts.txt} (recuento por fuente, \texttt{python3 count\_sources.py}) & \seqsplit{b4f419e2ff83e1df15fc73a642b6e7b9cf1c780624cb9f9f7aed593fd9843289} \\ \hline
+\texttt{count\_sources.py} (script del recuento) & \seqsplit{83789ced7c97921aef09452278e4f80098e7477bd7d67ece227c5000ac8ea29b} \\ \hline
+\end{tabular}
+\end{adjustbox}
+\caption{Sumas SHA-256 de los scripts, de las salidas y de las entradas de la auditoría por exclusión de fuente.}
+\label{tabla:loso-procedencia}
+\par\smallskip\footnotesize Fuente: hashes de \texttt{\_evidencia/loso-rf-v11/} (\texttt{sha256\_inputs.txt}, \texttt{sha256\_outputs\_v5.txt}) y de los archivos de la ejecución. Código de referencia: commit \texttt{dc380e3} de logSguarDian (\texttt{origin/develop}); la corrida repetida reproduce los valores de la corrida anterior en el commit \texttt{35b7a28}, según \texttt{tables\_v5.md}. Elaboración propia.
+\end{table}
+
