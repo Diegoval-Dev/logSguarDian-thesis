@@ -541,5 +541,9 @@ La confusión entre \texttt{cmdi} y \texttt{sqli} en técnicas de tiempo ciego e
 
 Los 100 payloads por categoría de la cobertura de Config 2 tampoco son disjuntos del entrenamiento, y la cobertura no se recalculó sin esas coincidencias; véase la subsección~\ref{sec:config2}.
 
+El conjunto de prueba se vectoriza a partir de las cadenas almacenadas, mientras que el middleware reconstruye la query con \texttt{URLSearchParams} antes de extraer las características, lo que modifica algunas de ellas para la misma petición (por ejemplo, \texttt{quote\_count} pasa de 1 a 0 con el payload \texttt{\textquotesingle{} OR 1=1-{}-}). Las métricas de prueba de este capítulo no incluyen ese efecto, que no se midió.
+
+% FUENTE: packages/core/src/middleware.ts:571-573 y packages/extractor/src/cli.ts:81 (rama develop de logSguarDian); el ejemplo de quote_count proviene de una ejecución del extractor de develop con la query construida por el middleware (q=%27+OR+1%3D1--, quote_count 0) y con la query cruda (quote_count 1)
+
 % NOTA: frase fechada; si se publica 0.1.1, actualizar
 A la fecha de redacción de este capítulo (10 de octubre de 2026), el paquete publicado en npm (\texttt{logsguardian@0.1.0}, par A) contiene \texttt{rf\_v10}/\texttt{if\_v9}. Esos modelos son los que se evaluaron de extremo a extremo en las Configuraciones 1 a 3b. En esa fecha, las métricas de modelo de este capítulo corresponden a \texttt{rf\_v11}/\texttt{if\_v10}, disponibles en el repositorio y no publicados.

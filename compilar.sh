@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-readonly MAIN="z-main"
+readonly MAIN_DOCUMENT="z-main"
+readonly STANDALONE_DOCUMENT="resultados-standalone"
+readonly STANDALONE_OUTPUT="resultados.pdf"
+readonly STANDALONE_ARG="standalone"
 readonly TEX_BIN_DIR="/Library/TeX/texbin"
 readonly BIBER_SYSTEM="${TEX_BIN_DIR}/biber"
 readonly BIBER_ARM64="${HOME}/.local/bin/biber-arm64"
@@ -12,6 +15,25 @@ cd "$(dirname "$0")"
 die() {
     echo "ERROR: $*" >&2
     exit 1
+}
+
+select_document() {
+    MAIN="$MAIN_DOCUMENT"
+    COPY_TARGET=""
+    case "${1:-}" in
+        "") ;;
+        "$STANDALONE_ARG")
+            MAIN="$STANDALONE_DOCUMENT"
+            COPY_TARGET="$STANDALONE_OUTPUT"
+            ;;
+        *) die "argumento desconocido: $1 (use '${STANDALONE_ARG}' o ninguno)" ;;
+    esac
+}
+
+copy_output() {
+    if [[ -n "$COPY_TARGET" ]]; then
+        cp "${MAIN}.pdf" "$COPY_TARGET"
+    fi
 }
 
 ensure_biber_arm64() {
@@ -52,6 +74,8 @@ print_summary() {
     echo "Ocurrencias de '[?]' en el texto extraído: ${unresolved_citations}"
 }
 
+select_document "$@"
 ensure_biber_arm64
 compile_document
+copy_output
 print_summary
