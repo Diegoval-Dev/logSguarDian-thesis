@@ -324,6 +324,131 @@ Las particiones comparten la estructura de casi-duplicados del conjunto de entre
 \par\smallskip\footnotesize Fuente: hashes del script, de \texttt{neardup\_v2\_results.json}, \texttt{tables.md} y \texttt{run.log} en \texttt{\_evidencia/casi-duplicados/}, y de las entradas según el registro de la ejecución del 11 de octubre de 2026 en \texttt{neardup\_v2\_results.json}. El hash de \texttt{large\_corpus\_requests.json} coincide con el archivo del commit \texttt{58033a0} del repositorio logSguarDian-vulnerable-project. La ejecución se hizo sobre el árbol de trabajo del repositorio logSguarDian en el commit \texttt{41553a7}, que estaba limpio. Ese commit es ancestro de \texttt{origin/develop} (verificado tras \texttt{git fetch origin}) y figura en la rama remota \texttt{origin/audit/config2-breakdown}. Los archivos \texttt{train}, \texttt{val}, \texttt{test} y \texttt{unified.jsonl} no están versionados en git en ese commit; se identifican por su SHA-256. Elaboración propia.
 \end{table}
 
+\section{Procedencia de las particiones de prueba}\label{anexo:locks}
+
+El conjunto de prueba se fija mediante un lock: el hash SHA-256 de un archivo que registra un identificador por fila. Cada lock se escribe en \texttt{training/splits/test.lock.sha256}, y la evaluación final lo recalcula antes de inferir. El Cuadro \ref{tabla:anexo-locks-cadena} resume la cadena de locks del repositorio, tomada de \texttt{git log --all -- training/splits/test.lock.sha256}.
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{|l|l|l|l|l|}
+\hline
+\textbf{Commit} & \textbf{Fecha} & \textbf{Lock antes} & \textbf{Lock después} & \textbf{Propósito} \\ \hline
+\texttt{cc00c3c} & 11 jun 2026 & (no existía) & \texttt{3beeaba4\ldots} & Creación del pipeline \\ \hline
+\texttt{df62619} & 23 jul 2026 & \texttt{3beeaba4\ldots} & \texttt{d1a2a284\ldots} & Antes de \texttt{v3} \\ \hline
+\texttt{6867f28} & 24 jul 2026 & \texttt{d1a2a284\ldots} & \texttt{7df5adb8\ldots} & Antes de \texttt{v4} \\ \hline
+\texttt{59990ca} & 24 jul 2026 & \texttt{7df5adb8\ldots} & \texttt{ee4b85db\ldots} & Antes de \texttt{v6} \\ \hline
+\texttt{5dc7c06} & 25 jul 2026 & \texttt{ee4b85db\ldots} & \texttt{251716bb\ldots} & Antes de \texttt{v8} \\ \hline
+\texttt{fa46bdd} & 26 jul 2026 & \texttt{251716bb\ldots} & \texttt{4a5e0b97\ldots} & Antes de \texttt{v9} \\ \hline
+\texttt{b43de9c} & 2 ago 2026 & \texttt{4a5e0b97\ldots} & \texttt{6c5f253d\ldots} & Antes de \texttt{v10} \\ \hline
+\texttt{8cbe6c9} & 30 ago 2026 & \texttt{6c5f253d\ldots} & \texttt{a3140ab3\ldots} & Antes de \texttt{v11} \\ \hline
+\texttt{6d1fa68}, \texttt{72aabd6}, \texttt{f15e7cc} & 23 sep 2026 & \texttt{a3140ab3\ldots} & \texttt{7486c258\ldots} & Re-fijación de \texttt{rf\_v11} restaurado \\ \hline
+\end{tabular}
+\end{adjustbox}
+\caption{Cadena de locks del conjunto de prueba. Los tres commits del 23 de septiembre aplican el mismo cambio de lock.}
+\label{tabla:anexo-locks-cadena}
+\par\smallskip\footnotesize Fuente: \texttt{lock\_history.md} (\texttt{git log} sobre \texttt{training/splits/test.lock.sha256} en el repositorio logSguarDian). El mensaje del commit \texttt{6d1fa68} es ``chore(training): re-lock test set to match the restored rf\_v11 generation''. Elaboración propia.
+\end{table}
+
+El lock de cada generación se escribe con el método de \texttt{training/split.py} (líneas 150--155): el SHA-256 de la concatenación, separada por saltos de línea, de los identificadores \texttt{\_row\_hash} ordenados. \texttt{evaluate\_test.py} (líneas 165--173) recalcula el mismo valor. Según la auditoría, este método reproduce \seqsplit{7486c258692a3cc66fa0ef74087255b904a9ea4d41c8646bb7c0784b15aa4fd9} sobre \texttt{test.parquet} con 57\,481 filas. El archivo \texttt{test.parquet} no está versionado en el repositorio, por lo que esa reproducción no se repitió en este anexo. El hash del archivo de bytes (\seqsplit{3e93b7763732cbd5e23738fba5514d64b826d37635ccdf7f6ee941bce3cfe608}) no es comparable con el lock.
+
+El Cuadro \ref{tabla:anexo-locks-soporte} muestra la diferencia de soporte entre la partición de v10 y la de v11.
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{|l|r|r|}
+\hline
+\textbf{Clase} & \textbf{Soporte en v10} & \textbf{Diferencia en v11} \\ \hline
+\texttt{benign} & 14\,866 & $+20$ \\ \hline
+\texttt{cmdi} & 1\,328 & $+140$ \\ \hline
+\texttt{path\_traversal} & 2\,527 & $+2$ \\ \hline
+\texttt{sqli} & 34\,103 & $+4$ \\ \hline
+\texttt{xss} & 4\,484 & $+7$ \\ \hline
+\textbf{Total} & 57\,308 & $+173$ \\ \hline
+\end{tabular}
+\end{adjustbox}
+\caption{Soporte por clase de la partición de prueba de v10 y diferencia observada en la de v11.}
+\label{tabla:anexo-locks-soporte}
+\par\smallskip\footnotesize Fuente: \texttt{v10\_test\_results\_dc2aaa6.json} (soporte de v10) y diferencias reportadas por la auditoría de particiones. Elaboración propia.
+\end{table}
+
+No consta el motivo del cambio de partición del 23 de septiembre de 2026, ni la fuente de los datos restaurados para la generación \texttt{rf\_v11}.
+
+\subsection{Procedencia}
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{|l|p{0.62\linewidth}|}
+\hline
+\textbf{Archivo} & \textbf{SHA-256} \\ \hline
+\texttt{lock\_history.md} & \seqsplit{b0ce4ce3a4fc73f6eae0d35974bad9b089fdbe747b339713718773fdd22a90fd} \\ \hline
+\texttt{lock\_commits.txt} & \seqsplit{ba79ba8ea0048c5d7353f69043d7a0b86efa4620288c2e704acfae30f17f2be4} \\ \hline
+\texttt{v10\_test\_results\_dc2aaa6.json} & \seqsplit{257f05f7d58b85f597485c4f65e4fcb12745cc5d58c5cf6219427b211457acb3} \\ \hline
+\end{tabular}
+\end{adjustbox}
+\caption{Sumas SHA-256 de los archivos de procedencia de las particiones de prueba.}
+\label{tabla:anexo-locks-procedencia}
+\par\smallskip\footnotesize Fuente: \texttt{shasum -a 256} sobre \texttt{\_evidencia/query-v5/}; verificadas contra \texttt{SHA256SUMS.txt}. Elaboración propia.
+\end{table}
+
+\section{Longitud del \textit{User-Agent} por clase}\label{anexo:ua}
+
+Este anexo documenta la distribución de la longitud del \textit{User-Agent} (\texttt{ua\_length}) por clase. Esta distribución sustenta la afirmación de que solo el 0.4\,\% de las filas benignas tiene un \textit{User-Agent} largo. Se considera largo un valor mayor que 40 caracteres. Las cifras se calcularon sobre las particiones de entrenamiento y validación; no se abrió la de prueba. El Cuadro~\ref{tabla:anexo-ua} reporta los valores por clase.
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{|l|r|r|r|r|r|}
+\hline
+\textbf{Clase} & \textbf{n} & \textbf{Filas con \texttt{ua\_length} $>$ 40} & \textbf{Porcentaje} & \textbf{IC de Wilson al 95\,\%} & \textbf{Porcentaje con \texttt{ua\_present} $>$ 0} \\ \hline
+\texttt{benign} & 84\,359 & 307 & 0.36 & [0.33, 0.41] & 0.48 \\ \hline
+\texttt{sqli} & 193\,261 & 157\,878 & 81.69 & [81.52, 81.86] & 81.79 \\ \hline
+\texttt{xss} & 25\,453 & 8\,463 & 33.25 & [32.67, 33.83] & 33.75 \\ \hline
+\texttt{path\_traversal} & 14\,327 & 13\,998 & 97.70 & [97.45, 97.94] & 98.07 \\ \hline
+\texttt{cmdi} & 8\,321 & 4\,521 & 54.33 & [53.26, 55.40] & 58.53 \\ \hline
+\end{tabular}
+\end{adjustbox}
+\caption{Longitud del \textit{User-Agent} por clase, en entrenamiento y validación combinados.}
+\label{tabla:anexo-ua}
+\par\smallskip\footnotesize Fuente: \texttt{\_evidencia/ua-v6/ua\_length\_audit.json}. Elaboración propia.
+\end{table}
+
+Las cifras por separado de entrenamiento y validación difieren de las de la unión en 0.6 puntos porcentuales o menos (la mayor, \texttt{cmdi} en validación, con 0.57). El mismo cálculo sobre el corpus completo (383\,083 filas de \texttt{unified.jsonl}, con el script \texttt{corpus\_ua\_skew.py} del repositorio logSguarDian, commit \texttt{8f6a895}) da 0.4\,\% en benigno, 33.3\,\% en \texttt{xss}, 54.4\,\% en \texttt{cmdi}, 81.7\,\% en \texttt{sqli} y 97.7\,\% en \texttt{path\_traversal}. La salida se repitió con resultado idéntico. Esta última cifra incluye filas de la partición de prueba; se trata de una descripción de las peticiones y no de una evaluación del modelo, y no se leyó ningún resultado del modelo sobre esa partición.
+
+El script del corpus mide la longitud en puntos de código de Python, y el extractor la mide en unidades UTF-16 de JavaScript. Ambas medidas coinciden salvo con caracteres fuera del plano multilingüe básico. El umbral de 40 caracteres es fijo. El análisis es descriptivo y no establece causas.
+
+\subsection{Procedencia}
+
+Los archivos de \texttt{\_evidencia/ua-v6/} se copiaron desde la carpeta de auditoría \path{/tmp/lsg-audit/v6/} y se verificaron contra \path{SHA256SUMS.txt}. Las particiones \path{train.parquet} y \path{val.parquet} no están versionadas en este repositorio; sus sumas SHA-256 se listan en el Cuadro~\ref{tabla:anexo-ua-procedencia}.
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{|l|p{0.62\linewidth}|}
+\hline
+\textbf{Archivo} & \textbf{SHA-256} \\ \hline
+\texttt{ua\_length\_audit.py} & \seqsplit{c9385deb84cbe23b6ed67cb3f35fc673655bdddf5e9a835f3cd3ec1b1eb0b00a} \\ \hline
+\texttt{ua\_length\_audit.json} & \seqsplit{c3922498a40b7daf9e4246fe25c905c5a09000488ac27236637689f7855d2511} \\ \hline
+\texttt{RESULTS.md} & \seqsplit{44aebc8d0fa4710612ee8925f12649dbd12d67d6b026834c19b5c0f2947adee9} \\ \hline
+\texttt{corpus\_ua\_skew\_docs\_script.py} & \seqsplit{521cf43137046e9c408b162539ef623bbadd43e3d8bac21662adc7fa3af1c08c} \\ \hline
+\texttt{corpus\_ua\_skew\_docs\_output.txt} & \seqsplit{9e7a29910ee29e4fb73bd4689003d16d166c3eb3e9d29b4b3a99ef7322412b33} \\ \hline
+\texttt{SHA256SUMS.txt} & \seqsplit{813dc901a68873a593e1970c6da45ea81805f371e33f30b362fda8c520689339} \\ \hline
+\texttt{train.parquet} (entrenamiento, no versionado) & \seqsplit{979ad08b629b94e974fd80e1fa9ef8f4f146fc800151ca6cb8515898045b5592} \\ \hline
+\texttt{val.parquet} (validación, no versionado) & \seqsplit{42b6a546e672d9961e45cf75895520590267bfdeeaaa8c4df95ab6e032970ad1} \\ \hline
+\end{tabular}
+\end{adjustbox}
+\caption{Sumas SHA-256 de los archivos de evidencia y de las particiones de entrenamiento y validación.}
+\label{tabla:anexo-ua-procedencia}
+\par\smallskip\footnotesize Fuente: \texttt{shasum -a 256} sobre \texttt{\_evidencia/ua-v6/} y sobre \texttt{training/splits/} en logSguarDian. Elaboración propia.
+\end{table}
 \section{Generalización entre fuentes (exclusión por fuente con la configuración de rf\_v11)}\label{anexo:loso}
 
 Este anexo mide cuánto depende el desempeño del modelo de fuentes concretas del corpus. Para cada fuente $S$, se entrena un Random Forest con la configuración de \texttt{rf\_v11} sobre las filas de entrenamiento que no pertenecen a $S$, y se evalúa sobre las filas de $S$. El modelo de cada fold no es el \texttt{rf.onnx} evaluado en el capítulo de Resultados.
@@ -480,13 +605,10 @@ El Cuadro \ref{tabla:anexo-query-versiones} enumera las versiones del middleware
 \begin{adjustbox}{max width=\linewidth}
 \begin{tabular}{|l|p{0.40\linewidth}|p{0.36\linewidth}|}
 \hline
-\textbf{Versión medida} & \textbf{Identificador y SHA-256} & \textbf{Reconstrucción de la query} \\ \hline
+\textbf{Versión medida} & \textbf{Identificador y SHA-256} & \textbf{Reconstrucción de la query en cada una} \\ \hline
 Paquete publicado 0.1.0 (\texttt{c3d591a}) & Código fuente; sin tarball en el conjunto de evidencia & \texttt{URLSearchParams} (\texttt{middleware.ts}, línea 539) \\ \hline
-\texttt{core\_worktree\_0.1.0.tgz} & \seqsplit{c8b975b2577fa8e532ba418fcd5c50dc68155ed25d4a8d23f5dbcc91027ad96e} & \texttt{URLSearchParams} \\ \hline
-Commit \texttt{f15a9e8} de logSguarDian-vulnerable-project (\texttt{vendor/logsguardian-0.1.0.tgz}; ejecución de latencia en Linux) & \seqsplit{c8b975b2577fa8e532ba418fcd5c50dc68155ed25d4a8d23f5dbcc91027ad96e} & \texttt{URLSearchParams} en \texttt{dist/middleware.js} \\ \hline
-Commit \texttt{4d928b5} del mismo repositorio (\texttt{vendor/logsguardian-0.1.0.tgz}; validación) & \seqsplit{cf1238deb33383975e12058de71c4423b22d7c5bcba5cf47241c0d0f712b0416} & \texttt{URLSearchParams} en \texttt{dist/middleware.js} \\ \hline
-\texttt{core\_worktree\_0.1.0.tgz} (mismo archivo que el de \texttt{f15a9e8}) & \seqsplit{c8b975b2577fa8e532ba418fcd5c50dc68155ed25d4a8d23f5dbcc91027ad96e} & \texttt{URLSearchParams} \\ \hline
-\texttt{worktree\_vendor.tgz} (mismo archivo que el de \texttt{4d928b5}; Ronda 5) & \seqsplit{cf1238deb33383975e12058de71c4423b22d7c5bcba5cf47241c0d0f712b0416} & \texttt{URLSearchParams} \\ \hline
+\texttt{core\_worktree\_0.1.0.tgz} (commit \texttt{f15a9e8} de logSguarDian-vulnerable-project, \texttt{vendor/logsguardian-0.1.0.tgz}; ejecución de latencia en Linux) & \seqsplit{c8b975b2577fa8e532ba418fcd5c50dc68155ed25d4a8d23f5dbcc91027ad96e} & \texttt{URLSearchParams} en \texttt{dist/middleware.js} \\ \hline
+Commit \texttt{4d928b5} del mismo repositorio (\texttt{vendor/logsguardian-0.1.0.tgz}; validación; \texttt{worktree\_vendor.tgz}, Ronda 5) & \seqsplit{cf1238deb33383975e12058de71c4423b22d7c5bcba5cf47241c0d0f712b0416} & \texttt{URLSearchParams} en \texttt{dist/middleware.js} \\ \hline
 \texttt{latency\_linux.tgz} (resultados de la ejecución de latencia en Linux) & \seqsplit{b96d901408547331fb4859a5dac4810abdb1caaeb2f15f3378877c2290187cec} & Contiene resultados de medición, no código del middleware \\ \hline
 \end{tabular}
 \end{adjustbox}
@@ -595,7 +717,7 @@ Este anexo presenta las métricas de la generación v10 (Random Forest \texttt{r
 \par\smallskip\footnotesize Fuente: \texttt{v10\_test\_results\_dc2aaa6.json}, sección \texttt{rf\_v10\_test}. Elaboración propia.
 \end{table}
 
-El Cuadro \ref{tabla:anexo-v10-if} presenta el recall por clase de Isolation Forest, junto con las cifras de validación que registra el mensaje del commit \texttt{dc2aaa6}. El umbral de decisión de \texttt{if\_v9} es $0.002486040118540811$ (\texttt{docs/decision-policy.md}, línea 440, del repositorio logSguarDian).
+El Cuadro \ref{tabla:anexo-v10-if} presenta el recall por clase de Isolation Forest, junto con las cifras de validación que registra el mensaje del commit \texttt{dc2aaa6}. El umbral de decisión de \texttt{if\_v9} es $0.002486040118540811$ (\texttt{training/models/if\_v9\_metadata.json}, clave \texttt{threshold}, del repositorio logSguarDian).
 
 \begin{table}[htbp]
 \centering
@@ -628,128 +750,3 @@ Las métricas de v10 y las de v11 no son comparables, por tres razones:
 \item La lectura única por generación que atribuye \texttt{docs/model-comparison.md} (líneas 100--102) no consta en los registros revisados. El registro de \texttt{rf\_v11} documenta tres lecturas de \texttt{test.parquet} (24, 25 y 26 de septiembre de 2026) en \texttt{docs/decision-policy.md} (línea 51) y en la nota \texttt{eval\_note} de \texttt{packages/core/data/class\_metrics.json}.
 \end{itemize}
 
-\section{Procedencia de las particiones de prueba}\label{anexo:locks}
-
-El conjunto de prueba se fija mediante un lock: el hash SHA-256 de un archivo que registra un identificador por fila. Cada lock se escribe en \texttt{training/splits/test.lock.sha256}, y la evaluación final lo recalcula antes de inferir. El Cuadro \ref{tabla:anexo-locks-cadena} resume la cadena de locks del repositorio, tomada de \texttt{git log --all -- training/splits/test.lock.sha256}.
-
-\begin{table}[htbp]
-\centering
-\footnotesize
-\setlength{\tabcolsep}{3pt}
-\begin{adjustbox}{max width=\linewidth}
-\begin{tabular}{|l|l|l|l|l|}
-\hline
-\textbf{Commit} & \textbf{Fecha} & \textbf{Lock antes} & \textbf{Lock después} & \textbf{Propósito} \\ \hline
-\texttt{cc00c3c} & 11 jun 2026 & (no existía) & \texttt{3beeaba4\ldots} & Creación del pipeline \\ \hline
-\texttt{df62619} & 23 jul 2026 & \texttt{3beeaba4\ldots} & \texttt{d1a2a284\ldots} & Antes de \texttt{v3} \\ \hline
-\texttt{6867f28} & 24 jul 2026 & \texttt{d1a2a284\ldots} & \texttt{7df5adb8\ldots} & Antes de \texttt{v4} \\ \hline
-\texttt{59990ca} & 24 jul 2026 & \texttt{7df5adb8\ldots} & \texttt{ee4b85db\ldots} & Antes de \texttt{v6} \\ \hline
-\texttt{5dc7c06} & 25 jul 2026 & \texttt{ee4b85db\ldots} & \texttt{251716bb\ldots} & Antes de \texttt{v8} \\ \hline
-\texttt{fa46bdd} & 26 jul 2026 & \texttt{251716bb\ldots} & \texttt{4a5e0b97\ldots} & Antes de \texttt{v9} \\ \hline
-\texttt{b43de9c} & 2 ago 2026 & \texttt{4a5e0b97\ldots} & \texttt{6c5f253d\ldots} & Antes de \texttt{v10} \\ \hline
-\texttt{8cbe6c9} & 30 ago 2026 & \texttt{6c5f253d\ldots} & \texttt{a3140ab3\ldots} & Antes de \texttt{v11} \\ \hline
-\texttt{6d1fa68}, \texttt{72aabd6}, \texttt{f15e7cc} & 23 sep 2026 & \texttt{a3140ab3\ldots} & \texttt{7486c258\ldots} & Re-fijación de \texttt{rf\_v11} restaurado \\ \hline
-\end{tabular}
-\end{adjustbox}
-\caption{Cadena de locks del conjunto de prueba. Los tres commits del 23 de septiembre aplican el mismo cambio de lock.}
-\label{tabla:anexo-locks-cadena}
-\par\smallskip\footnotesize Fuente: \texttt{lock\_history.md} (\texttt{git log} sobre \texttt{training/splits/test.lock.sha256} en el repositorio logSguarDian). El mensaje del commit \texttt{6d1fa68} es ``chore(training): re-lock test set to match the restored rf\_v11 generation''. Elaboración propia.
-\end{table}
-
-El lock de cada generación se escribe con el método de \texttt{training/split.py} (líneas 150--155): el SHA-256 de la concatenación, separada por saltos de línea, de los identificadores \texttt{\_row\_hash} ordenados. \texttt{evaluate\_test.py} (líneas 165--173) recalcula el mismo valor. Según la auditoría, este método reproduce \seqsplit{7486c258692a3cc66fa0ef74087255b904a9ea4d41c8646bb7c0784b15aa4fd9} sobre \texttt{test.parquet} con 57\,481 filas. El archivo \texttt{test.parquet} no está versionado en el repositorio, por lo que esa reproducción no se repitió en este anexo. El hash del archivo de bytes (\seqsplit{3e93b7763732cbd5e23738fba5514d64b826d37635ccdf7f6ee941bce3cfe608}) no es comparable con el lock.
-
-El Cuadro \ref{tabla:anexo-locks-soporte} muestra la diferencia de soporte entre la partición de v10 y la de v11.
-
-\begin{table}[htbp]
-\centering
-\footnotesize
-\begin{adjustbox}{max width=\linewidth}
-\begin{tabular}{|l|r|r|}
-\hline
-\textbf{Clase} & \textbf{Soporte en v10} & \textbf{Diferencia en v11} \\ \hline
-\texttt{benign} & 14\,866 & $+20$ \\ \hline
-\texttt{cmdi} & 1\,328 & $+140$ \\ \hline
-\texttt{path\_traversal} & 2\,527 & $+2$ \\ \hline
-\texttt{sqli} & 34\,103 & $+4$ \\ \hline
-\texttt{xss} & 4\,484 & $+7$ \\ \hline
-\textbf{Total} & 57\,308 & $+173$ \\ \hline
-\end{tabular}
-\end{adjustbox}
-\caption{Soporte por clase de la partición de prueba de v10 y diferencia observada en la de v11.}
-\label{tabla:anexo-locks-soporte}
-\par\smallskip\footnotesize Fuente: \texttt{v10\_test\_results\_dc2aaa6.json} (soporte de v10) y diferencias reportadas por la auditoría de particiones. Elaboración propia.
-\end{table}
-
-No consta el motivo del cambio de partición del 23 de septiembre de 2026, ni la fuente de los datos restaurados para la generación \texttt{rf\_v11}.
-
-\subsection{Procedencia}
-
-\begin{table}[htbp]
-\centering
-\footnotesize
-\begin{adjustbox}{max width=\linewidth}
-\begin{tabular}{|l|p{0.62\linewidth}|}
-\hline
-\textbf{Archivo} & \textbf{SHA-256} \\ \hline
-\texttt{lock\_history.md} & \seqsplit{b0ce4ce3a4fc73f6eae0d35974bad9b089fdbe747b339713718773fdd22a90fd} \\ \hline
-\texttt{lock\_commits.txt} & \seqsplit{ba79ba8ea0048c5d7353f69043d7a0b86efa4620288c2e704acfae30f17f2be4} \\ \hline
-\texttt{v10\_test\_results\_dc2aaa6.json} & \seqsplit{257f05f7d58b85f597485c4f65e4fcb12745cc5d58c5cf6219427b211457acb3} \\ \hline
-\end{tabular}
-\end{adjustbox}
-\caption{Sumas SHA-256 de los archivos de procedencia de las particiones de prueba.}
-\label{tabla:anexo-locks-procedencia}
-\par\smallskip\footnotesize Fuente: \texttt{shasum -a 256} sobre \texttt{\_evidencia/query-v5/}; verificadas contra \texttt{SHA256SUMS.txt}. Elaboración propia.
-\end{table}
-
-\section{Longitud del \textit{User-Agent} por clase}\label{anexo:ua}
-
-Este anexo documenta la distribución de la longitud del \textit{User-Agent} (\texttt{ua\_length}) por clase. Esta distribución sustenta la afirmación de que solo el 0.4\,\% de las filas benignas tiene un \textit{User-Agent} largo. Se considera largo un valor mayor que 40 caracteres. Las cifras se calcularon sobre las particiones de entrenamiento y validación; no se abrió la de prueba. El Cuadro~\ref{tabla:anexo-ua} reporta los valores por clase.
-
-\begin{table}[htbp]
-\centering
-\footnotesize
-\begin{adjustbox}{max width=\linewidth}
-\begin{tabular}{|l|r|r|r|r|r|}
-\hline
-\textbf{Clase} & \textbf{n} & \textbf{Filas con \texttt{ua\_length} $>$ 40} & \textbf{Porcentaje} & \textbf{IC de Wilson al 95\,\%} & \textbf{Porcentaje con \texttt{ua\_present} $>$ 0} \\ \hline
-\texttt{benign} & 84\,359 & 307 & 0.36 & [0.33, 0.41] & 0.48 \\ \hline
-\texttt{sqli} & 193\,261 & 157\,878 & 81.69 & [81.52, 81.86] & 81.79 \\ \hline
-\texttt{xss} & 25\,453 & 8\,463 & 33.25 & [32.67, 33.83] & 33.75 \\ \hline
-\texttt{path\_traversal} & 14\,327 & 13\,998 & 97.70 & [97.45, 97.94] & 98.07 \\ \hline
-\texttt{cmdi} & 8\,321 & 4\,521 & 54.33 & [53.26, 55.40] & 58.53 \\ \hline
-\end{tabular}
-\end{adjustbox}
-\caption{Longitud del \textit{User-Agent} por clase, en entrenamiento y validación combinados.}
-\label{tabla:anexo-ua}
-\par\smallskip\footnotesize Fuente: \texttt{\_evidencia/ua-v6/ua\_length\_audit.json}. Elaboración propia.
-\end{table}
-
-Las cifras por separado de entrenamiento y validación difieren de las de la unión en 0.6 puntos porcentuales o menos (la mayor, \texttt{cmdi} en validación, con 0.57). El mismo cálculo sobre el corpus completo (383\,083 filas de \texttt{unified.jsonl}, con el script \texttt{corpus\_ua\_skew.py} del repositorio logSguarDian, commit \texttt{8f6a895}) da 0.4\,\% en benigno, 33.3\,\% en \texttt{xss}, 54.4\,\% en \texttt{cmdi}, 81.7\,\% en \texttt{sqli} y 97.7\,\% en \texttt{path\_traversal}. La salida se repitió con resultado idéntico. Esta última cifra incluye filas de la partición de prueba; se trata de una descripción de las peticiones y no de una evaluación del modelo, y no se leyó ningún resultado del modelo sobre esa partición.
-
-El script del corpus mide la longitud en puntos de código de Python, y el extractor la mide en unidades UTF-16 de JavaScript. Ambas medidas coinciden salvo con caracteres fuera del plano multilingüe básico. El umbral de 40 caracteres es fijo. El análisis es descriptivo y no establece causas.
-
-\subsection{Procedencia}
-
-Los archivos de \texttt{\_evidencia/ua-v6/} se copiaron desde la carpeta de auditoría \path{/tmp/lsg-audit/v6/} y se verificaron contra \path{SHA256SUMS.txt}. Las particiones \path{train.parquet} y \path{val.parquet} no están versionadas en este repositorio; sus sumas SHA-256 se listan en el Cuadro~\ref{tabla:anexo-ua-procedencia}.
-
-\begin{table}[htbp]
-\centering
-\footnotesize
-\begin{adjustbox}{max width=\linewidth}
-\begin{tabular}{|l|p{0.62\linewidth}|}
-\hline
-\textbf{Archivo} & \textbf{SHA-256} \\ \hline
-\texttt{ua\_length\_audit.py} & \seqsplit{c9385deb84cbe23b6ed67cb3f35fc673655bdddf5e9a835f3cd3ec1b1eb0b00a} \\ \hline
-\texttt{ua\_length\_audit.json} & \seqsplit{c3922498a40b7daf9e4246fe25c905c5a09000488ac27236637689f7855d2511} \\ \hline
-\texttt{RESULTS.md} & \seqsplit{44aebc8d0fa4710612ee8925f12649dbd12d67d6b026834c19b5c0f2947adee9} \\ \hline
-\texttt{corpus\_ua\_skew\_docs\_script.py} & \seqsplit{521cf43137046e9c408b162539ef623bbadd43e3d8bac21662adc7fa3af1c08c} \\ \hline
-\texttt{corpus\_ua\_skew\_docs\_output.txt} & \seqsplit{9e7a29910ee29e4fb73bd4689003d16d166c3eb3e9d29b4b3a99ef7322412b33} \\ \hline
-\texttt{SHA256SUMS.txt} & \seqsplit{813dc901a68873a593e1970c6da45ea81805f371e33f30b362fda8c520689339} \\ \hline
-\texttt{train.parquet} (entrenamiento, no versionado) & \seqsplit{979ad08b629b94e974fd80e1fa9ef8f4f146fc800151ca6cb8515898045b5592} \\ \hline
-\texttt{val.parquet} (validación, no versionado) & \seqsplit{42b6a546e672d9961e45cf75895520590267bfdeeaaa8c4df95ab6e032970ad1} \\ \hline
-\end{tabular}
-\end{adjustbox}
-\caption{Sumas SHA-256 de los archivos de evidencia y de las particiones de entrenamiento y validación.}
-\label{tabla:anexo-ua-procedencia}
-\par\smallskip\footnotesize Fuente: \texttt{shasum -a 256} sobre \texttt{\_evidencia/ua-v6/} y sobre \texttt{training/splits/} en logSguarDian. Elaboración propia.
-\end{table}
