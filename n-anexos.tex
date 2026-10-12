@@ -126,7 +126,7 @@ Este anexo cuantifica la similitud textual de cada fila de validación, de prueb
 
 La similitud se mide sobre el texto de cada petición. Cada campo (\texttt{path}, \texttt{query} y \texttt{body}) se normaliza con decodificación \texttt{unquote\_plus}, conversión a minúsculas y colapso de espacios, y los tres campos se unen con el separador \texttt{ | }. El texto normalizado se descompone en shingles de tres caracteres, y la similitud entre dos peticiones es el índice de Jaccard exacto de sus conjuntos de shingles.
 
-Para encontrar candidatos se usa MinHash con \texttt{num\_perm=128} y LSH con bandas de \texttt{params=(8,16)}. Cada candidato se verifica con el Jaccard exacto, de modo que todo par informado con $J \geq$ umbral es un par real; los pares que el LSH omite se tratan en las limitaciones.
+Para encontrar candidatos se usa MinHash con \texttt{num\_perm=128} y LSH con bandas de \path{params=(8,16)}. Cada candidato se verifica con el Jaccard exacto, de modo que todo par informado con $J \geq$ umbral es un par real; los pares que el LSH omite se tratan en las limitaciones.
 
 Se usan los umbrales 0.8 y 0.9. Para cada fila, \textit{cualquiera} es el máximo de $J$ frente a todas las filas de entrenamiento, y \textit{misma clase} es el máximo frente a las filas con la misma etiqueta. En la Ronda 5, el texto de una petición \texttt{GET} es su \texttt{query} y el de una \texttt{POST} es su \texttt{body}, en la forma \texttt{param=payload}. Quedan fuera las filas sin texto bruto (82 de entrenamiento, 18 de validación y 19 de prueba), y el $n$ de cada cuadro lo refleja.
 
@@ -457,7 +457,7 @@ Este anexo mide cuánto depende el desempeño del modelo de fuentes concretas de
 
 \subsection{Protocolo}\label{anexo:loso-protocolo}
 
-El Random Forest usa los valores de \texttt{retrain\_v11\_contract69.py} (líneas 50--51 en \texttt{origin/develop}):
+El Random Forest usa los valores de \texttt{retrain\_v11\_contract69.py} (líneas 50--51 en \path{origin/develop}):
 
 \begin{itemize}
 \item \texttt{n\_estimators=30};
