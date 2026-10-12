@@ -700,3 +700,56 @@ No consta el motivo del cambio de partición del 23 de septiembre de 2026, ni la
 \label{tabla:anexo-locks-procedencia}
 \par\smallskip\footnotesize Fuente: \texttt{shasum -a 256} sobre \texttt{\_evidencia/query-v5/}; verificadas contra \texttt{SHA256SUMS.txt}. Elaboración propia.
 \end{table}
+
+\section{Longitud del \textit{User-Agent} por clase}\label{anexo:ua}
+
+Este anexo documenta la distribución de la longitud del \textit{User-Agent} (\texttt{ua\_length}) por clase. Esta distribución sustenta la afirmación de que solo el 0.4\,\% de las filas benignas tiene un \textit{User-Agent} largo. Se considera largo un valor mayor que 40 caracteres. Las cifras se calcularon sobre las particiones de entrenamiento y validación; no se abrió la de prueba. El Cuadro~\ref{tabla:anexo-ua} reporta los valores por clase.
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{|l|r|r|r|r|r|}
+\hline
+\textbf{Clase} & \textbf{n} & \textbf{Filas con \texttt{ua\_length} $>$ 40} & \textbf{Porcentaje} & \textbf{IC de Wilson al 95\,\%} & \textbf{Porcentaje con \texttt{ua\_present} $>$ 0} \\ \hline
+\texttt{benign} & 84\,359 & 307 & 0.36 & [0.33, 0.41] & 0.48 \\ \hline
+\texttt{sqli} & 193\,261 & 157\,878 & 81.69 & [81.52, 81.86] & 81.79 \\ \hline
+\texttt{xss} & 25\,453 & 8\,463 & 33.25 & [32.67, 33.83] & 33.75 \\ \hline
+\texttt{path\_traversal} & 14\,327 & 13\,998 & 97.70 & [97.45, 97.94] & 98.07 \\ \hline
+\texttt{cmdi} & 8\,321 & 4\,521 & 54.33 & [53.26, 55.40] & 58.53 \\ \hline
+\end{tabular}
+\end{adjustbox}
+\caption{Longitud del \textit{User-Agent} por clase, en entrenamiento y validación combinados.}
+\label{tabla:anexo-ua}
+\par\smallskip\footnotesize Fuente: \texttt{\_evidencia/ua-v6/ua\_length\_audit.json}. Elaboración propia.
+\end{table}
+
+Las cifras por separado de entrenamiento y validación difieren de las de la unión en 0.6 puntos porcentuales o menos. La mayor diferencia corresponde a \texttt{cmdi} en validación, con 0.57 puntos. El mismo cálculo sobre el corpus completo (383\,083 filas de \texttt{unified.jsonl}, con el script \texttt{corpus\_ua\_skew.py} del repositorio logSguarDian, commit \texttt{8f6a895}) da 0.4\,\% en benigno, 33.3\,\% en \texttt{xss}, 54.4\,\% en \texttt{cmdi}, 81.7\,\% en \texttt{sqli} y 97.7\,\% en \texttt{path\_traversal}. La salida se repitió con resultado idéntico.
+
+El script del corpus mide la longitud en puntos de código de Python, y el extractor la mide en unidades UTF-16 de JavaScript. Ambas medidas coinciden salvo con caracteres fuera del plano multilingüe básico. El umbral de 40 caracteres es fijo. El análisis es descriptivo y no establece causas.
+
+\subsection{Procedencia}
+
+Los archivos de \texttt{\_evidencia/ua-v6/} se copiaron desde la carpeta de auditoría \path{/tmp/lsg-audit/v6/} y se verificaron contra \path{SHA256SUMS.txt}. Las particiones \path{train.parquet} y \path{val.parquet} no están versionadas en este repositorio; sus sumas SHA-256 se listan en el Cuadro~\ref{tabla:anexo-ua-procedencia}.
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{|l|p{0.62\linewidth}|}
+\hline
+\textbf{Archivo} & \textbf{SHA-256} \\ \hline
+\texttt{ua\_length\_audit.py} & \seqsplit{c9385deb84cbe23b6ed67cb3f35fc673655bdddf5e9a835f3cd3ec1b1eb0b00a} \\ \hline
+\texttt{ua\_length\_audit.json} & \seqsplit{c3922498a40b7daf9e4246fe25c905c5a09000488ac27236637689f7855d2511} \\ \hline
+\texttt{RESULTS.md} & \seqsplit{44aebc8d0fa4710612ee8925f12649dbd12d67d6b026834c19b5c0f2947adee9} \\ \hline
+\texttt{corpus\_ua\_skew\_docs\_script.py} & \seqsplit{521cf43137046e9c408b162539ef623bbadd43e3d8bac21662adc7fa3af1c08c} \\ \hline
+\texttt{corpus\_ua\_skew\_docs\_output.txt} & \seqsplit{9e7a29910ee29e4fb73bd4689003d16d166c3eb3e9d29b4b3a99ef7322412b33} \\ \hline
+\texttt{SHA256SUMS.txt} & \seqsplit{813dc901a68873a593e1970c6da45ea81805f371e33f30b362fda8c520689339} \\ \hline
+\texttt{train.parquet} (entrenamiento, no versionado) & \seqsplit{979ad08b629b94e974fd80e1fa9ef8f4f146fc800151ca6cb8515898045b5592} \\ \hline
+\texttt{val.parquet} (validación, no versionado) & \seqsplit{42b6a546e672d9961e45cf75895520590267bfdeeaaa8c4df95ab6e032970ad1} \\ \hline
+\end{tabular}
+\end{adjustbox}
+\caption{Sumas SHA-256 de los archivos de evidencia y de las particiones de entrenamiento y validación.}
+\label{tabla:anexo-ua-procedencia}
+\par\smallskip\footnotesize Fuente: \texttt{shasum -a 256} sobre \texttt{\_evidencia/ua-v6/} y sobre \texttt{training/splits/} en logSguarDian. Elaboración propia.
+\end{table}
