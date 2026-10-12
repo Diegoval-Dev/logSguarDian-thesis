@@ -251,12 +251,12 @@
 	\newpage
 	\cleardoublepage\phantomsection
     \chapter*{Prefacio}
+    \addcontentsline{toc}{chapter}{Prefacio}
     \ifdefined\parpordefecto
     	\defaultparformat{a-prefacio}
     \else
     	\input{a-prefacio}
     \fi
-    \addcontentsline{toc}{chapter}{Prefacio}
 \fi
 
 % ÍNDICE GENERAL
@@ -307,12 +307,12 @@
 	\newpage
     \cleardoublepage\phantomsection
 	\chapter*{Resumen}
+	\addcontentsline{toc}{chapter}{Resumen}
 	\ifdefined\parpordefecto
 		\defaultparformat{b-resumen}
 	\else
 		\input{b-resumen}
 	\fi
-	\addcontentsline{toc}{chapter}{Resumen}
 \fi
 
 % ABSTRACT
@@ -321,12 +321,12 @@
 	\newpage
     \cleardoublepage\phantomsection
 	\chapter*{Abstract}
+	\addcontentsline{toc}{chapter}{Abstract}
 	\ifdefined\parpordefecto
 		\defaultparformat{c-abstract}
 	\else
 		\input{c-abstract}
 	\fi
-	\addcontentsline{toc}{chapter}{Abstract}
 \fi
 
 % INTRODUCCIÓN
@@ -471,7 +471,6 @@
 % GLOSARIO
 % ------------------------------------------------------------------------------
 \ifdefined\CAPglosario
-	\newpage
 	\printglossary
 \fi
 
