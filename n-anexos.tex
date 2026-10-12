@@ -249,7 +249,9 @@ Sin vecino & \texttt{xss} (recall) & 2\,394/2\,408 & 0.9942 & [0.9903, 0.9965] \
 \par\smallskip\footnotesize Fuente: \texttt{block\_gap\_counts.json} y \texttt{block\_gap\_counts.md} en \texttt{\_evidencia/casi-duplicados-v3/}. Elaboración propia.
 \end{table}
 
-Lectura acotada. Las diferencias de recall entre ambos grupos son de 0.6 puntos porcentuales o menos en todas las clases; la mayor es de 0.59 en \texttt{path\_traversal}. De los 16 falsos positivos de validación, 15 están en filas sin vecino. Con tan pocos casos, la tasa de ese grupo no se estima con precisión. El grupo ``sin vecino'' contiene además filas que sí tienen un vecino real que el LSH no encontró, cerca del 11\,\% de los pares con $J \geq 0.8$ según la medición de recall de este anexo. Por eso la brecha real entre grupos puede ser mayor que la observada. Estos datos no establecen una relación causal.
+Lectura acotada. Las diferencias de recall entre ambos grupos son de 0.6 puntos porcentuales o menos en todas las clases; la mayor es de 0.59 en \texttt{path\_traversal}. De los 16 falsos positivos de validación, 15 están en filas sin vecino.
+
+Con tan pocos casos, la tasa de ese grupo no se estima con precisión. El grupo ``sin vecino'' contiene además filas que sí tienen un vecino real que el LSH no encontró, cerca del 11\,\% de los pares con $J \geq 0.8$ según la medición de recall de este anexo. Por eso la brecha real entre grupos puede ser mayor que la observada. Estos datos no establecen una relación causal.
 
 \subsection{Cobertura de \texttt{cmdi} en la Ronda 5 sin los payloads con vecino}\label{anexo:casi-cobertura-cmdi}
 
@@ -545,7 +547,9 @@ El cuadro~\ref{tabla:loso-payload-full} muestra la clase que el modelo de exclus
 
 \subsection{Lectura acotada}\label{anexo:loso-lectura}
 
-Sin causas, con las cifras de los cuadros~\ref{tabla:loso-control} y~\ref{tabla:loso-fuentes}. El bloqueo de ataques de (c) frente a (a), sobre las filas de cada fuente en validación, cae de forma distinta según la fuente. Caída grande, de más de 25 puntos porcentuales: \texttt{payload\_full} (0.998 a 0.737), \texttt{seclists\_cmdi} (1.000 a 0.299) y \texttt{command\_injection} (0.958 a 0.563). Caída moderada, de 7 a 10 puntos: \texttt{owasp\_logs} (0.990 a 0.915, 7.5 puntos) y \texttt{payloads\_csv} (0.998 a 0.906, 9.2 puntos). Caída leve, de 4 puntos: \texttt{capec} (1.000 a 0.960). Sin cambio: \texttt{modsec\_learn} (0.998 a 0.997) y \texttt{xss\_dataset} (0.990 a 0.993). Los falsos positivos benignos suben al excluir \texttt{modsec\_learn} (0.001 a 0.760), \texttt{payloads\_csv} (0.004 a 0.270) y \texttt{xss\_dataset} (0.002 a 0.945). El control de mismo tamaño (b) no reproduce estas caídas: su bloqueo queda entre 0.952 y 1.000 en las ocho fuentes.
+Sin causas, con las cifras de los cuadros~\ref{tabla:loso-control} y~\ref{tabla:loso-fuentes}. El bloqueo de ataques de (c) frente a (a), sobre las filas de cada fuente en validación, cae de forma distinta según la fuente. Caída grande, de más de 25 puntos porcentuales: \texttt{payload\_full} (0.998 a 0.737), \texttt{seclists\_cmdi} (1.000 a 0.299) y \texttt{command\_injection} (0.958 a 0.563). Caída moderada, de 7 a 10 puntos: \texttt{owasp\_logs} (0.990 a 0.915, 7.5 puntos) y \texttt{payloads\_csv} (0.998 a 0.906, 9.2 puntos).
+
+Caída leve, de 4 puntos: \texttt{capec} (1.000 a 0.960). Sin cambio: \texttt{modsec\_learn} (0.998 a 0.997) y \texttt{xss\_dataset} (0.990 a 0.993). Los falsos positivos benignos suben al excluir \texttt{modsec\_learn} (0.001 a 0.760), \texttt{payloads\_csv} (0.004 a 0.270) y \texttt{xss\_dataset} (0.002 a 0.945). El control de mismo tamaño (b) no reproduce estas caídas: su bloqueo queda entre 0.952 y 1.000 en las ocho fuentes.
 
 \subsection{Limitaciones}\label{anexo:loso-limitaciones}
 
