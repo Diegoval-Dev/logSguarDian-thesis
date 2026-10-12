@@ -1,0 +1,8 @@
+curated lines: 130 unique _row_hash: 119
+curated label counts: {'xss': 49, 'cmdi': 37, 'sqli': 25, 'path_traversal': 19}
+train mlops_telemetry_curated: 82
+val mlops_telemetry_curated: 18
+test mlops_telemetry_curated: 19
+report total_events: 244 anomalous_events: 183 clusters: 17
+db telemetry_events: 244
+db source_id: {'sim-host-1': 49, 'sim-host-2': 49, 'sim-host-3': 48, 'sim-host-4': 53, 'sim-host-5': 39, 'sim-host-novel': 6}

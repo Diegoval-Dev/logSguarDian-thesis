@@ -1,0 +1,4 @@
+raw total: 964008 kept: 383083
+kept per source: {'capec': 213514, 'command_injection': 2053, 'modsec_learn': 99645, 'owasp_logs': 3860, 'patt_cmdi_curated': 15, 'payload_full': 29719, 'payloads_csv': 18411, 'seclists_cmdi': 2455, 'synthetic_cmdi_compound': 500, 'synthetic_cmdi_minimal_context': 834, 'synthetic_cmdi_windows': 400, 'synthetic_evasion': 24, 'synthetic_multifield': 246, 'synthetic_nav': 420, 'synthetic_nav_ecommerce': 133, 'xss_dataset': 10854}
+dups per source: {'capec': 75773, 'command_injection': 52, 'modsec_learn': 439429, 'owasp_logs': 52539, 'payload_full': 1348, 'payloads_csv': 3213, 'synthetic_cmdi_minimal_context': 190, 'synthetic_evasion': 336, 'synthetic_multifield': 352, 'synthetic_nav': 4730, 'synthetic_nav_ecommerce': 247, 'xss_dataset': 2716}
+owasp rows whose fingerprint appears in an earlier-sorted source: 1650

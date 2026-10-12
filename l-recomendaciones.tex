@@ -27,9 +27,9 @@ Se recomienda ampliar el corpus benigno con tráfico representativo de cada apli
 
 Esa ampliación debe incluir tráfico de clientes HTTP diversos y cadenas de \textit{User-Agent} variadas, dado el peso de esa característica en el modelo y el nivel de bloqueo observado en aplicaciones de terceros (sección~\ref{sec:falsos-positivos}).
 
-\section{Publicación y validación de una versión con los modelos evaluados}
+\section{Validación de la versión publicada}
 
-El paquete publicado (\texttt{logsguardian@0.1.0}) contiene \texttt{rf\_v10} e \texttt{if\_v9}, mientras que las métricas de modelo de este trabajo corresponden a \texttt{rf\_v11} e \texttt{if\_v10}. Además, el commit \texttt{25c7e64}, del 10 de octubre de 2026, cambió la forma en que el middleware entrega la query al extractor, y es posterior a todas las evaluaciones de integración (anexo~\ref{anexo:query}). Se recomienda publicar una versión que incluya los modelos evaluados y ese cambio, construir un tarball de validación a partir de ella y repetir con él la Configuración 2, la Ronda 5 y el experimento de latencia, memoria y CPU en Linux nativo. Se recomienda también medir el desajuste entre la cadena de consulta del entrenamiento y la que recibe el middleware, que este trabajo no midió. Hasta entonces, las mediciones de integración con \texttt{rf\_v11} e \texttt{if\_v10} corresponden a artefactos no publicados.
+La versión 0.1.0 del paquete contiene \texttt{rf\_v10} e \texttt{if\_v9}, mientras que las métricas de modelo de este trabajo corresponden a \texttt{rf\_v11} e \texttt{if\_v10}. El 11 de octubre de 2026 se publicó la versión 0.1.1, que contiene esos modelos y el cambio del commit \texttt{25c7e64} en la forma en que el middleware entrega la query al extractor (anexo~\ref{anexo:query}). Se recomienda construir un tarball de validación a partir de esa versión descargada del registro y repetir con él la Configuración 2, la Ronda 5 y el experimento de latencia, memoria y CPU en Linux nativo. Se recomienda también medir el desajuste entre la cadena de consulta del entrenamiento y la que recibe el middleware, que este trabajo no midió. Hasta entonces, las mediciones de integración con \texttt{rf\_v11} e \texttt{if\_v10} corresponden a tarballs de validación y no al paquete 0.1.1.
 
 \section{Costo de memoria y CPU por componente}
 
@@ -37,7 +37,7 @@ Los incrementos de memoria (de 331.9 a 375.9~MiB) y de CPU (de +529.6\,\% a +614
 
 \section{Corpus de evaluación fuera del entrenamiento}
 
-La categoría \texttt{xss} carece de un corpus sin solapamiento, y las Configuraciones 3a y 3b no se repitieron con el corpus de la Ronda 5. Se recomienda construir un corpus limpio de \texttt{xss} y repetir la comparación con el cortafuegos de aplicaciones web sobre ambos corpus. Con el paquete publicado, el límite inferior del intervalo de Wilson de \texttt{path\_traversal} (79.4\,\%) queda bajo el criterio del 80\,\%, por lo que conviene repetir esa medición con un número mayor de payloads.
+La categoría \texttt{xss} carece de un corpus sin solapamiento, y las Configuraciones 3a y 3b no se repitieron con el corpus de la Ronda 5. Se recomienda construir un corpus limpio de \texttt{xss} y repetir la comparación con el cortafuegos de aplicaciones web sobre ambos corpus. Con el paquete 0.1.0, el límite inferior del intervalo de Wilson de \texttt{path\_traversal} (79.4\,\%) queda bajo el criterio del 80\,\%, por lo que conviene repetir esa medición con un número mayor de payloads.
 
 \section{Rigor del protocolo de evaluación}
 

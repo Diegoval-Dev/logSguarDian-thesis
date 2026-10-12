@@ -551,6 +551,16 @@ Sin causas, con las cifras de los cuadros~\ref{tabla:loso-control} y~\ref{tabla:
 
 Caída leve, de 4 puntos: \texttt{capec} (1.000 a 0.960). Sin cambio: \texttt{modsec\_learn} (0.998 a 0.997) y \texttt{xss\_dataset} (0.990 a 0.993). Los falsos positivos benignos suben al excluir \texttt{modsec\_learn} (0.001 a 0.760), \texttt{payloads\_csv} (0.004 a 0.270) y \texttt{xss\_dataset} (0.002 a 0.945). El control de mismo tamaño (b) no reproduce estas caídas: su bloqueo queda entre 0.952 y 1.000 en las ocho fuentes.
 
+\subsection{Notas sobre dos fuentes}\label{anexo:loso-fuentes}
+
+\begingroup\sloppy
+La fuente \texttt{owasp\_logs} aporta 3\,860 filas al corpus. Su archivo de origen (\texttt{training/\allowbreak data\_clean/\allowbreak owasp\_logs.jsonl}, generado por \texttt{parsers/\allowbreak parse\_owasp.py}) tiene 56\,399 filas. La deduplicación exacta de la propia fuente deja 3\,873 (52\,526 duplicados internos, 93\,\%), y la deduplicación global elimina 13 más que coinciden con fuentes anteriores en el orden de unificación (\texttt{unify.py}, línea 94). No se aplica otro filtro ni muestreo: las 3\,860 filas se reparten en 2\,702 de entrenamiento, 578 de validación y 580 de prueba, y las 3\,280 de entrenamiento y validación son las del cuadro de exclusión por fuente. El número de bloques sin etiqueta que descarta el parser (líneas 97--98) no consta.
+
+La fuente \texttt{mlops\_\allowbreak telemetry\_\allowbreak curated} aporta 119 filas: 82 de entrenamiento, 18 de validación y 19 de prueba. Proviene de la ejecución del pipeline de MLOps del 29 de agosto de 2026 sobre 244 eventos simulados, de cinco fuentes (\texttt{sim-host-1} a \texttt{sim-host-5}) y una dedicada (\texttt{sim-host-novel}), que reproducen el corpus de extremo a extremo a través del middleware; no es tráfico real. El agrupamiento (DBSCAN, \texttt{eps} 2.5, \texttt{min\_\allowbreak samples} 3) formó 17 grupos, uno de ellos de ruido con 53 eventos. Los grupos se etiquetaron a mano en la interfaz de línea de comandos; los conteos son compatibles con 16 grupos etiquetados y el de ruido sin etiquetar, pero no consta un criterio de curación escrito y el registro de decisiones no se conserva. De 130 filas etiquetadas, la deduplicación por \texttt{\_row\_\allowbreak hash} dejó 119.
+
+Fuente: \texttt{\_evidencia/\allowbreak paquete-y-fuentes-v7/} y los scripts \texttt{count\_\allowbreak owasp.py}, \texttt{dedup\_\allowbreak full.py} y \texttt{telemetry\_\allowbreak partitions.py}, con SHA-256 en el Cuadro \ref{tabla:anexo-query-procedencia}. Elaboración propia.
+\endgroup
+
 \subsection{Limitaciones}\label{anexo:loso-limitaciones}
 
 \begin{itemize}
@@ -559,7 +569,7 @@ Caída leve, de 4 puntos: \texttt{capec} (1.000 a 0.960). Sin cambio: \texttt{mo
 \item \texttt{capec} concentra la mayor parte de \texttt{sqli} y comparte \texttt{path\_traversal} con \texttt{owasp\_logs}. Excluirla retira una parte grande de la señal de esas clases, según la composición documentada en \texttt{docs/results.md} (sección F3.6).
 \item Hay fuentes con $n < 200$ (\texttt{mlops\_telemetry\_curated}, \texttt{synthetic\_nav\_ecommerce}), cuyos intervalos son amplios.
 \item Se usa una sola configuración de hiperparámetros. Las cinco semillas se aplican solo al control (b).
-\item Solo se evalúa Random Forest. No se reporta macro F1 ni se compara con \texttt{rf\_v7}.
+\item Solo se evalúa Random Forest. No se reporta macro F1 ni se compara con el LOSO anterior (\texttt{loso\_results.json}).
 \end{itemize}
 
 \subsection{Procedencia}\label{anexo:loso-procedencia}
@@ -581,7 +591,7 @@ Caída leve, de 4 puntos: \texttt{capec} (1.000 a 0.960). Sin cambio: \texttt{mo
 \texttt{train.parquet (entrada)} & \seqsplit{979ad08b629b94e974fd80e1fa9ef8f4f146fc800151ca6cb8515898045b5592} \\ \hline
 \texttt{val.parquet (entrada)} & \seqsplit{42b6a546e672d9961e45cf75895520590267bfdeeaaa8c4df95ab6e032970ad1} \\ \hline
 \texttt{rf.onnx (entrada, par C)} & \seqsplit{25b407e649283606a231665a5a8c8ea1c2c7ad4fd0374a8945b3f119651b0870} \\ \hline
-\texttt{loso\_results.json (referencia rf\_v7)} & \seqsplit{27672b0c7e5f78fa0fee6a602fc6dd0e9a8a9f8d0a0dc90d8ae00c6acab63646} \\ \hline
+\texttt{loso\_results.json (referencia: LOSO anterior)} & \seqsplit{27672b0c7e5f78fa0fee6a602fc6dd0e9a8a9f8d0a0dc90d8ae00c6acab63646} \\ \hline
 \texttt{source\_counts.txt} (recuento por fuente, \texttt{python3 count\_sources.py}) & \seqsplit{b4f419e2ff83e1df15fc73a642b6e7b9cf1c780624cb9f9f7aed593fd9843289} \\ \hline
 \texttt{count\_sources.py} (script del recuento) & \seqsplit{83789ced7c97921aef09452278e4f80098e7477bd7d67ece227c5000ac8ea29b} \\ \hline
 \end{tabular}
@@ -610,7 +620,7 @@ El Cuadro \ref{tabla:anexo-query-versiones} enumera las versiones del middleware
 \begin{tabular}{|l|p{0.40\linewidth}|p{0.36\linewidth}|}
 \hline
 \textbf{Versión medida} & \textbf{Identificador y SHA-256} & \textbf{Reconstrucción de la query en cada una} \\ \hline
-Paquete publicado 0.1.0 (\texttt{c3d591a}) & Código fuente; sin tarball en el conjunto de evidencia & \texttt{URLSearchParams} (\texttt{middleware.ts}, línea 539) \\ \hline
+Paquete 0.1.0 (\texttt{c3d591a}) & \seqsplit{c5c1a1da57cfb873350ac0c8ab3e7bad395e8cbf507b18cc3272df447880dcb0} (\texttt{dist/\allowbreak middleware.js}:490--492) & \texttt{URLSearchParams} (\texttt{middleware.ts}, línea 539) \\ \hline
 \texttt{core\_worktree\_0.1.0.tgz} (commit \texttt{f15a9e8} de logSguarDian-vulnerable-project, \texttt{vendor/logsguardian-0.1.0.tgz}; ejecución de latencia en Linux) & \seqsplit{c8b975b2577fa8e532ba418fcd5c50dc68155ed25d4a8d23f5dbcc91027ad96e} & \texttt{URLSearchParams} en \texttt{dist/middleware.js} \\ \hline
 Commit \texttt{4d928b5} del mismo repositorio (\texttt{vendor/logsguardian-0.1.0.tgz}; validación; \texttt{worktree\_vendor.tgz}, Ronda 5) & \seqsplit{cf1238deb33383975e12058de71c4423b22d7c5bcba5cf47241c0d0f712b0416} & \texttt{URLSearchParams} en \texttt{dist/middleware.js} \\ \hline
 \texttt{latency\_linux.tgz} (resultados de la ejecución de latencia en Linux) & \seqsplit{b96d901408547331fb4859a5dac4810abdb1caaeb2f15f3378877c2290187cec} & Contiene resultados de medición, no código del middleware \\ \hline
@@ -620,6 +630,30 @@ Commit \texttt{4d928b5} del mismo repositorio (\texttt{vendor/logsguardian-0.1.0
 \label{tabla:anexo-query-versiones}
 \par\smallskip\footnotesize Fuente: hashes calculados con \texttt{shasum -a 256} sobre los tarballes de \texttt{\_evidencia/query-v5/} (\texttt{SHA256SUMS.txt}); los commits \texttt{f15a9e8} y \texttt{4d928b5} se verificaron con \texttt{git -C} en logSguarDian-vulnerable-project, donde \texttt{vendor/logsguardian-0.1.0.tgz} tiene los mismos SHA-256; código de \texttt{c3d591a} verificado con \texttt{git show} en logSguarDian. Elaboración propia.
 \end{table}
+
+\subsection{Paquetes publicados en npm}\label{anexo:query-paquetes}
+
+El Cuadro \ref{tabla:anexo-query-paquetes} compara las dos versiones publicadas en el registro de npm y la forma en que cada una construye la query.
+
+\begingroup\sloppy
+\begin{table}[htbp]
+\centering
+\scriptsize
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{|p{0.09\linewidth}|p{0.17\linewidth}|p{0.24\linewidth}|p{0.06\linewidth}|p{0.21\linewidth}|p{0.21\linewidth}|}
+\hline
+\textbf{Versión} & \textbf{Publicación (UTC)} & \textbf{SHA-256 del tgz} & \textbf{Par} & \textbf{Umbral de IF} & \textbf{Construcción de la query} \\ \hline
+0.1.0 & \seqsplit{2026-08-30T05:07:31Z} & \seqsplit{c5c1a1da57cfb873350ac0c8ab3e7bad395e8cbf507b18cc3272df447880dcb0} & A & \seqsplit{0.002486040118540811}, fijo (\texttt{dist/\allowbreak middleware.js}\allowbreak :95) & \texttt{URLSearchParams} (\texttt{dist/middleware.js}:490--492) \\ \hline
+0.1.1 & \seqsplit{2026-10-11T04:02:39Z} & \seqsplit{abf8d5c47036d9c3a289bc36158f1caaa91b9504689aa97193e51c6808258d15} & C & \seqsplit{0.004205941820353609}, leído de \texttt{models/\allowbreak parity\_report.json} (\texttt{dist/\allowbreak model-metadata.js}:20--40; \texttt{dist/\allowbreak middleware.js}:118) & \texttt{req.originalUrl} con corte en ``?'' y \texttt{URLSearchParams} solo como respaldo (\texttt{dist/\allowbreak middleware.js}:539--543 y 550--552) \\ \hline
+\end{tabular}
+\end{adjustbox}
+\caption{Versiones del paquete logsguardian publicadas en npm.}
+\label{tabla:anexo-query-paquetes}
+\par\smallskip\footnotesize Fuente: \texttt{package\_hashes.txt} y \texttt{SHA256SUMS.txt} en \texttt{\_evidencia/paquete-y-fuentes-v7/}; líneas de código según el tarball de cada versión. Elaboración propia.
+\end{table}
+\endgroup
+
+El par B no aparece en ninguna de las dos versiones. La versión 0.1.1 se publicó tras el cambio de versión \texttt{20eeafd} (10 de octubre de 2026, 21:53 hora de Guatemala). No constan tags de git ni, para 0.1.0, el commit de origen.
 
 \subsection{Réplica de la Ronda 5}
 
@@ -689,11 +723,19 @@ Todas las evaluaciones de este documento son anteriores al commit \texttt{25c7e6
 \texttt{cases\_old\_vs\_new.jsonl} (salida) & \seqsplit{4421dcc7ff2f468ae39e58fd9ccbcf11271de58f5852f2e35d045233bcb046ee} \\ \hline
 \texttt{middleware\_log.txt} (\texttt{git show} de \texttt{25c7e64}) & \seqsplit{13a3d59d580f644c4aadb6963f85730687fed32ecec36c7ef7ac33625f8cc481} \\ \hline
 \texttt{rf.onnx} (modelo, par C) & \seqsplit{25b407e649283606a231665a5a8c8ea1c2c7ad4fd0374a8945b3f119651b0870} \\ \hline
+\texttt{package\_hashes.txt} (copia en \texttt{\_evidencia/paquete-y-fuentes-v7/}) & \seqsplit{776f334e73d5209a8049ee9372758d1f72eb3d6feae541d0b67d6350acdd376e} \\ \hline
+\texttt{owasp\_counts.txt} (copia en \texttt{\_evidencia/paquete-y-fuentes-v7/}) & \seqsplit{5ed8f7888424cd1bb555f10a196072c5b0218ab08fb71108bab5a31a54e0a475} \\ \hline
+\texttt{dedup\_full.txt} (copia en \texttt{\_evidencia/paquete-y-fuentes-v7/}) & \seqsplit{50b5229c30af62a850d2c009ad95ce611d7203a7fc2dc8a62d38d49d4b820686} \\ \hline
+\texttt{telemetry\_counts.txt} (copia en \texttt{\_evidencia/paquete-y-fuentes-v7/}) & \seqsplit{f641c77d999b6fc435da16f2cfb8c411684e223100da064fc8e660afeed5314f} \\ \hline
+\texttt{SHA256SUMS.txt} (copia en \texttt{\_evidencia/paquete-y-fuentes-v7/}) & \seqsplit{6503e6fcb08087c5cda29872bca2d0db2c5e8ee54ec9f7a1716260411d3ce22e} \\ \hline
+\texttt{count\_owasp.py} (copia en \texttt{\_evidencia/paquete-y-fuentes-v7/}) & \seqsplit{d915f0c19a919f7b40c25080f1122972e40009af4aaa513e01bd351aaa8c144c} \\ \hline
+\texttt{dedup\_full.py} (copia en \texttt{\_evidencia/paquete-y-fuentes-v7/}) & \seqsplit{3d2ae964804e83699c451fd314c72f9cc19b780c38de7d6bce3f20e1594338c6} \\ \hline
+\texttt{telemetry\_partitions.py} (copia en \texttt{\_evidencia/paquete-y-fuentes-v7/}) & \seqsplit{d86929d641755b9acdb9a69266dc567ac8aa8ebe65855a3faf9a692f6a82eff6} \\ \hline
 \end{tabular}
 \end{adjustbox}
-\caption{Sumas SHA-256 de los scripts, las entradas y las salidas de la réplica de la Ronda 5.}
+\caption{Sumas SHA-256 de los scripts, las entradas y las salidas de la réplica de la Ronda 5, y de los archivos de paquete y de fuentes copiados a \texttt{\_evidencia/paquete-y-fuentes-v7/}.}
 \label{tabla:anexo-query-procedencia}
-\par\smallskip\footnotesize Fuente: \texttt{shasum -a 256} sobre \texttt{\_evidencia/query-v5/}; verificadas contra \texttt{SHA256SUMS.txt}. Elaboración propia.
+\par\smallskip\footnotesize Fuente: \texttt{shasum -a 256} sobre \texttt{\_evidencia/query-v5/} y \texttt{\_evidencia/paquete-y-fuentes-v7/}; verificadas contra \texttt{SHA256SUMS.txt}. Elaboración propia.
 \end{table}
 
 \section{Métricas de rf\_v10 e if\_v9}\label{anexo:v10}
