@@ -255,7 +255,7 @@ Con tan pocos casos, la tasa de ese grupo no se estima con precisión. El grupo 
 
 \subsection{Cobertura de \texttt{cmdi} en la Ronda 5 sin los payloads con vecino}\label{anexo:casi-cobertura-cmdi}
 
-La cobertura de \texttt{cmdi} en la Ronda 5 se recalcula sin los payloads que tienen un vecino en entrenamiento. El denominador es de 200 payloads, y los timeouts, errores y respuestas HTTP 5xx cuentan como no bloqueados. El par A (tarball e09120\ldots) usa \texttt{results\_config2.json} del commit \texttt{a3aada0}, y el par C usa \texttt{results\_config2-develop-tarball-20261009.json}, añadido en el commit \texttt{4d928b5}.
+La cobertura de \texttt{cmdi} en la Ronda 5 se recalcula sin los payloads que tienen un vecino en entrenamiento. El denominador es de 200 payloads, y los timeouts, errores y respuestas HTTP 5xx cuentan como no bloqueados. El par A (tarball e09120\textellipsis{}) usa \texttt{results\_config2.json} del commit \texttt{a3aada0}, y el par C usa \texttt{results\_config2-develop-tarball-20261009.json}, añadido en el commit \texttt{4d928b5}.
 
 \begin{table}[htbp]
 \centering
@@ -735,7 +735,7 @@ Todas las evaluaciones de este documento son anteriores al commit \texttt{25c7e6
 \texttt{telemetry\_partitions.py} (copia en \texttt{\_evidencia/paquete-y-fuentes-v7/}) & \seqsplit{d86929d641755b9acdb9a69266dc567ac8aa8ebe65855a3faf9a692f6a82eff6} \\ \hline
 \end{tabular}
 \end{adjustbox}
-\caption{Sumas SHA-256 de los scripts, las entradas y las salidas de la réplica de la Ronda 5, y de los archivos de paquete y de fuentes copiados a \texttt{\_evidencia/paquete-y-fuentes-v7/}.}
+\caption[Sumas SHA-256 de la réplica de la Ronda 5 y de los archivos de paquete y de fuentes]{Sumas SHA-256 de los scripts, las entradas y las salidas de la réplica de la Ronda 5, y de los archivos de paquete y de fuentes copiados a \texttt{\_evidencia/paquete-y-fuentes-v7/}.}
 \label{tabla:anexo-query-procedencia}
 \par\smallskip\footnotesize Fuente: \texttt{shasum -a 256} sobre \texttt{\_evidencia/query-v5/} y \texttt{\_evidencia/paquete-y-fuentes-v7/}; verificadas contra \texttt{SHA256SUMS.txt}. Elaboración propia.
 \end{table}
