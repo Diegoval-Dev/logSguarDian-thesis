@@ -342,7 +342,7 @@ El Cuadro \ref{tabla:res-ronda5} presenta la cobertura de Config 2 sobre este co
 \begin{adjustbox}{max width=\linewidth}
 \begin{tabular}{|l|r|r|}
 \hline
-\textbf{Categoría} & \textbf{\texttt{rf\_v10}/\texttt{if\_v9} (paquete 0.1.0 (par A))} & \textbf{\texttt{rf\_v11}/\texttt{if\_v10} (validado)} \\ \hline
+\textbf{Categoría} & \textbf{\texttt{rf\_v10}/\texttt{if\_v9}, par A (tarball e09120\ldots)} & \textbf{\texttt{rf\_v11}/\texttt{if\_v10} (validado)} \\ \hline
 \texttt{sqli} & 200/200 (100.0\,\%) & 199/200 (99.5\,\%) \\ \hline
 \texttt{path\_traversal} & 170/200 (85.0\,\%) & 190/200 (95.0\,\%) \\ \hline
 \texttt{cmdi} & 183/200 (91.5\,\%) & 192/200 (96.0\,\%) \\ \hline
@@ -355,9 +355,9 @@ El Cuadro \ref{tabla:res-ronda5} presenta la cobertura de Config 2 sobre este co
 
 Con \texttt{rf\_v10}/\texttt{if\_v9}, los intervalos de Wilson al 95\,\% son 98.1--100.0\,\% en sqli, 79.4--89.3\,\% en path traversal y 86.8--94.6\,\% en cmdi. Con \texttt{rf\_v11}/\texttt{if\_v10} son 97.2--99.9\,\%, 91.0--97.3\,\% y 92.3--98.0\,\%, en el mismo orden. Las tres categorías superan el 80\,\% del objetivo específico 3 con ambos pares de modelos, aunque el límite inferior del intervalo de path traversal con \texttt{rf\_v10}/\texttt{if\_v9} queda por debajo de ese umbral.
 
-Al comparar por identificador, 26 payloads de path traversal pasaron de no bloqueados a bloqueados y 6 en sentido inverso; en cmdi, 16 pasaron a bloqueados y 7 en sentido inverso; en sqli, ninguno pasó a bloqueado y 1 en sentido inverso. En la corrida del paquete, \texttt{cmdi\_94} terminó por \textit{timeout}; en la corrida validada, \texttt{sqli\_75} devolvió HTTP 500. Ambas entradas se contaron como no bloqueadas.
+Al comparar por identificador, 26 payloads de path traversal pasaron de no bloqueados a bloqueados y 6 en sentido inverso; en cmdi, 16 pasaron a bloqueados y 7 en sentido inverso; en sqli, ninguno pasó a bloqueado y 1 en sentido inverso. En la corrida del par A (tarball e09120\ldots), \texttt{cmdi\_94} terminó por \textit{timeout}; en la corrida validada, \texttt{sqli\_75} devolvió HTTP 500. Ambas entradas se contaron como no bloqueadas.
 
-Esta evaluación tiene limitaciones que acotan su alcance. Se realizó una sola corrida, con 200 solicitudes por categoría. Los corpus de path traversal y cmdi son sintéticos, y la categoría \texttt{xss} no tiene un corpus limpio, por lo que su cobertura permanece en el corpus de 590 payloads. A la fecha de redacción de este capítulo (10 de octubre de 2026), las configuraciones 3a y 3b no se repitieron, de modo que la comparación con el WAF también permanece en ese corpus.
+Esta evaluación tiene limitaciones que acotan su alcance. Se realizó una sola corrida, con 200 solicitudes por categoría. Los corpus de path traversal y cmdi son sintéticos, y la categoría \texttt{xss} no tiene un corpus limpio, por lo que su cobertura permanece en el corpus de 590 payloads. A la fecha de redacción de este capítulo (10 de octubre de 2026), las configuraciones 3a y 3b no se repitieron en este trabajo; el coautor las ejecutó de forma provisional (anexo~\ref{anexo:coautor}), de modo que la comparación con el WAF de este capítulo permanece en el corpus de 590 payloads. El arnés de esta ronda codifica cada payload con \texttt{quote\_plus}, por lo que los que contienen secuencias \texttt{\%xx} llegan doble codificados; los 30 fallos de \texttt{path\_traversal} del par A son respuestas 404 de la aplicación (anexo~\ref{anexo:coautor}).
 
 Los resultados de la Ronda 5 con \texttt{rf\_v10}/\texttt{if\_v9} se conocieron el 24 de septiembre de 2026, y el modelo \texttt{rf\_v11}/\texttt{if\_v10} se reconstruyó el 26 de septiembre de 2026. El historial no vincula ambos hechos, por lo que esta no es una evaluación estrictamente ciega del modelo reconstruido. Por último, este capítulo no evalúa la causa de la diferencia de path traversal entre ambas corridas (de 85.0\,\% a 95.0\,\%).
 

@@ -1,0 +1,73 @@
+diff --git a/attack-sim/run_large_corpus.py b/attack-sim/run_large_corpus.py
+index 79f8055..87c5800 100644
+--- a/attack-sim/run_large_corpus.py
++++ b/attack-sim/run_large_corpus.py
+@@ -8,6 +8,7 @@ config_name is a free-form label (e.g. "config1", "config2", "config3a",
+ anything, the stack must already be up on http://localhost:3000.
+ """
+ import json
++import re
+ import sys
+ import time
+ import http.cookiejar
+@@ -16,6 +17,29 @@ import urllib.parse
+ import urllib.error
+ from collections import defaultdict
+ 
++# path_traversal_gen.py and cmdi_gen.py both deliberately emit payloads that
++# are ALREADY percent-encoded on the wire (e.g. "%252e%252e%252f...",
++# "%c0%ae%c0%ae...", a "%0a" separator) -- literal bytes the attacker wants
++# to send, not raw text that still needs encoding. Running those through
++# urllib.parse.urlencode() below (which treats every value as raw/decoded)
++# re-escapes the "%" characters, adding an unintended extra layer that
++# doesn't represent the attack the corpus entry was meant to simulate.
++# Found 2026-10-10 via training/audit/breakdown_config2.py's path_traversal
++# breakdown: double_encoding/overlong_utf8 misses didn't budge after fixing
++# the equivalent bug in packages/core/src/middleware.ts, because this
++# harness-side layer was adding the same kind of corruption independently.
++#
++# Scoped to path_traversal/cmdi only (not sqli): sqlmap-derived sqli
++# payloads can legitimately contain a literal "%" from SQL's LIKE wildcard
++# followed by two characters that happen to be hex digits (e.g. "%ab"),
++# which would false-positive as "already encoded" under a bare regex check.
++PRE_ENCODED_CATEGORIES = {"path_traversal", "cmdi"}
++PERCENT_ENCODED_RE = re.compile(r"%[0-9a-fA-F]{2}")
++
++
++def _is_pre_encoded(category: str, value: str) -> bool:
++    return category in PRE_ENCODED_CATEGORIES and bool(PERCENT_ENCODED_RE.search(value))
++
+ BASE_URL = "http://localhost:3000"
+ CORPUS_PATH = "attack-sim/large_corpus_requests.json"
+ # Fixed across every request: User-Agent is part of logsguardian's feature
+@@ -53,14 +77,27 @@ def do_request(opener, req_spec):
+     param = req_spec["param"]
+     payload = req_spec["payload"]
+     extra = req_spec.get("extra", {})
++    category = req_spec.get("category", "")
++    pre_encoded = _is_pre_encoded(category, payload)
+ 
+     if method == "GET":
+-        qs = urllib.parse.urlencode({param: payload})
++        if pre_encoded:
++            # Insert the payload's literal bytes as-is; only the param name
++            # goes through quote() (it's a fixed ascii identifier, never
++            # attacker-controlled, so this is just normal query syntax).
++            qs = f"{urllib.parse.quote(param, safe='')}={payload}"
++        else:
++            qs = urllib.parse.urlencode({param: payload})
+         url = f"{BASE_URL}{path}?{qs}"
+         req = urllib.request.Request(url, method="GET")
+     else:
+-        body = {param: payload, **extra}
+-        data = urllib.parse.urlencode(body).encode()
++        if pre_encoded:
++            parts = [f"{urllib.parse.quote(param, safe='')}={payload}"]
++            parts += [f"{urllib.parse.quote(k, safe='')}={urllib.parse.quote(str(v), safe='')}" for k, v in extra.items()]
++            data = "&".join(parts).encode()
++        else:
++            body = {param: payload, **extra}
++            data = urllib.parse.urlencode(body).encode()
+         req = urllib.request.Request(f"{BASE_URL}{path}", data=data, method="POST")
+         req.add_header("Content-Type", "application/x-www-form-urlencoded")
+     req.add_header("User-Agent", FIXED_USER_AGENT)

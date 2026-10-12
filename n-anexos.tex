@@ -255,7 +255,7 @@ Con tan pocos casos, la tasa de ese grupo no se estima con precisión. El grupo 
 
 \subsection{Cobertura de \texttt{cmdi} en la Ronda 5 sin los payloads con vecino}\label{anexo:casi-cobertura-cmdi}
 
-La cobertura de \texttt{cmdi} en la Ronda 5 se recalcula sin los payloads que tienen un vecino en entrenamiento. El denominador es de 200 payloads, y los timeouts, errores y respuestas HTTP 5xx cuentan como no bloqueados. El par A usa \texttt{results\_config2.json} del commit \texttt{a3aada0}, y el par C usa \texttt{results\_config2-develop-tarball-20261009.json}, añadido en el commit \texttt{4d928b5}.
+La cobertura de \texttt{cmdi} en la Ronda 5 se recalcula sin los payloads que tienen un vecino en entrenamiento. El denominador es de 200 payloads, y los timeouts, errores y respuestas HTTP 5xx cuentan como no bloqueados. El par A (tarball e09120\ldots) usa \texttt{results\_config2.json} del commit \texttt{a3aada0}, y el par C usa \texttt{results\_config2-develop-tarball-20261009.json}, añadido en el commit \texttt{4d928b5}.
 
 \begin{table}[htbp]
 \centering
@@ -655,6 +655,8 @@ El Cuadro \ref{tabla:anexo-query-paquetes} compara las dos versiones publicadas 
 
 El par B no aparece en ninguna de las dos versiones. La versión 0.1.1 se publicó tras el cambio de versión \texttt{20eeafd} (10 de octubre de 2026, 21:53 hora de Guatemala). No constan tags de git ni, para 0.1.0, el commit de origen.
 
+El tarball \texttt{e09120\ldots} del par A y el tgz del registro de 0.1.0 (\seqsplit{c5c1a1da57cfb873350ac0c8ab3e7bad395e8cbf507b18cc3272df447880dcb0}) tienen modelos idénticos y el mismo umbral de Isolation Forest. Difieren en el código: el tarball espera al Isolation Forest 5~ms (\texttt{IF\_GRACE\_MS}), mientras que el registro reemplaza esa espera por un parche asíncrono y añade telemetría y webhooks. Ambos construyen la query con \texttt{URLSearchParams}. El tarball \texttt{cf1238\ldots} del par C y el tgz de 0.1.1 (\texttt{abf8d5c4\ldots}) tienen los mismos modelos y el mismo \texttt{parity\_report.json}, y difieren en el código en la construcción de la query; difieren además en la nota de texto de \texttt{data/class\_metrics.json} y en el campo de versión de \texttt{package.json}, que en el tarball \texttt{cf1238\ldots} es 0.1.0. Por tanto, las evaluaciones de este trabajo que usaron tarball no emplearon el tgz del registro.
+
 \subsection{Réplica de la Ronda 5}
 
 Se reprodujeron las 600 peticiones de la Ronda 5 (200 por clase: \texttt{sqli}, \texttt{path\_traversal} y \texttt{cmdi}) con el extractor de \texttt{dc380e3}, el modelo \texttt{rf.onnx} del par C (SHA-256 \seqsplit{25b407e649283606a231665a5a8c8ea1c2c7ad4fd0374a8945b3f119651b0870}), el umbral de decisión $T = 0.35$ y la codificación de \texttt{run\_large\_corpus.py}. Cada petición se evaluó con dos derivaciones de la query: la anterior a \texttt{25c7e64} y la de \texttt{dc380e3}. El Cuadro \ref{tabla:anexo-query-replica} resume la comparación.
@@ -796,3 +798,76 @@ Las métricas de v10 y las de v11 no son comparables, por tres razones:
 \item La lectura única por generación que atribuye \texttt{docs/model-comparison.md} (líneas 100--102) no consta en los registros revisados. El registro de \texttt{rf\_v11} documenta tres lecturas de \texttt{test.parquet} (24, 25 y 26 de septiembre de 2026) en \texttt{docs/decision-policy.md} (línea 51) y en la nota \texttt{eval\_note} de \texttt{packages/core/data/class\_metrics.json}.
 \end{itemize}
 
+\section{Evaluaciones posteriores del coautor sobre la Ronda 5}\label{anexo:coautor}
+
+Este anexo reúne mediciones sobre el corpus de la Ronda 5 que ejecutó Sebastián Huertas Gómez en el repositorio de la aplicación vulnerable. El autor de este trabajo no las ejecutó ni las reprodujo, y no forman parte de los criterios de aceptación. Los archivos no registran la fecha de ejecución, solo la de los commits. Los commits \texttt{963843e} (18:24), \texttt{20cbd88} (20:52) y \texttt{00ea3a3} (22:37) tienen fecha del 10 de octubre de 2026 en hora local (UTC$-$6), y su autor es el usuario de Git \texttt{xtsebas}. El commit \texttt{00ea3a3} corresponde al 11 de octubre de 2026 en UTC.
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{|p{0.36\linewidth}|r|r|r|r|r|}
+\hline
+\textbf{Configuración} & \textbf{sqli} & \textbf{path\_traversal} & \textbf{cmdi} & \textbf{xss} & \textbf{Total (600)} \\ \hline
+Configuración 1, sin protección & 0/200 & 0/200 & 0/200 & 0/1 & 0/600 \\ \hline
+Configuración 2, par A (tarball \texttt{e09120\ldots}) & 200/200 & 170/200 & 183/200 & \textsuperscript{a}— & 553/600 \\ \hline
+Configuración 2, par C (tarball \texttt{cf1238\ldots}) & 199/200 & 190/200 & 192/200 & \textsuperscript{a}— & 581/600 \\ \hline
+Configuración 3a, WAF & 199/200 & 197/200 & 136/200 & 1/1 & 532/600 \\ \hline
+Configuración 3b, WAF y logSguarDian & 200/200 & 200/200 & 197/200 & 1/1 & 597/600 \\ \hline
+Paquete 0.1.1, arnés original & 199/200 & 190/200 & 192/200 & 1/1 & 581/600 \\ \hline
+Paquete 0.1.1, arnés corregido & 199/200 & 200/200 & 185/200\textsuperscript{b} & 1/1 & 584/600 \\ \hline
+\end{tabular}
+\end{adjustbox}
+\caption{Bloqueos por categoría en las mediciones del coautor sobre la Ronda 5.}
+\label{tabla:anexo-coautor-resultados}
+\par\smallskip\footnotesize Fuente: conteo propio de los campos \texttt{blocked} y \texttt{status} de los archivos \texttt{results\_\allowbreak *.\allowbreak json} de \texttt{\_evidencia/coautor-ronda5-v10/}. Bloqueado significa HTTP 403; los errores y los timeouts cuentan como no bloqueados. (a) Los archivos de 608 entradas de los commits \texttt{a3aada0} y \texttt{4d928b5} contienen ocho marcadores xss escritos a mano, que no se evalúan; la columna xss solo es comparable desde las filas de \texttt{963843e}. (b) Incluye un timeout (\texttt{cmdi\_7}). Elaboración propia.
+\end{table}
+
+De los paquetes usados en las Configuraciones 1, 3a y 3b no consta registro en los resultados. El directorio \texttt{vendor} del commit \texttt{963843e} contiene el tgz con SHA-256 \seqsplit{c5c1a1da57cfb873350ac0c8ab3e7bad395e8cbf507b18cc3272df447880dcb0}, que es el de la versión 0.1.0 del registro. La columna del par A usa el tarball \seqsplit{e09120006dd17e790838f2ae92bb68ee4c7f3a5e160c2c4c83f5a513909fe359} (commit \texttt{a3aada0}), y la del par C el tarball \seqsplit{cf1238deb33383975e12058de71c4423b22d7c5bcba5cf47241c0d0f712b0416} (commit \texttt{4d928b5}). La corrida de la Configuración 2 de \texttt{963843e} tiene como vendor el tgz del registro, pero no consta que se ejecutara con él.
+
+El arnés original codifica cada payload con \texttt{quote\_plus}, por lo que los payloads que ya contienen secuencias \texttt{\%xx} llegan doblemente codificados. El cambio del commit \texttt{00ea3a3} los envía sin codificar, y es lo único que cambia entre las dos corridas de 0.1.1. Con el arnés original, 0.1.1 da exactamente los mismos resultados que el tarball del par C. Por tanto, la mejora de \texttt{path\_traversal} de 190 a 200 no se debe al cambio de la query del commit \texttt{25c7e64}, sino al arnés: los 10 casos que cambian pasan de 404 a 403.
+
+En \texttt{cmdi} cambian 13 veredictos, y 13 payloads con \texttt{\&} sin codificar se truncan en el servidor. Por ello, 185/200 depende en parte del arnés. Ninguna de las dos variantes entrega los 200 payloads de \texttt{cmdi} como se pretendía. Los fallos de \texttt{path} del par A son todos respuestas 404 de la aplicación (30 de 200). Sin protección, 184 de 200 payloads de \texttt{path} de la Configuración 1 dan 404, y el arnés los cuenta como no bloqueados.
+
+Las dos corridas de 0.1.1 usaron el paquete instalado desde el registro, según el lock de la rama de prueba: el integrity SHA-512 de \texttt{package-lock.json} coincide con el del tgz de \texttt{npm pack} de 0.1.1 (SHA-256 \seqsplit{abf8d5c47036d9c3a289bc36158f1caaa91b9504689aa97193e51c6808258d15}). Con el arnés original, \texttt{path} da 190/200 (intervalo de Wilson al 95\,\%: 91.0--97.3\,\%) y \texttt{cmdi} da 192/200 (92.3--98.0\,\%). Con el arnés corregido, \texttt{path} da 200/200 (98.1--100.0\,\%) y \texttt{cmdi} da 185/200 (88.0--95.4\,\%), con un timeout. La cifra de 200/200 se midió sobre el corpus que reveló los defectos, por lo que es optimista. El límite inferior de \texttt{path} con el tarball del par A (79.4\,\%) no se reproduce con 0.1.1 y el arnés original (91.0\,\%).
+
+Los archivos \texttt{vendor/*.tgz} y \texttt{models/*} del commit \texttt{00ea3a3} están vacíos, y no consta el motivo.
+
+\subsection{Escaneo con OWASP ZAP}\label{anexo:coautor-zap}
+
+OWASP ZAP 2.17.0 realizó un escaneo autenticado como el usuario \texttt{alice} sobre \texttt{localhost:\allowbreak 3000}, con spider y escaneo activo. El escaneo produjo 538 alertas en total. Una de ellas es una alerta de XSS reflejado en \texttt{POST /profile}, campo \texttt{bio}, con el payload \texttt{</div>\allowbreak<scrIpt>\allowbreak alert(1);\allowbreak</scRipt>\allowbreak<div>} (id \texttt{xss\_placeholder\_0} de la Ronda 5).
+
+El número $n = 1$ significa un payload y una petición por configuración, sin repeticiones. Los resultados son 0/1 sin protección y 1/1 en las configuraciones 2, 3a y 3b. El paquete que ejecutaba la aplicación no consta, y tampoco constan la política de escaneo ni el ajax spider. Un solo caso no permite afirmar el cumplimiento del criterio del 80\,\% para \texttt{xss}.
+
+\begin{table}[htbp]
+\centering
+\scriptsize
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{|p{0.34\linewidth}|p{0.20\linewidth}|p{0.40\linewidth}|}
+\hline
+\textbf{Archivo o tarball} & \textbf{Origen} & \textbf{SHA-256} \\ \hline
+\texttt{results\_\allowbreak config1-\allowbreak round5-\allowbreak 20261010.\allowbreak json} & \texttt{20cbd88} & \seqsplit{e4b44ca4b21c023b778c2204c69e58b0a334a128340680aab91a2ebc21a894d3} \\ \hline
+\texttt{results\_\allowbreak config2-\allowbreak parA-\allowbreak a3aada0.\allowbreak json} (\texttt{results\_\allowbreak config2.\allowbreak json}) & \texttt{a3aada0} & \seqsplit{ed3fbc91b80f68483ffef5ae9dc432dab9ce104836ddbca1a2295dd873031054} \\ \hline
+\texttt{results\_\allowbreak config2-\allowbreak published-\allowbreak with-\allowbreak real-\allowbreak xss-\allowbreak 20261010.\allowbreak json} & \texttt{963843e} & \seqsplit{e56dc582e2ce57bd3bf4d80e204dd87d0aa17632da4af7f9897c0f574139d534} \\ \hline
+\texttt{results\_\allowbreak config2-\allowbreak parC-\allowbreak 4d928b5.\allowbreak json} & \texttt{4d928b5} & \seqsplit{dd4ea3c565f9368fabf146c56d1c48de08212e2c0c2e5f677a550532baa36bc9} \\ \hline
+\texttt{results\_\allowbreak config2-\allowbreak with-\allowbreak real-\allowbreak xss-\allowbreak 20261010.\allowbreak json} & \texttt{963843e} & \seqsplit{80d4ee8251e2758292f23956a59067ea395d3637810e40433a59046856731273} \\ \hline
+\texttt{results\_\allowbreak config3a-\allowbreak round5-\allowbreak 20261010.\allowbreak json} & \texttt{20cbd88} & \seqsplit{def99facb115e38295243957a1ed297839e0d97cd50fa2bf9eb94d822f9fbd2d} \\ \hline
+\texttt{results\_\allowbreak config3b-\allowbreak round5-\allowbreak 20261010.\allowbreak json} & \texttt{20cbd88} & \seqsplit{0f854afece9844a270c2aa6fe3883e90faf5786e1a4b085b5be381ba9028144e} \\ \hline
+\texttt{results\_\allowbreak config2-\allowbreak published-\allowbreak 0.\allowbreak 1.\allowbreak 1-\allowbreak 20261010.\allowbreak json} & \texttt{00ea3a3} & \seqsplit{80d4ee8251e2758292f23956a59067ea395d3637810e40433a59046856731273} \\ \hline
+\texttt{results\_\allowbreak config2-\allowbreak published-\allowbreak 0.\allowbreak 1.\allowbreak 1-\allowbreak harness-\allowbreak fixed-\allowbreak 20261010.\allowbreak json} & \texttt{00ea3a3} & \seqsplit{66958151c52888a9c629ff440fdc0759a244ba25fb4ba5cb89916fd6b4f03490} \\ \hline
+\texttt{zap-\allowbreak xss-\allowbreak report.\allowbreak json} & \texttt{963843e} & \seqsplit{85389aff3510438d2577ff361da7dc3015557f46bb292b60b9c47bd37ac235b0} \\ \hline
+\texttt{zap-\allowbreak alerts-\allowbreak full.\allowbreak json} & \texttt{963843e} & \seqsplit{bde073136cf0ec61433e466938c1e21a699b84fe7ebc0d8d1fd2b1f1c3291d88} \\ \hline
+\texttt{run\_\allowbreak large\_\allowbreak corpus-\allowbreak origin-\allowbreak main-\allowbreak vs-\allowbreak 00ea3a3.\allowbreak diff} & \texttt{origin/main}--\texttt{00ea3a3} & \seqsplit{a304b458cad3162ecbd02fd42767c8028829b185b47d03c81ccc7e68c03cf117} \\ \hline
+\texttt{cmdi\_\allowbreak flips.\allowbreak md} & Auditoría v10 & \seqsplit{15d08b706978f224c157a0930cacb40fd7112b38e12abc4ecf03000c7cf7c665} \\ \hline
+\texttt{manifest\_\allowbreak v10.\allowbreak txt} & Auditoría v10 & \seqsplit{55af9fdc2a4684a287e493bc462b79c485da97020ff5f09a8eff8127111753cd} \\ \hline
+Tarball de la Ronda 5 original (par A) & \texttt{a3aada0} & \seqsplit{e09120006dd17e790838f2ae92bb68ee4c7f3a5e160c2c4c83f5a513909fe359} \\ \hline
+Tarball de validación (par C) & \texttt{4d928b5} & \seqsplit{cf1238deb33383975e12058de71c4423b22d7c5bcba5cf47241c0d0f712b0416} \\ \hline
+Tgz de 0.1.0 del registro (\texttt{vendor} de \texttt{963843e}) & Registro npm & \seqsplit{c5c1a1da57cfb873350ac0c8ab3e7bad395e8cbf507b18cc3272df447880dcb0} \\ \hline
+Tgz de 0.1.1 del registro (\texttt{npm pack}) & Registro npm & \seqsplit{abf8d5c47036d9c3a289bc36158f1caaa91b9504689aa97193e51c6808258d15} \\ \hline
+\end{tabular}
+\end{adjustbox}
+\caption{Procedencia de los archivos copiados a \texttt{\_evidencia/coautor-ronda5-v10/} y de los tarballes citados.}
+\label{tabla:anexo-coautor-procedencia}
+\par\smallskip\footnotesize Fuente: \texttt{SHA256SUMS.txt} de \texttt{\_evidencia/coautor-ronda5-v10/} (\texttt{shasum -a 256}); los commits se verificaron con \texttt{git show} sobre logSguarDian-vulnerable-project. Elaboración propia.
+\end{table}

@@ -37,7 +37,7 @@ Los incrementos de memoria (de 331.9 a 375.9~MiB) y de CPU (de +529.6\,\% a +614
 
 \section{Corpus de evaluación fuera del entrenamiento}
 
-La categoría \texttt{xss} carece de un corpus sin solapamiento, y las Configuraciones 3a y 3b no se repitieron con el corpus de la Ronda 5. Se recomienda construir un corpus limpio de \texttt{xss} y repetir la comparación con el cortafuegos de aplicaciones web sobre ambos corpus. Con el paquete 0.1.0, el límite inferior del intervalo de Wilson de \texttt{path\_traversal} (79.4\,\%) queda bajo el criterio del 80\,\%, por lo que conviene repetir esa medición con un número mayor de payloads.
+La categoría \texttt{xss} carece de un corpus sin solapamiento; un caso hallado con ZAP no basta para evaluar su cobertura. Las Configuraciones 1, 3a y 3b se ejecutaron sobre la Ronda 5 de forma provisional, sin paquete identificado en los resultados (anexo~\ref{anexo:coautor}). Se recomienda construir un corpus limpio de \texttt{xss} y repetir la comparación con el cortafuegos de aplicaciones web sobre ambos corpus con el paquete 0.1.1 del registro. Se recomienda también definir para cada payload su forma exacta en el cable, para que el arnés no la altere. Con el tarball del par A, el límite inferior del intervalo de Wilson de \texttt{path\_traversal} (79.4\,\%) queda bajo el criterio del 80\,\%; la medición debe repetirse con un número mayor de payloads.
 
 \section{Rigor del protocolo de evaluación}
 

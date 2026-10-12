@@ -1,0 +1,4259 @@
+[
+  {
+    "id": "sqli_0",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_1",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_2",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_3",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_4",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_5",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_6",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_7",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_8",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_9",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_10",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_11",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_12",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_13",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_14",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_15",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_16",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_17",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_18",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_19",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_20",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_21",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_22",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_23",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_24",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_25",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_26",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_27",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_28",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_29",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_30",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_31",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_32",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_33",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_34",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_35",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_36",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_37",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_38",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_39",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_40",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_41",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_42",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_43",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_44",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_45",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_46",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_47",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_48",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_49",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_50",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_51",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_52",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_53",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_54",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_55",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_56",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_57",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_58",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_59",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_60",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_61",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_62",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_63",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_64",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_65",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_66",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_67",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_68",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_69",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_70",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_71",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_72",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_73",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_74",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_75",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_76",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_77",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_78",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_79",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_80",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_81",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_82",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_83",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_84",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_85",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_86",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_87",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_88",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_89",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_90",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_91",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_92",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_93",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_94",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_95",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_96",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_97",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_98",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_99",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_100",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_101",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_102",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_103",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_104",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_105",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_106",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_107",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_108",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_109",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_110",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_111",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_112",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_113",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_114",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_115",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_116",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_117",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_118",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_119",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_120",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_121",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_122",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_123",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_124",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_125",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_126",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_127",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_128",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_129",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_130",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_131",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_132",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_133",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_134",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_135",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_136",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_137",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_138",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_139",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_140",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_141",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_142",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_143",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_144",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_145",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_146",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_147",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_148",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_149",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_150",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_151",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_152",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_153",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_154",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_155",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_156",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_157",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_158",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_159",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_160",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_161",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_162",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_163",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_164",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_165",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_166",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_167",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_168",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_169",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_170",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_171",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_172",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_173",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_174",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_175",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_176",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_177",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_178",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_179",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_180",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_181",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_182",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_183",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_184",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_185",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_186",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_187",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_188",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_189",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_190",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_191",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_192",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_193",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_194",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_195",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_196",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_197",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_198",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "sqli_199",
+    "category": "sqli",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_0",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_1",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_2",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_3",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_4",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_5",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_6",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_7",
+    "category": "path_traversal",
+    "status": 404,
+    "blocked": false,
+    "layer_guess": "n/a"
+  },
+  {
+    "id": "path_traversal_8",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_9",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_10",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_11",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_12",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_13",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_14",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_15",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_16",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_17",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_18",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_19",
+    "category": "path_traversal",
+    "status": 404,
+    "blocked": false,
+    "layer_guess": "n/a"
+  },
+  {
+    "id": "path_traversal_20",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_21",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_22",
+    "category": "path_traversal",
+    "status": 404,
+    "blocked": false,
+    "layer_guess": "n/a"
+  },
+  {
+    "id": "path_traversal_23",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_24",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_25",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_26",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_27",
+    "category": "path_traversal",
+    "status": 404,
+    "blocked": false,
+    "layer_guess": "n/a"
+  },
+  {
+    "id": "path_traversal_28",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_29",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_30",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_31",
+    "category": "path_traversal",
+    "status": 404,
+    "blocked": false,
+    "layer_guess": "n/a"
+  },
+  {
+    "id": "path_traversal_32",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_33",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_34",
+    "category": "path_traversal",
+    "status": 404,
+    "blocked": false,
+    "layer_guess": "n/a"
+  },
+  {
+    "id": "path_traversal_35",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_36",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_37",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_38",
+    "category": "path_traversal",
+    "status": 404,
+    "blocked": false,
+    "layer_guess": "n/a"
+  },
+  {
+    "id": "path_traversal_39",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_40",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_41",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_42",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_43",
+    "category": "path_traversal",
+    "status": 404,
+    "blocked": false,
+    "layer_guess": "n/a"
+  },
+  {
+    "id": "path_traversal_44",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_45",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_46",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_47",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_48",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_49",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_50",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_51",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_52",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_53",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_54",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_55",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_56",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_57",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_58",
+    "category": "path_traversal",
+    "status": 404,
+    "blocked": false,
+    "layer_guess": "n/a"
+  },
+  {
+    "id": "path_traversal_59",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_60",
+    "category": "path_traversal",
+    "status": 404,
+    "blocked": false,
+    "layer_guess": "n/a"
+  },
+  {
+    "id": "path_traversal_61",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_62",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_63",
+    "category": "path_traversal",
+    "status": 404,
+    "blocked": false,
+    "layer_guess": "n/a"
+  },
+  {
+    "id": "path_traversal_64",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_65",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_66",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_67",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_68",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_69",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_70",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_71",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_72",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_73",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_74",
+    "category": "path_traversal",
+    "status": 404,
+    "blocked": false,
+    "layer_guess": "n/a"
+  },
+  {
+    "id": "path_traversal_75",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_76",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_77",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_78",
+    "category": "path_traversal",
+    "status": 404,
+    "blocked": false,
+    "layer_guess": "n/a"
+  },
+  {
+    "id": "path_traversal_79",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_80",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_81",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_82",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_83",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_84",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_85",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_86",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_87",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_88",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_89",
+    "category": "path_traversal",
+    "status": 404,
+    "blocked": false,
+    "layer_guess": "n/a"
+  },
+  {
+    "id": "path_traversal_90",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_91",
+    "category": "path_traversal",
+    "status": 404,
+    "blocked": false,
+    "layer_guess": "n/a"
+  },
+  {
+    "id": "path_traversal_92",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_93",
+    "category": "path_traversal",
+    "status": 404,
+    "blocked": false,
+    "layer_guess": "n/a"
+  },
+  {
+    "id": "path_traversal_94",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_95",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_96",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_97",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_98",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_99",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_100",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_101",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_102",
+    "category": "path_traversal",
+    "status": 404,
+    "blocked": false,
+    "layer_guess": "n/a"
+  },
+  {
+    "id": "path_traversal_103",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_104",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_105",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_106",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_107",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_108",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_109",
+    "category": "path_traversal",
+    "status": 404,
+    "blocked": false,
+    "layer_guess": "n/a"
+  },
+  {
+    "id": "path_traversal_110",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_111",
+    "category": "path_traversal",
+    "status": 404,
+    "blocked": false,
+    "layer_guess": "n/a"
+  },
+  {
+    "id": "path_traversal_112",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_113",
+    "category": "path_traversal",
+    "status": 404,
+    "blocked": false,
+    "layer_guess": "n/a"
+  },
+  {
+    "id": "path_traversal_114",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_115",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_116",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_117",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_118",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_119",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_120",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_121",
+    "category": "path_traversal",
+    "status": 404,
+    "blocked": false,
+    "layer_guess": "n/a"
+  },
+  {
+    "id": "path_traversal_122",
+    "category": "path_traversal",
+    "status": 404,
+    "blocked": false,
+    "layer_guess": "n/a"
+  },
+  {
+    "id": "path_traversal_123",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_124",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_125",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_126",
+    "category": "path_traversal",
+    "status": 404,
+    "blocked": false,
+    "layer_guess": "n/a"
+  },
+  {
+    "id": "path_traversal_127",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_128",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_129",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_130",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_131",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_132",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_133",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_134",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_135",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_136",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_137",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_138",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_139",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_140",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_141",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_142",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_143",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_144",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_145",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_146",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_147",
+    "category": "path_traversal",
+    "status": 404,
+    "blocked": false,
+    "layer_guess": "n/a"
+  },
+  {
+    "id": "path_traversal_148",
+    "category": "path_traversal",
+    "status": 404,
+    "blocked": false,
+    "layer_guess": "n/a"
+  },
+  {
+    "id": "path_traversal_149",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_150",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_151",
+    "category": "path_traversal",
+    "status": 404,
+    "blocked": false,
+    "layer_guess": "n/a"
+  },
+  {
+    "id": "path_traversal_152",
+    "category": "path_traversal",
+    "status": 404,
+    "blocked": false,
+    "layer_guess": "n/a"
+  },
+  {
+    "id": "path_traversal_153",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_154",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_155",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_156",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_157",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_158",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_159",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_160",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_161",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_162",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_163",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_164",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_165",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_166",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_167",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_168",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_169",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_170",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_171",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_172",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_173",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_174",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_175",
+    "category": "path_traversal",
+    "status": 404,
+    "blocked": false,
+    "layer_guess": "n/a"
+  },
+  {
+    "id": "path_traversal_176",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_177",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_178",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_179",
+    "category": "path_traversal",
+    "status": 404,
+    "blocked": false,
+    "layer_guess": "n/a"
+  },
+  {
+    "id": "path_traversal_180",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_181",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_182",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_183",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_184",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_185",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_186",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_187",
+    "category": "path_traversal",
+    "status": 404,
+    "blocked": false,
+    "layer_guess": "n/a"
+  },
+  {
+    "id": "path_traversal_188",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_189",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_190",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_191",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_192",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_193",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_194",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_195",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_196",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_197",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_198",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "path_traversal_199",
+    "category": "path_traversal",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_0",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_1",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_2",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_3",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_4",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_5",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_6",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_7",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_8",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_9",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_10",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_11",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_12",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_13",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_14",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_15",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_16",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_17",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_18",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_19",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_20",
+    "category": "cmdi",
+    "status": 200,
+    "blocked": false,
+    "layer_guess": "n/a"
+  },
+  {
+    "id": "cmdi_21",
+    "category": "cmdi",
+    "status": 200,
+    "blocked": false,
+    "layer_guess": "n/a"
+  },
+  {
+    "id": "cmdi_22",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_23",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_24",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_25",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_26",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_27",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_28",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_29",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_30",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_31",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_32",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_33",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_34",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_35",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_36",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_37",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_38",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_39",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_40",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_41",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_42",
+    "category": "cmdi",
+    "status": 200,
+    "blocked": false,
+    "layer_guess": "n/a"
+  },
+  {
+    "id": "cmdi_43",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_44",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_45",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_46",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_47",
+    "category": "cmdi",
+    "status": 200,
+    "blocked": false,
+    "layer_guess": "n/a"
+  },
+  {
+    "id": "cmdi_48",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_49",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_50",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_51",
+    "category": "cmdi",
+    "status": 200,
+    "blocked": false,
+    "layer_guess": "n/a"
+  },
+  {
+    "id": "cmdi_52",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_53",
+    "category": "cmdi",
+    "status": 200,
+    "blocked": false,
+    "layer_guess": "n/a"
+  },
+  {
+    "id": "cmdi_54",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_55",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_56",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_57",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_58",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_59",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_60",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_61",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_62",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_63",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_64",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_65",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_66",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_67",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_68",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_69",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_70",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_71",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_72",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_73",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_74",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_75",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_76",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_77",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_78",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_79",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_80",
+    "category": "cmdi",
+    "status": 200,
+    "blocked": false,
+    "layer_guess": "n/a"
+  },
+  {
+    "id": "cmdi_81",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_82",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_83",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_84",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_85",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_86",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_87",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_88",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_89",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_90",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_91",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_92",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_93",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_94",
+    "category": "cmdi",
+    "status": "error",
+    "error": "timed out",
+    "blocked": null,
+    "layer_guess": null
+  },
+  {
+    "id": "cmdi_95",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_96",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_97",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_98",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_99",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_100",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_101",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_102",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_103",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_104",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_105",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_106",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_107",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_108",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_109",
+    "category": "cmdi",
+    "status": 200,
+    "blocked": false,
+    "layer_guess": "n/a"
+  },
+  {
+    "id": "cmdi_110",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_111",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_112",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_113",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_114",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_115",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_116",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_117",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_118",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_119",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_120",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_121",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_122",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_123",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_124",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_125",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_126",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_127",
+    "category": "cmdi",
+    "status": 200,
+    "blocked": false,
+    "layer_guess": "n/a"
+  },
+  {
+    "id": "cmdi_128",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_129",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_130",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_131",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_132",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_133",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_134",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_135",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_136",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_137",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_138",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_139",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_140",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_141",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_142",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_143",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_144",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_145",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_146",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_147",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_148",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_149",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_150",
+    "category": "cmdi",
+    "status": 200,
+    "blocked": false,
+    "layer_guess": "n/a"
+  },
+  {
+    "id": "cmdi_151",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_152",
+    "category": "cmdi",
+    "status": 200,
+    "blocked": false,
+    "layer_guess": "n/a"
+  },
+  {
+    "id": "cmdi_153",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_154",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_155",
+    "category": "cmdi",
+    "status": 200,
+    "blocked": false,
+    "layer_guess": "n/a"
+  },
+  {
+    "id": "cmdi_156",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_157",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_158",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_159",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_160",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_161",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_162",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_163",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_164",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_165",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_166",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_167",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_168",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_169",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_170",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_171",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_172",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_173",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_174",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_175",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_176",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_177",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_178",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_179",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_180",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_181",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_182",
+    "category": "cmdi",
+    "status": 200,
+    "blocked": false,
+    "layer_guess": "n/a"
+  },
+  {
+    "id": "cmdi_183",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_184",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_185",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_186",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_187",
+    "category": "cmdi",
+    "status": 200,
+    "blocked": false,
+    "layer_guess": "n/a"
+  },
+  {
+    "id": "cmdi_188",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_189",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_190",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_191",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_192",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_193",
+    "category": "cmdi",
+    "status": 200,
+    "blocked": false,
+    "layer_guess": "n/a"
+  },
+  {
+    "id": "cmdi_194",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_195",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_196",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_197",
+    "category": "cmdi",
+    "status": 200,
+    "blocked": false,
+    "layer_guess": "n/a"
+  },
+  {
+    "id": "cmdi_198",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "cmdi_199",
+    "category": "cmdi",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "xss_placeholder_0",
+    "category": "xss_placeholder",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "xss_placeholder_1",
+    "category": "xss_placeholder",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "xss_placeholder_2",
+    "category": "xss_placeholder",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "xss_placeholder_3",
+    "category": "xss_placeholder",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "xss_placeholder_4",
+    "category": "xss_placeholder",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "xss_placeholder_5",
+    "category": "xss_placeholder",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "xss_placeholder_6",
+    "category": "xss_placeholder",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  },
+  {
+    "id": "xss_placeholder_7",
+    "category": "xss_placeholder",
+    "status": 403,
+    "blocked": true,
+    "layer_guess": "app"
+  }
+]
