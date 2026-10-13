@@ -8,7 +8,7 @@ El extractor cumple el criterio del objetivo específico 1. El p95 mixto del cic
 
 % CALC: 12.08/0.0273 = 442 y 12.85/0.0273 = 471; ambos cocientes superan 400.
 El incremento de latencia de extremo a extremo en Linux es de 12.08~ms en carga normal y de 12.85~ms en carga de ataque, más de 400 veces el costo del extractor (subsección~\ref{sec:config2}). La extracción no explica el sobrecosto del middleware. El middleware crea tres \texttt{worker\_threads}, dos de Isolation Forest y uno de Random Forest (sección~\ref{sec:memoria-cpu}), comunica los hilos por mensajes y persiste los eventos en SQLite.
-% FUENTE: logSguarDian, origin/develop. Workers: middleware.ts:391 (RF), :418 (pool IF, IF\_POOL\_SIZE = 2 en :88). Mensajes: middleware.ts:544, :549 y :559 (postMessage). Persistencia: store.ts:61 (INSERT INTO detection_events) y middleware.ts:688 y :695 (store.log por evento en ambas ramas). El worker de canary (middleware.ts:456) solo se crea en la reproducción de corpus.
+% FUENTE: logSguarDian, origin/develop. Workers: middleware.ts:391 (RF), :418 (pool IF, IF\_POOL\_SIZE = 2 en :88). Mensajes: middleware.ts:544, :549 y :559 (postMessage). Persistencia: store.ts:61 (INSERT INTO detection_events) y middleware.ts:709 y :716 (store.log por evento en ambas ramas). El worker de canary (middleware.ts:456) solo se crea en la reproducción de corpus.
 Este trabajo no midió el costo de cada componente por separado, y su atribución queda como trabajo futuro.
 
 \section{Modelo híbrido}

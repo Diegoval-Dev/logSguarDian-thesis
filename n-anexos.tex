@@ -354,7 +354,7 @@ El conjunto de prueba se fija mediante un lock: el hash SHA-256 de un archivo qu
 \par\smallskip\footnotesize Fuente: \texttt{lock\_history.md} (\texttt{git log} sobre \texttt{training/splits/test.lock.sha256} en el repositorio logSguarDian). El mensaje del commit \texttt{6d1fa68} es ``chore(training): re-lock test set to match the restored rf\_v11 generation''. Elaboración propia.
 \end{table}
 
-El lock de cada generación se escribe con el método de \texttt{training/split.py} (líneas 150--155): el SHA-256 de la concatenación, separada por saltos de línea, de los identificadores \texttt{\_row\_hash} ordenados. \texttt{evaluate\_test.py} (líneas 165--173) recalcula el mismo valor. Según la auditoría, este método reproduce \seqsplit{7486c258692a3cc66fa0ef74087255b904a9ea4d41c8646bb7c0784b15aa4fd9} sobre \texttt{test.parquet} con 57\,481 filas. El archivo \texttt{test.parquet} no está versionado en el repositorio, por lo que esa reproducción no se repitió en este anexo. El hash del archivo de bytes (\seqsplit{3e93b7763732cbd5e23738fba5514d64b826d37635ccdf7f6ee941bce3cfe608}) no es comparable con el lock.
+El lock de cada generación se escribe con el método de \texttt{training/split.py} (líneas 150--155): el SHA-256 de la concatenación, separada por saltos de línea, de los identificadores \texttt{\_row\_hash} ordenados. \texttt{evaluate\_test.py} (líneas 189--192) recalcula el mismo valor a partir de los identificadores que define \texttt{row\_hash} (líneas 171--174). Según la auditoría, este método reproduce \seqsplit{7486c258692a3cc66fa0ef74087255b904a9ea4d41c8646bb7c0784b15aa4fd9} sobre \texttt{test.parquet} con 57\,481 filas. El archivo \texttt{test.parquet} no está versionado en el repositorio, por lo que esa reproducción no se repitió en este anexo. El hash del archivo de bytes (\seqsplit{3e93b7763732cbd5e23738fba5514d64b826d37635ccdf7f6ee941bce3cfe608}) no es comparable con el lock.
 
 El Cuadro \ref{tabla:anexo-locks-soporte} muestra la diferencia de soporte entre la partición de v10 y la de v11.
 
@@ -390,7 +390,7 @@ No consta el motivo del cambio de partición del 23 de septiembre de 2026, ni la
 \hline
 \textbf{Archivo} & \textbf{SHA-256} \\ \hline
 \texttt{lock\_history.md} & \seqsplit{b0ce4ce3a4fc73f6eae0d35974bad9b089fdbe747b339713718773fdd22a90fd} \\ \hline
-\texttt{lock\_commits.txt} & \seqsplit{ba79ba8ea0048c5d7353f69043d7a0b86efa4620288c2e704acfae30f17f2be4} \\ \hline
+\texttt{lock\_commits.txt} & \seqsplit{1c829f096692e3179e9a96bc829fd6f52b5e57069fb99f7654489bed9281922d} \\ \hline
 \texttt{v10\_test\_results\_dc2aaa6.json} & \seqsplit{257f05f7d58b85f597485c4f65e4fcb12745cc5d58c5cf6219427b211457acb3} \\ \hline
 \end{tabular}
 \end{adjustbox}
