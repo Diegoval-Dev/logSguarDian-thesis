@@ -102,7 +102,7 @@ El Cuadro \ref{tabla:res-rf} presenta la precisión, el \textit{recall}, el F1-s
 
 \subsection{Isolation Forest}
 
-El Cuadro \ref{tabla:res-if} presenta las métricas de Isolation Forest (\texttt{if\_v10}) sobre el mismo conjunto de prueba. % Código: ../logSguarDian/packages/core/src/middleware.ts:236 (is_anomaly = ifScore < ifThreshold) y training/evaluate_test.py:288 (if_pred_attack = if_scores < if_threshold); ambos declaran anomalía con puntaje menor al umbral.
+El Cuadro \ref{tabla:res-if} presenta las métricas de Isolation Forest (\texttt{if\_v10}) sobre el mismo conjunto de prueba. % Código: ../logSguarDian/packages/core/src/middleware.ts:236 (is_anomaly = ifScore < ifThreshold) y training/evaluate_test.py:299 (if_pred_attack = if_scores < if_threshold); ambos declaran anomalía con puntaje menor al umbral.
 Una petición se considera detectada como anomalía cuando su puntaje queda por debajo del umbral de 0.004205941820353609, congelado en \texttt{training/models/if\_v10\_metadata.json} y no recalibrado contra el conjunto de prueba. El umbral de Isolation Forest pasó de 0.00807 (lectura del 24 de septiembre de 2026, con el modelo previo a ese reentrenamiento) a 0.00421 (lecturas del 25 y 26 de septiembre de 2026) tras reentrenar y recalibrar en validación. Las clases de ataque (42\,595 filas) se tratan como positivas y la clase \texttt{benign} (14\,886 filas) como negativa. La matriz de confusión resultante fue: 38\,868 verdaderos positivos, 3\,727 falsos negativos, 813 falsos positivos y 14\,073 verdaderos negativos.
 
 \begin{table}[htbp]
