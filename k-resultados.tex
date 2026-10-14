@@ -369,9 +369,9 @@ Los resultados de la Ronda 5 con \texttt{rf\_v10}/\texttt{if\_v9} se conocieron 
 % node-api-goat-results.md, dvna-results.md; evidencia en docs/vulnerable-projects-tests/evidence/.
 En la aplicación vulnerable del proyecto, con el User-Agent por defecto de Artillery, ninguna petición benigna de los escenarios normal y de volumen recibió una respuesta 403 (cifras en la sección de resultados de Config 2, obtenidas con el par \texttt{rf\_v11}/\texttt{if\_v10}, primera versión del 30 de agosto de 2026, \texttt{a7c015f5\ldots}/\texttt{3cf8e45c\ldots}); el resultado cambia con User-Agent de navegador, como se describe a continuación. En aplicaciones de terceros la proporción de peticiones benignas bloqueadas fue alta. En OWASP Juice Shop (modo \texttt{monitor}, solo peticiones benignas), 303 de 312 peticiones con User-Agent de navegador (97.1\,\%) y 123 de 312 con \texttt{curl} (39.4\,\%) recibieron el veredicto de bloqueo.
 
-Con un User-Agent de navegador se bloquearon 37 de 40 peticiones benignas en dvws-node (92.5\,\%) y 5 de 5 en DVNA, medición preliminar. 
+Con un User-Agent de navegador se bloquearon 37 de 40 peticiones benignas en dvws-node (92.5\,\%) y 5 de 5 en DVNA, observación manual sin registro crudo. 
 
-En node-api-goat se bloquearon 50 de 50 valores enviados a una sola ruta, todos con el User-Agent de Chrome 128 (\texttt{evidence/node-api-goat/run-attacks.js}); el chequeo de cinco peticiones con ese mismo User-Agent dio 4 de 5. En dvws-node, el User-Agent por defecto de Node bloqueó 30 de 40 (75\,\%).
+En node-api-goat se bloquearon 50 de 50 valores enviados a una sola ruta, todos con el User-Agent de Chrome 128 (\texttt{evidence/node-api-goat/run-attacks.js}); el chequeo de cinco peticiones con ese mismo User-Agent dio 4 de 5 (listado manual, sin registro crudo). En dvws-node, el User-Agent por defecto de Node bloqueó 30 de 40 (75\,\%). Los resultados crudos de dvws-node y node-api-goat constan en \path{docs/vulnerable-projects-tests/evidence/} del repositorio logSguarDian.
 
 La medición en Juice Shop usó la copia local de Juice Shop (par C), no el paquete 0.1.0 en npm. Esa copia contiene \texttt{rf\_v11} e \texttt{if\_v10} (SHA-256 \texttt{25b407e6\ldots} y \texttt{5be28ee8\ldots}), los mismos que el repositorio de entrenamiento conserva en \texttt{training/models/}. Para dvna, node-api-goat y dvws-node, el paquete y el modelo exactos de cada medición no constan en el repositorio.
 
@@ -379,7 +379,7 @@ La medición en Juice Shop usó la copia local de Juice Shop (par C), no el paqu
 
 La memoria y la CPU se midieron con \texttt{docker stats} sobre el contenedor de la aplicación, no sobre un proceso. La CPU se expresa como porcentaje del contenedor, de modo que 100\,\% equivale a un núcleo. La medición corresponde a la misma ejecución del experimento de latencia en Linux nativo (ejecución 36276690236), en un runner \texttt{ubuntu-latest} con 2 vCPU y 7.8~GiB de memoria, con cinco repeticiones por condición. La ventana A, primaria, excluye los primeros 15~s de cada repetición, que corresponden al calentamiento a baja carga; la ventana B (repetición completa) sí lo incluye.
 
-% Source: docs/evidence/analyze_resources.py and docs/evidence/resources_summary.json on branch docs/latency-linux-evidence.
+% Source: docs/evidence/analyze_resources.py and docs/evidence/resources_summary.json on branch main.
 % Window A (first 15 s of each repetition dropped). Archive sha256 b96d901408547331fb4859a5dac4810abdb1caaeb2f15f3378877c2290187cec,
 % measured commit f15a9e8, run 36276690236.
 \begin{table}[htbp]
@@ -397,7 +397,7 @@ Volumen & 83.3 / 459.1 & 375.9 & 82.3 / 115.3 & 33.0 pp / 40.1\,\% \\ \hline
 \end{adjustbox}
 \caption{Memoria y CPU del contenedor con y sin middleware, por escenario (ventana A).}
 \label{tabla:res-recursos}
-\par\smallskip\footnotesize Fuente: \texttt{docs/evidence/resources\_summary.json}, rama \texttt{docs/latency-linux-evidence}, ventana A. Medias por condición; $\Delta$Memoria y $\Delta$CPU son la media de las diferencias pareadas por repetición. Elaboración propia.
+\par\smallskip\footnotesize Fuente: \texttt{docs/evidence/resources\_summary.json}, rama \texttt{main}, ventana A. Medias por condición; $\Delta$Memoria y $\Delta$CPU son la media de las diferencias pareadas por repetición. Elaboración propia.
 \end{table}
 
 El Cuadro \ref{tabla:res-recursos} usa la ventana A, que descarta los primeros 15~s de cada repetición. La ventana B, que conserva la repetición completa con el arranque, da una $\Delta$CPU relativa mayor en los tres escenarios (541.3\,\%, 668.9\,\% y 57.5\,\%). Ambas ventanas llevan a la misma conclusión: ningún escenario cumple el criterio de CPU.

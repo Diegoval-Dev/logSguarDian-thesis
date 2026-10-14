@@ -5,6 +5,9 @@ readonly MAIN_DOCUMENT="z-main"
 readonly STANDALONE_DOCUMENT="resultados-standalone"
 readonly STANDALONE_OUTPUT="resultados.pdf"
 readonly STANDALONE_ARG="standalone"
+readonly DISCUSION_DOCUMENT="discusion-standalone"
+readonly DISCUSION_OUTPUT="discusion.pdf"
+readonly DISCUSION_ARG="discusion"
 readonly TEX_BIN_DIR="/Library/TeX/texbin"
 readonly BIBER_SYSTEM="${TEX_BIN_DIR}/biber"
 readonly BIBER_ARM64="${HOME}/.local/bin/biber-arm64"
@@ -26,7 +29,11 @@ select_document() {
             MAIN="$STANDALONE_DOCUMENT"
             COPY_TARGET="$STANDALONE_OUTPUT"
             ;;
-        *) die "argumento desconocido: $1 (use '${STANDALONE_ARG}' o ninguno)" ;;
+        "$DISCUSION_ARG")
+            MAIN="$DISCUSION_DOCUMENT"
+            COPY_TARGET="$DISCUSION_OUTPUT"
+            ;;
+        *) die "argumento desconocido: $1 (use '${STANDALONE_ARG}', '${DISCUSION_ARG}' o ninguno)" ;;
     esac
 }
 

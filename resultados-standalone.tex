@@ -19,6 +19,8 @@
 \usepackage{xfrac}
 \usepackage{float}
 \usepackage[hypertexnames=false]{hyperref}
+\usepackage{xr}
+\externaldocument{z-main}
 \usepackage[font=small]{caption}
 \usepackage{subcaption}
 \usepackage{xpatch}
@@ -49,6 +51,9 @@
 \setcounter{page}{1}
 
 \setcounter{chapter}{7}
+% Cuadros 1 a 6 pertenecen a capítulos anteriores en z-main
+\setcounter{table}{6}
 \input{k-resultados}
+\input{vobo-standalone}
 
 \end{document}
