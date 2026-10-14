@@ -1,0 +1,367 @@
+PDF z-main.pdf SHA-256 coincide con la tabla (b0e77e56b42d03d9dfed9f6de8c820087b09591b9a87de7414fd8bc81017cc40)
+
+=== Fila 1 — OK
+  a) PDF: «0.0273 ms» → 8 lugar(es), pp. [16, 17, 48, 57, 60, 78]
+  b) fuentes: logSguarDian@origin/main:benchmarks/results/extractor-2026-10-09T23-34-10-046Z.json; logSguarDian@origin/main:benchmarks/results/extractor-2026-10-09T23-34-13-619Z.json; logSguarDian@origin/main:benchmarks/results/extractor-2026-10-09T23-34-17-152Z.json
+  [OK] 3 corridas del 9-oct · tabla: cumple · recalculado: sí
+  [OK] p95 mixto worker_threads, mediana (ms, desde ns) · tabla: 0.0273 · recalculado: 0.0273
+  nota: el campo fixtures.mixed.p95 está redondeado a 3 decimales en ms (0.027); la precisión está en ns.p95
+  repetir: python3 tesis/_evidencia/verificacion-cifras/verificar_cifras.py --fila 1
+
+=== Fila 2 — OK
+  a) PDF: «0.9776» → 13 lugar(es), pp. [16, 17, 21, 25, 42, 54]; «0.9239» → 6 lugar(es), pp. [55, 57, 62, 78, 81, 82]
+  b) fuentes: logSguarDian@origin/main:training/results/v11_test_results.json
+  [OK] macro F1 RF · tabla: 0.9776 · recalculado: 0.9776
+  [OK] F1 cmdi · tabla: 0.9239 · recalculado: 0.9239
+  repetir: python3 tesis/_evidencia/verificacion-cifras/verificar_cifras.py --fila 2
+
+=== Fila 3 — OK
+  a) PDF: «0.9125» → 7 lugar(es), pp. [16, 17, 42, 56, 57, 63]; «0.0546» → 7 lugar(es), pp. [16, 17, 42, 56, 57, 63]
+  b) fuentes: logSguarDian@origin/main:training/results/v11_test_results.json
+  [OK] recall IF · tabla: 0.9125 · recalculado: 0.9125
+  [OK] falsos positivos IF · tabla: 0.0546 · recalculado: 0.0546
+  [OK] criterios IF (recall ≥ 50 %, FP ≤ 10 %) · tabla: cumple · recalculado: sí
+  repetir: python3 tesis/_evidencia/verificacion-cifras/verificar_cifras.py --fila 3
+
+=== Fila 4 — OK
+  a) PDF: «1.01 × 10⁻⁷» → 1 lugar(es), pp. [63] (literal sin coincidencia; número «1.01»); «2.42 × 10⁻⁷» → 1 lugar(es), pp. [63] (literal sin coincidencia; número «2.42»)
+  b) fuentes: logSguarDian@origin/main:training/models/parity_report.json
+  [OK] RF max |Δprob| (×10⁻⁷) · tabla: 1.01 · recalculado: 1.01
+  [OK] IF max |Δscore| (×10⁻⁷) · tabla: 2.42 · recalculado: 2.42
+  repetir: python3 tesis/_evidencia/verificacion-cifras/verificar_cifras.py --fila 4
+
+=== Fila 5 — NO VERIFICABLE
+  a) PDF: «76» → 22 lugar(es), pp. [8, 11, 12, 18, 31, 42]; «69» → 16 lugar(es), pp. [8, 49, 50, 52, 54, 55]; «63» → 12 lugar(es), pp. [8, 49, 50, 52, 54, 55]
+  b) fuentes: logSguarDian@origin/main:docs/feature-spec.md; logSguarDian@origin/main:packages/core/src/worker.ts
+  [OK] features en feature-spec.md · tabla: 76 · recalculado: 76
+  [OK] exclusiones comunes que existen en la lista · tabla: 7 · recalculado: 7
+  [OK] entradas RF · tabla: 69 · recalculado: 69
+  [OK] entradas IF · tabla: 63 · recalculado: 63
+  [OK] exclusiones temporales (_1s, _5s, _60s) · tabla: 5 · recalculado: 5
+  [OK] exclusiones extra del IF · tabla: 6 · recalculado: 6
+  [NO VERIFICABLE] autoría 72 / 4 (Sebastián / tú) · motivo: la autoría por feature no consta en el repo; requiere git log/blame y revisión manual
+  repetir: python3 tesis/_evidencia/verificacion-cifras/verificar_cifras.py --fila 5
+
+=== Fila 6 — OK
+  a) PDF: «383 202» → 4 lugar(es), pp. [16, 18, 53, 76]; «17» → 18 lugar(es), pp. [7, 11, 18, 34, 38, 39]; «268 240 / 57 481 / 57 481» → 6 lugar(es), pp. [12, 16, 18, 53, 95] (literal sin coincidencia; número «268»)
+  b) fuentes: tesis/_evidencia/paquete-y-fuentes-v7/dedup_full.txt; tesis/_evidencia/paquete-y-fuentes-v7/telemetry_counts.txt; tesis/_evidencia/loso-rf-v11/source_counts.txt; logSguarDian@origin/main:training/results/v11_test_results.json; logSguarDian (local, sin versionar):training/splits/train.parquet; logSguarDian (local, sin versionar):training/splits/val.parquet
+  [OK] corpus total (dedup + telemetría) · tabla: 383202 · recalculado: 383202
+  [OK] fuentes (16 dedup + telemetría) · tabla: 17 · recalculado: 17
+  [OK] generadores propios (synthetic_*) · tabla: 7 · recalculado: 7
+  [OK] conjuntos o listas públicas · tabla: 9 · recalculado: 9
+  [OK] train + val (source_counts) · tabla: 325721 · recalculado: 325721
+  [OK] test (n_test_rows) · tabla: 57481 · recalculado: 57481
+  [OK] train + val + test = corpus · tabla: 383202 · recalculado: 383202
+  [OK] train (metadatos parquet, sin abrir test) · tabla: 268240 · recalculado: 268240
+  [OK] val (metadatos parquet) · tabla: 57481 · recalculado: 57481
+  repetir: python3 tesis/_evidencia/verificacion-cifras/verificar_cifras.py --fila 6
+
+=== Fila 7 — OK
+  a) PDF: «3 veces» → 80 lugar(es), pp. [6, 7, 10, 11, 20, 21] (literal sin coincidencia; número «3»)
+  b) fuentes: logSguarDian@3086318:training/results/v11_test_results.json; logSguarDian@03de50f:training/results/v11_test_results.json; logSguarDian@origin/main:training/results/v11_test_results.json
+  [OK] commit 3086318 existe en logSguarDian · tabla: cumple · recalculado: sí
+  [OK] commit fc47a5b existe en logSguarDian · tabla: cumple · recalculado: sí
+  [OK] commit 03de50f existe en logSguarDian · tabla: cumple · recalculado: sí
+  [OK] macro F1 0,9843 en una lectura del test · tabla: cumple · recalculado: sí
+  [OK] umbral IF 0,00807 en una lectura del test · tabla: cumple · recalculado: sí
+  [OK] umbral IF actual · tabla: 0.00421 · recalculado: 0.00421
+  repetir: python3 tesis/_evidencia/verificacion-cifras/verificar_cifras.py --fila 7
+
+=== Fila 8 — NO VERIFICABLE
+  a) PDF: «57 481» → 10 lugar(es), pp. [12, 53, 61, 62, 91, 92]; «57 308» → 7 lugar(es), pp. [12, 99, 107, 108, 109]
+  b) fuentes: logSguarDian@origin/main:training/splits/test.lock.sha256; tesis/_evidencia/query-v5/lock_history.md; logSguarDian@origin/main:training/results/v11_test_results.json
+  [OK] lock vigente 7486c258…4fd9 · tabla: cumple · recalculado: 7486c258…4fd9
+  [OK] lock v10 6c5f253d… en historial · tabla: cumple · recalculado: sí
+  [OK] filas del test con lock vigente · tabla: 57481 · recalculado: 57481
+  [NO VERIFICABLE] 57 308 filas del lock v10 · motivo: lock_history.md no registra el número de filas del lock v10
+  repetir: python3 tesis/_evidencia/verificacion-cifras/verificar_cifras.py --fila 8
+
+=== Fila 9 — OK
+  a) PDF: «0.0067 pp» → 1 lugar(es), pp. [91] (literal sin coincidencia; número «0.0067»); «0.056 pp» → 1 lugar(es), pp. [91] (literal sin coincidencia; número «0.056»)
+  b) fuentes: tesis/_evidencia/revalidacion-umbral-if/analysis_out.txt
+  [OK] |Δ bloqueo benigno| T 0,30–0,40 (pp) · tabla: 0.0067 · recalculado: 0.0067
+  [OK] |Δ recall| T 0,30–0,40 (pp) · tabla: 0.056 · recalculado: 0.056
+  [OK] criterio < 0,5 pp en ambos · tabla: cumple · recalculado: sí
+  repetir: python3 tesis/_evidencia/verificacion-cifras/verificar_cifras.py --fila 9
+
+=== Fila 10 — OK
+  a) PDF: «39» → 17 lugar(es), pp. [7, 12, 39, 56, 76, 79]; «19» → 23 lugar(es), pp. [7, 11, 36, 38, 39, 50]; «866» → 8 lugar(es), pp. [76, 79, 82, 92, 93, 99]; «5.925 %» → 2 lugar(es), pp. [92, 93]
+  b) fuentes: tesis/_evidencia/revalidacion-umbral-if/analysis_out.txt
+  [OK] ataques que pasan RF · tabla: 39 · recalculado: 39
+  [OK] ataques totales · tabla: 42594 · recalculado: 42594
+  [OK] ataques extra marcados por IF · tabla: 19 · recalculado: 19
+  [OK] benignos marcados por IF (costo) · tabla: 866 · recalculado: 866
+  [OK] bloqueo benigno solo RF (%) · tabla: 0.107 · recalculado: 0.107
+  [OK] bloqueo benigno RF o IF (%) · tabla: 5.925 · recalculado: 5.925
+  repetir: python3 tesis/_evidencia/verificacion-cifras/verificar_cifras.py --fila 10
+
+=== Fila 11 — OK
+  a) PDF: «874» → 4 lugar(es), pp. [89, 92, 93]; «67 de 69» → 8 lugar(es), pp. [8, 52, 80, 84, 92, 93] (literal sin coincidencia; número «67»)
+  b) fuentes: tesis/_evidencia/revalidacion-umbral-if/ua_check_regenerado_out.txt
+  [OK] benignos marcados por IF · tabla: 874 · recalculado: 874
+  [OK] benignos totales · tabla: 14887 · recalculado: 14887
+  [OK] benignos con User-Agent · tabla: 69 · recalculado: 69
+  [OK] de ellos marcados · tabla: 67 · recalculado: 67
+  [OK] porcentaje con UA marcado (%) · tabla: 97.1 · recalculado: 97.1
+  repetir: python3 tesis/_evidencia/verificacion-cifras/verificar_cifras.py --fila 11
+
+=== Fila 12 — OK
+  a) PDF: «583/590» → 1 lugar(es), pp. [67]; «550/590» → 2 lugar(es), pp. [58, 67]; «587/590» → 2 lugar(es), pp. [58, 67]; «37 de 40» → 3 lugar(es), pp. [70, 79, 83]
+  b) fuentes: logSguarDian-vulnerable-project@origin/main:docs/config3b-results.md
+  [OK] columnas: Config 2 / 3a / 3b · tabla: cumple · recalculado: sí
+  [OK] Overall columna Config 2 (logsguardian only) · tabla: 583/590 · recalculado: 583/590
+  [OK]   porcentaje Config 2 (logsguardian only) · tabla: 98.8 · recalculado: 98.8
+  [OK] Overall columna Config 3a (WAF only, PL1) · tabla: 550/590 · recalculado: 550/590
+  [OK]   porcentaje Config 3a (WAF only, PL1) · tabla: 93.2 · recalculado: 93.2
+  [OK] Overall columna Config 3b (layered, blocking) · tabla: 587/590 · recalculado: 587/590
+  [OK]   porcentaje Config 3b (layered, blocking) · tabla: 99.5 · recalculado: 99.5
+  [OK] cmdi Config 2 · tabla: 200/200 · recalculado: 200/200
+  [OK] ataques que pasan el WAF y atrapa logSguarDian · tabla: 37 · recalculado: 37
+  [OK] ataques que pasan el WAF (590 − 550) · tabla: 40 · recalculado: 40
+  repetir: python3 tesis/_evidencia/verificacion-cifras/verificar_cifras.py --fila 12
+
+=== Fila 13 — DIFERENTE
+  a) PDF: «199» → 6 lugar(es), pp. [69, 107, 109]; «190» → 6 lugar(es), pp. [69, 107, 109, 110]; «192» → 7 lugar(es), pp. [69, 97, 99, 107, 109, 110]
+  b) fuentes: logSguarDian-vulnerable-project@origin/main:attack-sim/results_config2-develop-tarball-20261009.json; logSguarDian-vulnerable-project@origin/main:docs/config3b-results.md
+  [OK] sqli bloqueadas (HTTP 403) · tabla: 199/200 · recalculado: 199/200
+  [OK]   porcentaje sqli · tabla: 99.5 · recalculado: 99.5
+  [OK] path bloqueadas (HTTP 403) · tabla: 190/200 · recalculado: 190/200
+  [OK]   porcentaje path · tabla: 95.0 · recalculado: 95.0
+  [OK] cmdi bloqueadas (HTTP 403) · tabla: 192/200 · recalculado: 192/200
+  [OK]   porcentaje cmdi · tabla: 96.0 · recalculado: 96.0
+  [DIFERENTE] cf1238… es el par C de la fila 31 (logsguardian 0.1.1, abf8d5c4…) · tabla: cumple · recalculado: docs: logsguardian-0.1.0.tgz (develop)
+  repetir: python3 tesis/_evidencia/verificacion-cifras/verificar_cifras.py --fila 13
+
+=== Fila 14 — OK
+  a) PDF: «200 / 170 / 183» → 97 lugar(es), pp. [11, 12, 26, 40, 42, 57] (literal sin coincidencia; número «200»); «79.4–89.3 %» → 1 lugar(es), pp. [69]
+  b) fuentes: logSguarDian-vulnerable-project@origin/main:attack-sim/results_config2.json
+  [OK] sqli bloqueadas (HTTP 403) · tabla: 200/200 · recalculado: 200/200
+  [OK] path bloqueadas (HTTP 403) · tabla: 170/200 · recalculado: 170/200
+  [OK] cmdi bloqueadas (HTTP 403) · tabla: 183/200 · recalculado: 183/200
+  [OK] Wilson 95 % path, límite inferior (%) · tabla: 79.4 · recalculado: 79.4
+  [OK] Wilson 95 % path, límite superior (%) · tabla: 89.3 · recalculado: 89.3
+  [OK] commit a3aada0 existe en logSguarDian-vulnerable-project · tabla: cumple · recalculado: sí
+  repetir: python3 tesis/_evidencia/verificacion-cifras/verificar_cifras.py --fila 14
+
+=== Fila 15 — OK
+  a) PDF: «97.3 %» → 8 lugar(es), pp. [67, 69, 80, 81, 83, 110]; «1/1» → 7 lugar(es), pp. [64, 109, 110]
+  b) fuentes: logSguarDian-vulnerable-project@origin/main:docs/config3b-results.md; tesis/_evidencia/coautor-ronda5-v10/zap-alerts-full.json
+  [OK] XSS Config 2 (ronda 4) · tabla: 110/113 · recalculado: 110/113
+  [OK] XSS Config 2 porcentaje (%) · tabla: 97.3 · recalculado: 97.3
+  [OK] ZAP XSS ronda 5: 1/1 (100,0 %) · tabla: cumple · recalculado: sí
+  [OK] alertas ZAP totales · tabla: 538 · recalculado: 538
+  repetir: python3 tesis/_evidencia/verificacion-cifras/verificar_cifras.py --fila 15
+
+=== Fila 16 — OK
+  a) PDF: «12.08 ms» → 7 lugar(es), pp. [57, 66, 78, 80, 81, 82]; «12.85 ms» → 7 lugar(es), pp. [57, 66, 78, 80, 81, 82]
+  b) fuentes: logSguarDian-vulnerable-project@origin/main:docs/evidence/latency-linux-2026-09-26.tgz
+  [OK] Δp95 normal (mediana de 5 repeticiones, ms) · tabla: 12.08 · recalculado: 12.08
+  [OK] Δp95 normal ≤ 15 ms (criterio) · tabla: cumple · recalculado: sí
+  [OK] Δp95 attack (mediana de 5 repeticiones, ms) · tabla: 12.85 · recalculado: 12.85
+  [OK] Δp95 attack ≤ 15 ms (criterio) · tabla: cumple · recalculado: sí
+  nota: normal: con media de pares el Δp95 sería 12.31; la tabla no declara el estadístico y reproduce con mediana
+  nota: attack: con media de pares el Δp95 sería 13.62; la tabla no declara el estadístico y reproduce con mediana
+  repetir: python3 tesis/_evidencia/verificacion-cifras/verificar_cifras.py --fila 16
+
+=== Fila 17 — OK
+  a) PDF: «6 495.46 ms» → 3 lugar(es), pp. [66, 80, 83]; «7.00 %» → 4 lugar(es), pp. [57, 66, 80, 83]
+  b) fuentes: logSguarDian-vulnerable-project@origin/main:docs/evidence/latency-linux-2026-09-26.tgz
+  [OK] Δp95 volumen (mediana de 5 repeticiones, ms) · tabla: 6495.46 · recalculado: 6495.46
+  [OK] timeouts volumen · tabla: 1824 · recalculado: 1824
+  [OK] solicitudes volumen · tabla: 26048 · recalculado: 26048
+  [OK] porcentaje de timeouts · tabla: 7.0 · recalculado: 7.00
+  [OK] Δp95 volumen > 15 ms (no cumple) · tabla: cumple · recalculado: sí
+  nota: volume: con media de pares el Δp95 sería 6431.30; la tabla no declara el estadístico y reproduce con mediana
+  repetir: python3 tesis/_evidencia/verificacion-cifras/verificar_cifras.py --fila 17
+
+=== Fila 18 — OK
+  a) PDF: «+331.9 / +332.0 / +375.9 MiB» → 7 lugar(es), pp. [70, 71, 80, 83, 86] (literal sin coincidencia; número «331.9»)
+  b) fuentes: logSguarDian-vulnerable-project@origin/main:docs/evidence/resources_summary.json
+  [OK] memoria ataque (MiB) · tabla: 331.9 · recalculado: 331.9
+  [OK] memoria normal (MiB) · tabla: 332.0 · recalculado: 332.0
+  [OK] memoria volumen (MiB) · tabla: 375.9 · recalculado: 375.9
+  [OK] 150 MB expresados en MiB · tabla: 143 · recalculado: 143
+  repetir: python3 tesis/_evidencia/verificacion-cifras/verificar_cifras.py --fila 18
+
+=== Fila 19 — OK
+  a) PDF: «+529.6 % / +614.4 % / +40.1 %» → 5 lugar(es), pp. [70, 71, 80, 83, 86] (literal sin coincidencia; número «529.6»)
+  b) fuentes: logSguarDian-vulnerable-project@origin/main:docs/evidence/resources_summary.json
+  [OK] CPU ataque (%) · tabla: 529.6 · recalculado: 529.6
+  [OK] CPU normal (%) · tabla: 614.4 · recalculado: 614.4
+  [OK] CPU volumen (%) · tabla: 40.1 · recalculado: 40.1
+  [OK] criterio 15 % no cumple · tabla: cumple · recalculado: sí
+  repetir: python3 tesis/_evidencia/verificacion-cifras/verificar_cifras.py --fila 19
+
+=== Fila 20 — OK
+  a) PDF: «303/312» → 3 lugar(es), pp. [70, 83, 102] (literal sin coincidencia; número «303»); «123/312» → 1 lugar(es), pp. [70] (literal sin coincidencia; número «123»)
+  b) fuentes: logSguarDian@origin/main:docs/limitations.md
+  [OK] UA de navegador bloqueadas · tabla: 303/312 · recalculado: 303/312
+  [OK] UA de navegador (%) · tabla: 97.1 · recalculado: 97.1
+  [OK] curl bloqueadas · tabla: 123/312 · recalculado: 123/312
+  [OK] curl (%) · tabla: 39.4 · recalculado: 39.4
+  [OK] modo monitor, solo tráfico benigno · tabla: cumple · recalculado: sí
+  repetir: python3 tesis/_evidencia/verificacion-cifras/verificar_cifras.py --fila 20
+
+=== Fila 21 — NO VERIFICABLE
+  a) PDF: «37/40» → 15 lugar(es), pp. [12, 31, 54, 58, 67, 70] (literal sin coincidencia; número «37»); «30/40» → 32 lugar(es), pp. [7, 12, 29, 47, 49, 52] (literal sin coincidencia; número «30»)
+  b) fuentes: logSguarDian@origin/main:docs/limitations.md
+  [NO VERIFICABLE] «37/40» dvws-node · motivo: la cifra no aparece en docs/limitations.md (solo se nombra dvws-node en la lista de apps)
+  [NO VERIFICABLE] «92.5» dvws-node · motivo: la cifra no aparece en docs/limitations.md (solo se nombra dvws-node en la lista de apps)
+  [NO VERIFICABLE] «30/40» dvws-node · motivo: la cifra no aparece en docs/limitations.md (solo se nombra dvws-node en la lista de apps)
+  repetir: python3 tesis/_evidencia/verificacion-cifras/verificar_cifras.py --fila 21
+
+=== Fila 22 — OK
+  a) PDF: «0» → 59 lugar(es), pp. [57, 62, 67, 68, 75, 76]; «6 300» → 3 lugar(es), pp. [65, 79]
+  b) fuentes: logSguarDian-vulnerable-project@origin/main:docs/evidence/latency-linux-2026-09-26.tgz
+  [OK] solicitudes por repetición ≈ 6 300 (media 6300) · tabla: cumple · recalculado: 6300
+  [OK] bloqueos HTTP 403 en tráfico benigno (5 repeticiones) · tabla: 0 · recalculado: 0
+  repetir: python3 tesis/_evidencia/verificacion-cifras/verificar_cifras.py --fila 22
+
+=== Fila 23 — OK
+  a) PDF: «0.4 %» → 6 lugar(es), pp. [71, 79, 83, 100]; «0.36 %» → 1 lugar(es), pp. [100] (literal sin coincidencia; número «0.36»)
+  b) fuentes: logSguarDian@origin/main:docs/findings-evidence/juice-shop-ua-bias/output/corpus_ua_skew.txt; tesis/_evidencia/ua-v6/corpus_ua_skew_docs_output.txt; tesis/_evidencia/ua-v6/ua_length_audit.json
+  [OK] UA>40 xss (%) corpus completo · tabla: 33.3 · recalculado: 33.3
+  [OK] UA>40 cmdi (%) corpus completo · tabla: 54.4 · recalculado: 54.4
+  [OK] UA>40 path_traversal (%) corpus completo · tabla: 97.7 · recalculado: 97.7
+  [OK] UA>40 sqli (%) corpus completo · tabla: 81.7 · recalculado: 81.7
+  [OK] UA>40 benign (%) corpus completo · tabla: 0.4 · recalculado: 0.4
+  [OK] copia de _evidencia/ua-v6 idéntica al docs · tabla: cumple · recalculado: sí
+  [OK] benignos train + val con UA > 40 (%) · tabla: 0.36 · recalculado: 0.36
+  repetir: python3 tesis/_evidencia/verificacion-cifras/verificar_cifras.py --fila 23
+
+=== Fila 24 — OK
+  a) PDF: sin valores en negrita
+  b) fuentes: logSguarDian@origin/main:training/results/shap_global_report.json
+  [OK] ua_length primera en benign · tabla: cumple · recalculado: sí
+  [OK] SHAP ua_length benign · tabla: 0.0866 · recalculado: 0.0866
+  [OK] ua_length primera en sqli · tabla: cumple · recalculado: sí
+  [OK] SHAP ua_length sqli · tabla: 0.0734 · recalculado: 0.0734
+  repetir: python3 tesis/_evidencia/verificacion-cifras/verificar_cifras.py --fila 24
+
+=== Fila 25 — OK
+  a) PDF: «60 %» → 8 lugar(es), pp. [50, 61, 65, 66, 77, 93] (literal sin coincidencia; número «60»); «59.61 / 59.83 / 59.63 %» → 2 lugar(es), pp. [95] (literal sin coincidencia; número «59.61»); «21/200» → 23 lugar(es), pp. [7, 12, 41, 66, 79, 81] (literal sin coincidencia; número «21»); «0» → 59 lugar(es), pp. [57, 62, 67, 68, 75, 76]
+  b) fuentes: tesis/_evidencia/casi-duplicados/neardup_v2_results.json
+  [OK] val: con vecino J ≥ 0,8 (%) · tabla: 59.61 · recalculado: 59.61
+  [OK] test: con vecino J ≥ 0,8 (%) · tabla: 59.83 · recalculado: 59.83
+  [OK] train_self: con vecino J ≥ 0,8 (%) · tabla: 59.63 · recalculado: 59.63
+  [OK] Ronda 5 cmdi con vecino · tabla: 21 · recalculado: 21
+  [OK] Ronda 5 sqli con vecino · tabla: 0 · recalculado: 0
+  [OK] Ronda 5 path con vecino · tabla: 0 · recalculado: 0
+  [OK] pérdida del LSH a J = 0,8 (%) · tabla: 11 · recalculado: 11
+  repetir: python3 tesis/_evidencia/verificacion-cifras/verificar_cifras.py --fila 25
+
+=== Fila 26 — OK
+  a) PDF: «1/4 491» → 1 lugar(es), pp. [96]; «15/10 396» → 1 lugar(es), pp. [96]; «0.6 pp» → 2 lugar(es), pp. [96, 100] (literal sin coincidencia; número «0.6»)
+  b) fuentes: tesis/_evidencia/casi-duplicados-v3/block_gap_counts.json
+  [OK] FP con vecino · tabla: 1/4491 · recalculado: 1/4491
+  [OK] FP sin vecino · tabla: 15/10396 · recalculado: 15/10396
+  [OK] máx. diferencia de recall ≤ 0,6 pp · tabla: cumple · recalculado: 0.59 pp
+  repetir: python3 tesis/_evidencia/verificacion-cifras/verificar_cifras.py --fila 26
+
+=== Fila 27 — OK
+  a) PDF: «0.998 → 0.737» → 12 lugar(es), pp. [102, 103] (literal sin coincidencia; número «0.998»); «1.000 → 0.299» → 18 lugar(es), pp. [102, 103] (literal sin coincidencia; número «1.000»); «0.958 → 0.563» → 3 lugar(es), pp. [102, 103] (literal sin coincidencia; número «0.958»); «0.001 → 0.760» → 7 lugar(es), pp. [102, 103] (literal sin coincidencia; número «0.001»); «0.002 → 0.945» → 6 lugar(es), pp. [102, 103] (literal sin coincidencia; número «0.002»)
+  b) fuentes: tesis/_evidencia/loso-rf-v11/results.json
+  [OK] payload_full block_attack, rf_onnx · tabla: 0.998 · recalculado: 0.998
+  [OK] payload_full block_attack, LOSO · tabla: 0.737 · recalculado: 0.737
+  [OK] seclists_cmdi block_attack, rf_onnx · tabla: 1.0 · recalculado: 1.000
+  [OK] seclists_cmdi block_attack, LOSO · tabla: 0.299 · recalculado: 0.299
+  [OK] command_injection block_attack, rf_onnx · tabla: 0.958 · recalculado: 0.958
+  [OK] command_injection block_attack, LOSO · tabla: 0.563 · recalculado: 0.563
+  [OK] modsec_learn fp_benign, rf_onnx · tabla: 0.001 · recalculado: 0.001
+  [OK] modsec_learn fp_benign, LOSO · tabla: 0.76 · recalculado: 0.760
+  [OK] xss_dataset fp_benign, rf_onnx · tabla: 0.002 · recalculado: 0.002
+  [OK] xss_dataset fp_benign, LOSO · tabla: 0.945 · recalculado: 0.945
+  repetir: python3 tesis/_evidencia/verificacion-cifras/verificar_cifras.py --fila 27
+
+=== Fila 28 — OK
+  a) PDF: «56 399 → 3 860» → 4 lugar(es), pp. [10, 73, 103] (literal sin coincidencia; número «56»); «119» → 4 lugar(es), pp. [53, 76, 103]; «simulada» → 2 lugar(es), pp. [53, 85]
+  b) fuentes: tesis/_evidencia/paquete-y-fuentes-v7/owasp_counts.txt; tesis/_evidencia/paquete-y-fuentes-v7/dedup_full.txt; tesis/_evidencia/paquete-y-fuentes-v7/telemetry_counts.txt
+  [OK] owasp filas · tabla: 56399 · recalculado: 56399
+  [OK] owasp duplicados exactos · tabla: 52526 · recalculado: 52526
+  [OK] owasp tras deduplicar · tabla: 3860 · recalculado: 3860
+  [OK] residuo (56 399 − 52 526 − 3 860) · tabla: 13 · recalculado: 13
+  [OK] telemetría train/val/test · tabla: (82, 18, 19) · recalculado: (82, 18, 19)
+  [OK] telemetría filas únicas · tabla: 119 · recalculado: 119
+  [OK] telemetría de hosts simulados (sim-host-*) · tabla: cumple · recalculado: sí
+  repetir: python3 tesis/_evidencia/verificacion-cifras/verificar_cifras.py --fila 28
+
+=== Fila 29 — OK
+  a) PDF: «574/600» → 2 lugar(es), pp. [93, 106] (literal sin coincidencia; número «574»); «0» → 59 lugar(es), pp. [57, 62, 67, 68, 75, 76]
+  b) fuentes: tesis/_evidencia/query-v5/round5_wire_report.json
+  [OK] réplica n · tabla: 600 · recalculado: 600
+  [OK] bloqueadas, lado izquierdo · tabla: 574 · recalculado: 574
+  [OK] bloqueadas, lado derecho · tabla: 574 · recalculado: 574
+  [OK] diferencias de características · tabla: 0 · recalculado: 0
+  [OK] cambios de clase · tabla: 0 · recalculado: 0
+  [OK] cambios de decisión · tabla: 0 · recalculado: 0
+  [OK] commit 25c7e64 existe en logSguarDian · tabla: cumple · recalculado: sí
+  repetir: python3 tesis/_evidencia/verificacion-cifras/verificar_cifras.py --fila 29
+
+=== Fila 30 — OK
+  a) PDF: «532/600» → 1 lugar(es), pp. [109]; «597/600» → 1 lugar(es), pp. [109]; «199 / 190 / 192» → 6 lugar(es), pp. [69, 107, 109] (literal sin coincidencia; número «199»); «199 / 200 / 185» → 6 lugar(es), pp. [69, 107, 109] (literal sin coincidencia; número «199»)
+  b) fuentes: tesis/_evidencia/coautor-ronda5-v10/results_config3a-round5-20261010.json; tesis/_evidencia/coautor-ronda5-v10/results_config3b-round5-20261010.json; tesis/_evidencia/coautor-ronda5-v10/results_config2-published-0.1.1-20261010.json; tesis/_evidencia/coautor-ronda5-v10/results_config2-published-0.1.1-harness-fixed-20261010.json
+  [OK] results_config3a-round5-20261010.json · tabla: 532/600 · recalculado: 532/600
+  [OK] results_config3b-round5-20261010.json · tabla: 597/600 · recalculado: 597/600
+  [OK] 0.1.1 arnés original, sqli · tabla: 199/200 · recalculado: 199/200
+  [OK] 0.1.1 arnés original, path · tabla: 190/200 · recalculado: 190/200
+  [OK] 0.1.1 arnés original, cmdi · tabla: 192/200 · recalculado: 192/200
+  [OK] 0.1.1 arnés corregido, sqli · tabla: 199/200 · recalculado: 199/200
+  [OK] 0.1.1 arnés corregido, path · tabla: 200/200 · recalculado: 200/200
+  [OK] 0.1.1 arnés corregido, cmdi · tabla: 185/200 · recalculado: 185/200
+  [OK] commit 00ea3a3 existe en logSguarDian-vulnerable-project · tabla: cumple · recalculado: sí
+  nota: se excluye la entrada «xss_placeholder_0» (placeholder de la ronda 5, no es un payload de los 600)
+  nota: se excluye la entrada «xss_placeholder_0» (placeholder de la ronda 5, no es un payload de los 600)
+  nota: se excluye la entrada «xss_placeholder_0» (placeholder de la ronda 5, no es un payload de los 600)
+  nota: se excluye la entrada «xss_placeholder_0» (placeholder de la ronda 5, no es un payload de los 600)
+  repetir: python3 tesis/_evidencia/verificacion-cifras/verificar_cifras.py --fila 30
+
+=== Fila 31 — OK
+  a) PDF: sin valores en negrita
+  b) fuentes: tesis/_evidencia/paquete-y-fuentes-v7/package_hashes.txt
+  [OK] 0.1.0 tgz c5c1a1da…80dcb0 · tabla: cumple · recalculado: sí
+  [OK] 0.1.1 tgz abf8d5c4…258d15 · tabla: cumple · recalculado: sí
+  [OK] npm pack logsguardian@0.1.0 = registro · tabla: cumple · recalculado: c5c1a1da57cf…
+  [OK] npm pack logsguardian@0.1.1 = registro · tabla: cumple · recalculado: abf8d5c47036…
+  repetir: python3 tesis/_evidencia/verificacion-cifras/verificar_cifras.py --fila 31
+
+=== Fila 32 — OK
+  a) PDF: «0.9787» → 1 lugar(es), pp. [82]; «0.9156» → 0 lugar(es), pp. [] (literal sin coincidencia; número «0.9156»); «0.0516» → 0 lugar(es), pp. [] (literal sin coincidencia; número «0.0516»)
+  b) fuentes: tesis/_evidencia/query-v5/v10_test_results_dc2aaa6.json
+  [OK] macro F1 rf_v10 · tabla: 0.9787 · recalculado: 0.9787
+  [OK] recall IF v9 · tabla: 0.9156 · recalculado: 0.9156
+  [OK] falsos positivos IF v9 · tabla: 0.0516 · recalculado: 0.0516
+  repetir: python3 tesis/_evidencia/verificacion-cifras/verificar_cifras.py --fila 32
+
+=== RESUMEN
+  1  OK               logSguarDian@origin/main:benchmarks/results/extractor-2026-10-09T23-34-10-046Z.json
+  2  OK               logSguarDian@origin/main:training/results/v11_test_results.json
+  3  OK               logSguarDian@origin/main:training/results/v11_test_results.json
+  4  OK               logSguarDian@origin/main:training/models/parity_report.json
+  5  NO VERIFICABLE   logSguarDian@origin/main:docs/feature-spec.md
+  6  OK               tesis/_evidencia/paquete-y-fuentes-v7/dedup_full.txt
+  7  OK               logSguarDian@3086318:training/results/v11_test_results.json
+  8  NO VERIFICABLE   logSguarDian@origin/main:training/splits/test.lock.sha256
+  9  OK               tesis/_evidencia/revalidacion-umbral-if/analysis_out.txt
+ 10  OK               tesis/_evidencia/revalidacion-umbral-if/analysis_out.txt
+ 11  OK               tesis/_evidencia/revalidacion-umbral-if/ua_check_regenerado_out.txt
+ 12  OK               logSguarDian-vulnerable-project@origin/main:docs/config3b-results.md
+ 13  DIFERENTE        logSguarDian-vulnerable-project@origin/main:attack-sim/results_config2-develop-tarball-20261009.json
+ 14  OK               logSguarDian-vulnerable-project@origin/main:attack-sim/results_config2.json
+ 15  OK               logSguarDian-vulnerable-project@origin/main:docs/config3b-results.md
+ 16  OK               logSguarDian-vulnerable-project@origin/main:docs/evidence/latency-linux-2026-09-26.tgz
+ 17  OK               logSguarDian-vulnerable-project@origin/main:docs/evidence/latency-linux-2026-09-26.tgz
+ 18  OK               logSguarDian-vulnerable-project@origin/main:docs/evidence/resources_summary.json
+ 19  OK               logSguarDian-vulnerable-project@origin/main:docs/evidence/resources_summary.json
+ 20  OK               logSguarDian@origin/main:docs/limitations.md
+ 21  NO VERIFICABLE   logSguarDian@origin/main:docs/limitations.md
+ 22  OK               logSguarDian-vulnerable-project@origin/main:docs/evidence/latency-linux-2026-09-26.tgz
+ 23  OK               logSguarDian@origin/main:docs/findings-evidence/juice-shop-ua-bias/output/corpus_ua_skew.txt
+ 24  OK               logSguarDian@origin/main:training/results/shap_global_report.json
+ 25  OK               tesis/_evidencia/casi-duplicados/neardup_v2_results.json
+ 26  OK               tesis/_evidencia/casi-duplicados-v3/block_gap_counts.json
+ 27  OK               tesis/_evidencia/loso-rf-v11/results.json
+ 28  OK               tesis/_evidencia/paquete-y-fuentes-v7/owasp_counts.txt
+ 29  OK               tesis/_evidencia/query-v5/round5_wire_report.json
+ 30  OK               tesis/_evidencia/coautor-ronda5-v10/results_config3a-round5-20261010.json
+ 31  OK               tesis/_evidencia/paquete-y-fuentes-v7/package_hashes.txt
+ 32  OK               tesis/_evidencia/query-v5/v10_test_results_dc2aaa6.json
