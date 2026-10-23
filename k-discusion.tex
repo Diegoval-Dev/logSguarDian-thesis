@@ -78,7 +78,7 @@ Objetivo general & Detección de amenazas conocidas y de variantes desconocidas,
 OE1 & Extractor $\leq$ 5~ms por petición & 0.0273~ms (ida y vuelta al \textit{worker}; extractor en aislamiento, el sobrecosto del middleware completo es de 12~ms) & Cumple \\ \hline
 OE2 & F1 $\geq$ 0.80 en al menos 3 de 4 clases & 4 de 4 (mínimo 0.9239) & Cumple \\ \hline
 OE2 & \textit{Isolation Forest}: \textit{recall} $\geq$ 50\,\%, falsos positivos $\leq$ 10\,\% & 91.25\,\% y 5.46\,\% & Cumple \\ \hline
-OE3 & Cobertura $\geq$ 80\,\% por categoría & 99.5, 95.0 y 96.0\,\% en \texttt{sqli}, \texttt{path\_traversal} y \texttt{cmdi}; XSS: 97.3\,\% sobre el corpus de 590 & Cumple; XSS sin corpus limpio \\ \hline
+OE3 & Cobertura $\geq$ 80\,\% por categoría & 99.5, 95.0 y 96.0\,\% en \texttt{sqli}, \texttt{path\_traversal} y \texttt{cmdi}; XSS: 97.3\,\% sobre el corpus de 590 & Cumple en \texttt{sqli}, \texttt{path\_traversal} y \texttt{cmdi}; \texttt{xss} no concluyente \\ \hline
 OE3 & $\Delta$p95 $\leq$ 15~ms & 12.08~ms (normal) y 12.85~ms (ataque) & Cumple; volumen no cumple \\ \hline
 Falsos positivos en aplicaciones de terceros & Sin criterio formal & 92.5\,\% de bloqueo en dvws-node y 97.1\,\% de veredictos de bloqueo en Juice Shop (modo \textit{monitor}) de tráfico benigno con User-Agent de navegador & Limitación \\ \hline
 Protocolo & Memoria adicional $\leq$ 150~MB & +332~MiB & No cumple \\ \hline
