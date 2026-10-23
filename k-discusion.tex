@@ -57,6 +57,8 @@ El protocolo fijaba un incremento de hasta 10\,\% de la latencia media sobre la 
 % CALC: 10 % de 2.49 = 0.25 y 10 % de 4.62 = 0.46.
 Los datos son de una sola corrida en un ejecutor de 2 vCPU, con cinco repeticiones por condición (subsección~\ref{sec:config2}).
 
+El p95 de cada corrida es una aproximación (promedio ponderado de los p95 por intervalo; subsección~\ref{sec:config2}), por lo que los márgenes de 2.92 y 2.15~ms no incorporan esa incertidumbre.
+
 % FUENTE: protocolo aprobado, sección 7.0.5 (restricciones del proyecto) y actividad A24; el protocolo no está en el repositorio
 La memoria aumenta 331.9, 332.0 y 375.9~MiB en ataque, normal y volumen, más del doble del límite de 150~MB (unos 143 MiB) (Cuadro~\ref{tabla:res-recursos}). El incremento es casi igual en normal y ataque, lo que sugiere un costo fijo asociado a la carga de los modelos. Esa interpretación no se verificó. La CPU aumenta 85.1 y 88.9 puntos porcentuales (+529.6\,\% y +614.4\,\%) en ataque y normal, frente a un límite de 15\,\%. El contenedor completo usa entre 394.8 y 459.1~MiB y no se probó en una instancia de 1~GB, para la que se fijó el límite (sección~\ref{sec:memoria-cpu}).
 
@@ -86,5 +88,5 @@ Protocolo & $\Delta$CPU $\leq$ 15\,\% & +530\,\% a +614\,\% & No cumple \\ \hlin
 \end{tabular}
 \caption{Cumplimiento de los criterios de aceptación por objetivo específico y criterio del protocolo.}
 \label{tabla:disc-cumplimiento}
-\par\smallskip\footnotesize Fuente: capítulo de Resultados (Cuadros~\ref{tabla:res-extractor}, \ref{tabla:res-rf}, \ref{tabla:res-if}, \ref{tabla:res-ronda5}, \ref{tabla:res-config3-corpus} y \ref{tabla:res-recursos}, y subsección~\ref{sec:config2}). Elaboración propia. OE: objetivo específico.
+\par\smallskip\footnotesize Fuente: capítulo de Resultados (Cuadros~\ref{tabla:res-extractor}, \ref{tabla:res-overhead}, \ref{tabla:res-rf}, \ref{tabla:res-if}, \ref{tabla:res-ronda5}, \ref{tabla:res-config3-corpus} y \ref{tabla:res-recursos}, y subsección~\ref{sec:config2}). Elaboración propia. OE: objetivo específico.
 \end{table}

@@ -45,6 +45,8 @@ La cifra que se compara con el criterio de 5~ms del objetivo específico 1 es el
 
 El Cuadro \ref{tabla:res-overhead} reúne las mediciones de latencia p95 con y sin el middleware activo en cada entorno donde se midió. Las filas difieren en entorno, escala de datos y compilación del middleware, por lo que cada una declara esas condiciones. Las filas de Docker más Postgres usan la aplicación de referencia (Express y Postgres) con el flujo de navegación benigno de Artillery (\texttt{attack-sim/artillery-baseline.yml}, 60~s, 20 usuarios virtuales por segundo con cuatro solicitudes por usuario, es decir, una tasa objetivo de 80 solicitudes por segundo). La fila de Node.js sobre WSL2 usa el benchmark de \texttt{packages/core/bench} (Artillery, 50 solicitudes por segundo, 30~s, 3\,000 solicitudes por corrida, Node.js v22.5.1, Windows 11 con WSL2, 9 de julio de 2026) con resolución de 1~ms. La fila de microbenchmark mide una función Express sin aplicación detrás.
 
+Las filas de Linux nativo corresponden a la ejecución 36276690236, en un ejecutor de 2 vCPU y con cinco repeticiones por condición (subsección~\ref{sec:config2}).
+
 \begin{table}[htbp]
 \centering
 \footnotesize
@@ -59,12 +61,15 @@ Aplicación real con Postgres, sin Docker & \textit{Worker pool} con ventana de 
 Docker y Postgres, 10 filas & \textit{Worker pool} con ventana de gracia, sin registro asíncrono & 5.0 & 12.8 & 7.8$^{\dagger}$ \\ \hline
 Docker y Postgres, 10 filas & Diseño híbrido (ventana de gracia y cola de escritura por lotes) & $\approx$5 & $\approx$12--14 & $\approx$7--9 \\ \hline
 Docker y Postgres, 2\,010 filas & Diseño híbrido (ventana de gracia y cola de escritura por lotes) & 13.67 & 23--28 & 9.33--14.33$^{\dagger}$ \\ \hline
+Linux nativo (ejecución 36276690236), carga normal & Commit medido f15a9e8 & 2.49 & 14.57 & 12.08 \\ \hline
+Linux nativo (ejecución 36276690236), carga de ataque & Commit medido f15a9e8 & 4.62 & 17.47 & 12.85 \\ \hline
+Linux nativo (ejecución 36276690236), carga de volumen & Commit medido f15a9e8 & 63.84 & 6\,559.30 & 6\,495.46 \\ \hline
 \end{tabular}
 \end{adjustbox}
 \caption{Latencia p95 con y sin middleware y diferencia absoluta, por entorno medido.}
 \label{tabla:res-overhead}
 \par\smallskip\footnotesize $^{\dagger}$ Diferencia calculada como p95 con middleware menos p95 sin middleware; la fuente reporta ambos valores y no la diferencia. Las compilaciones con ventana de gracia corresponden a versiones anteriores del middleware; la versión vigente resuelve la respuesta sin esperar al Isolation Forest y actualiza el registro con su puntaje tardío (\texttt{packages/core/src/middleware.ts}, rama \texttt{develop}).\\
-Fuente: \texttt{docs/results.md}, secciones A19 y F6.5; \texttt{docs/config2-latency-evaluation.md}, secciones Final latency y Config 2 Final Status. Elaboración propia.
+Fuente: \texttt{docs/results.md}, secciones A19 y F6.5; \texttt{docs/config2-latency-evaluation.md}, secciones Final latency y Config 2 Final Status; \texttt{docs/evidence/latency-linux-2026-09-26.tgz} (ejecución 36276690236) del repositorio \texttt{logSguarDian-vulnerable-project}, rama \texttt{main}, para las filas de Linux nativo. Elaboración propia.
 \end{table}
 
 El Cuadro \ref{tabla:res-overhead} reporta la latencia p95 con y sin middleware, y su diferencia $\Delta$p95 frente al límite de 15~ms fijado en el objetivo específico 3.
