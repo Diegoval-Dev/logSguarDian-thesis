@@ -6,7 +6,7 @@ logSguarDian es una librería npm que implementa un middleware de tipo \textit{R
 
 Tercero, la inferencia sobre un modelo híbrido compuesto por un Random Forest (componente supervisado) y un Isolation Forest (componente no supervisado), ambos serializados en formato ONNX y ejecutados de forma asíncrona mediante \texttt{worker\_threads} sin bloquear el \textit{Event Loop} del proceso anfitrión. Cuarto, la clasificación de cada petición como tráfico legítimo o como una de las cuatro categorías de ataque cubiertas, con la generación correspondiente de una respuesta de bloqueo configurable o de una alerta registrada.
 
-El alcance funcional incluye además una interfaz de línea de comandos con cuatro grupos de subcomandos (\texttt{config}, \texttt{endpoints}, \texttt{attacks}, \texttt{webhooks}) que permiten al desarrollador anfitrión obtener visibilidad sobre el tráfico clasificado, perfilar rutas con mayor densidad de ataques e integrar la librería con sistemas externos de notificación mediante webhooks, sin requerir modificaciones a la arquitectura de la aplicación protegida.
+El alcance funcional incluye además una interfaz de línea de comandos con cuatro grupos de subcomandos (\texttt{config}, \texttt{endpoints}, \texttt{attacks}, \texttt{webhooks}). Esa interfaz permite al desarrollador anfitrión obtener visibilidad sobre el tráfico clasificado, perfilar rutas con mayor densidad de ataques e integrar la librería con sistemas externos de notificación mediante webhooks, sin requerir modificaciones a la arquitectura de la aplicación protegida. Esa interfaz forma parte de la librería y no se evalúa en este trabajo.
 
 \section{Alcance técnico}
 

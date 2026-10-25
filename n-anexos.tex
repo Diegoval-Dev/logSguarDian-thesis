@@ -98,8 +98,8 @@ Los modelos evaluados son \texttt{rf.onnx} e \texttt{if.onnx} del par C, descrit
 \begin{table}[htbp]
 \centering
 \footnotesize
-\begin{adjustbox}{max width=\linewidth}
-\begin{tabular}{|l|p{0.62\linewidth}|}
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{|p{0.36\linewidth}|p{0.58\linewidth}|}
 \hline
 \textbf{Archivo} & \textbf{SHA-256} \\ \hline
 \texttt{rf.onnx} (modelo, par C) & \seqsplit{25b407e649283606a231665a5a8c8ea1c2c7ad4fd0374a8945b3f119651b0870} \\ \hline
@@ -112,7 +112,6 @@ Los modelos evaluados son \texttt{rf.onnx} e \texttt{if.onnx} del par C, descrit
 \texttt{ua\_check\_regenerado.py} (regenera \texttt{ua\_check.txt}) & \seqsplit{56516f5f6b63d3c3886ef4a6350807c356d4c2fc49d8ea77a0207be4adcffe5f} \\ \hline
 \texttt{ua\_check\_regenerado\_out.txt} & \seqsplit{d61660015b8f763af7140987836b6b94559c025d76f2d4ff980766d5ba5fe6a6} \\ \hline
 \end{tabular}
-\end{adjustbox}
 \caption{Sumas SHA-256 de los modelos evaluados, de los archivos de evidencia y de los scripts que los generaron o regeneraron.}
 \label{tabla:anexo-procedencia}
 \par\smallskip\footnotesize Fuente: hashes de los modelos, de \texttt{training/models/} en el commit \texttt{03de50f} del repositorio logSguarDian; hashes de los archivos de evidencia y de los scripts, calculados con \texttt{shasum -a 256} sobre \texttt{\_evidencia/revalidacion-umbral-if/}. El script original que generó \texttt{ua\_check.txt} no se conserva; \texttt{ua\_check\_regenerado.py} es una regeneración que reproduce las cifras de validación de ese archivo, y su salida se guarda en \texttt{ua\_check\_regenerado\_out.txt}. La línea de \texttt{ua\_check.txt} sobre el \texttt{login} no se reproduce, porque depende de \texttt{login\_vec.json}. Elaboración propia.
@@ -295,12 +294,14 @@ Otras limitaciones:
 Las particiones comparten la estructura de casi-duplicados del conjunto de entrenamiento; las métricas de prueba miden desempeño en esa distribución. Este anexo describe la estructura y no establece su causa.
 
 \subsection{Procedencia}\label{anexo:casi-procedencia}
+El Cuadro~\ref{tabla:anexo-casi-procedencia} reúne los datos de procedencia de esta sección.
+
 
 \begin{table}[htbp]
 \centering
 \footnotesize
-\begin{adjustbox}{max width=\linewidth}
-\begin{tabular}{|l|p{0.62\linewidth}|}
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{|p{0.36\linewidth}|p{0.58\linewidth}|}
 \hline
 \textbf{Archivo} & \textbf{SHA-256} \\ \hline
 \texttt{neardup\_v2.py} (script) & \seqsplit{d0879391e85e9a3d2972cab462d6207c8a62584dc40953ea30c9c2e8a17e52b7} \\ \hline
@@ -320,7 +321,6 @@ Las particiones comparten la estructura de casi-duplicados del conjunto de entre
 \texttt{block\_gap\_counts.md} (\texttt{casi-duplicados-v3}) & \seqsplit{2f07a2393b45ada764a032fc54fe4655e6a3809921db6c5f2ede81cfb0e01017} \\ \hline
 \texttt{provenance.md} (\texttt{casi-duplicados-v3}) & \seqsplit{ab60e7da6227b5107a40bf950ddb4e0e77c28975120c7c6bfb7683090bad4c76} \\ \hline
 \end{tabular}
-\end{adjustbox}
 \caption{Sumas SHA-256 del script, de los resultados de la auditoría de casi-duplicados y de sus entradas.}
 \label{tabla:anexo-casi-procedencia}
 \par\smallskip\footnotesize Fuente: hashes del script, de \texttt{neardup\_v2\_results.json}, \texttt{tables.md} y \texttt{run.log} en \texttt{\_evidencia/casi-duplicados/}, y de las entradas según el registro de la ejecución del 11 de octubre de 2026 en \texttt{neardup\_v2\_results.json}. El hash de \texttt{large\_corpus\_requests.json} coincide con el archivo del commit \texttt{58033a0} del repositorio logSguarDian-vulnerable-project. La ejecución se hizo sobre el árbol de trabajo del repositorio logSguarDian en el commit \texttt{41553a7}, que estaba limpio. Ese commit es ancestro de \texttt{origin/develop} (verificado tras \texttt{git fetch origin}) y figura en la rama remota \texttt{origin/audit/config2-breakdown}. Los archivos \texttt{train}, \texttt{val}, \texttt{test} y \texttt{unified.jsonl} no están versionados en git en ese commit; se identifican por su SHA-256. Elaboración propia.
@@ -381,19 +381,20 @@ El Cuadro \ref{tabla:anexo-locks-soporte} muestra la diferencia de soporte entre
 No consta el motivo del cambio de partición del 23 de septiembre de 2026, ni la fuente de los datos restaurados para la generación \texttt{rf\_v11}.
 
 \subsection{Procedencia}
+El Cuadro~\ref{tabla:anexo-locks-procedencia} reúne los datos de procedencia de esta sección.
+
 
 \begin{table}[htbp]
 \centering
 \footnotesize
-\begin{adjustbox}{max width=\linewidth}
-\begin{tabular}{|l|p{0.62\linewidth}|}
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{|p{0.36\linewidth}|p{0.58\linewidth}|}
 \hline
 \textbf{Archivo} & \textbf{SHA-256} \\ \hline
 \texttt{lock\_history.md} & \seqsplit{b0ce4ce3a4fc73f6eae0d35974bad9b089fdbe747b339713718773fdd22a90fd} \\ \hline
 \texttt{lock\_commits.txt} & \seqsplit{1c829f096692e3179e9a96bc829fd6f52b5e57069fb99f7654489bed9281922d} \\ \hline
 \texttt{v10\_test\_results\_dc2aaa6.json} & \seqsplit{257f05f7d58b85f597485c4f65e4fcb12745cc5d58c5cf6219427b211457acb3} \\ \hline
 \end{tabular}
-\end{adjustbox}
 \caption{Sumas SHA-256 de los archivos de procedencia de las particiones de prueba.}
 \label{tabla:anexo-locks-procedencia}
 \par\smallskip\footnotesize Fuente: \texttt{shasum -a 256} sobre \texttt{\_evidencia/query-v5/}; verificadas contra \texttt{SHA256SUMS.txt}. Elaboración propia.
@@ -406,8 +407,8 @@ Este anexo documenta la distribución de la longitud del \textit{User-Agent} (\t
 \begin{table}[htbp]
 \centering
 \footnotesize
-\begin{adjustbox}{max width=\linewidth}
-\begin{tabular}{|l|r|r|r|r|r|}
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{|p{0.30\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|}
 \hline
 \textbf{Clase} & \textbf{n} & \textbf{Filas con \texttt{ua\_length} $>$ 40} & \textbf{Porcentaje} & \textbf{IC de Wilson al 95\,\%} & \textbf{Porcentaje con \texttt{ua\_present} $>$ 0} \\ \hline
 \texttt{benign} & 84\,359 & 307 & 0.36 & [0.33, 0.41] & 0.48 \\ \hline
@@ -416,7 +417,6 @@ Este anexo documenta la distribución de la longitud del \textit{User-Agent} (\t
 \texttt{path\_traversal} & 14\,327 & 13\,998 & 97.70 & [97.45, 97.94] & 98.07 \\ \hline
 \texttt{cmdi} & 8\,321 & 4\,521 & 54.33 & [53.26, 55.40] & 58.53 \\ \hline
 \end{tabular}
-\end{adjustbox}
 \caption{Longitud del \textit{User-Agent} por clase, en entrenamiento y validación combinados.}
 \label{tabla:anexo-ua}
 \par\smallskip\footnotesize Fuente: \texttt{\_evidencia/ua-v6/ua\_length\_audit.json}. Elaboración propia.
@@ -433,8 +433,8 @@ Los archivos de \texttt{\_evidencia/ua-v6/} se copiaron desde la carpeta de audi
 \begin{table}[htbp]
 \centering
 \footnotesize
-\begin{adjustbox}{max width=\linewidth}
-\begin{tabular}{|l|p{0.62\linewidth}|}
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{|p{0.36\linewidth}|p{0.58\linewidth}|}
 \hline
 \textbf{Archivo} & \textbf{SHA-256} \\ \hline
 \texttt{ua\_length\_audit.py} & \seqsplit{c9385deb84cbe23b6ed67cb3f35fc673655bdddf5e9a835f3cd3ec1b1eb0b00a} \\ \hline
@@ -446,7 +446,6 @@ Los archivos de \texttt{\_evidencia/ua-v6/} se copiaron desde la carpeta de audi
 \texttt{train.parquet} (entrenamiento, no versionado) & \seqsplit{979ad08b629b94e974fd80e1fa9ef8f4f146fc800151ca6cb8515898045b5592} \\ \hline
 \texttt{val.parquet} (validación, no versionado) & \seqsplit{42b6a546e672d9961e45cf75895520590267bfdeeaaa8c4df95ab6e032970ad1} \\ \hline
 \end{tabular}
-\end{adjustbox}
 \caption{Sumas SHA-256 de los archivos de evidencia y de las particiones de entrenamiento y validación.}
 \label{tabla:anexo-ua-procedencia}
 \par\smallskip\footnotesize Fuente: \texttt{shasum -a 256} sobre \texttt{\_evidencia/ua-v6/} y sobre \texttt{training/splits/} en logSguarDian. Elaboración propia.
@@ -475,30 +474,29 @@ El cuadro~\ref{tabla:loso-fuentes} reporta, para las 15 fuentes, el bloqueo de s
 \begin{table}[htbp]
 \centering
 \footnotesize
-\begin{adjustbox}{max width=\linewidth}
-\begin{tabular}{|l|r|c|r|c|r|c|}
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{|p{0.27\linewidth}|r|c|r|p{0.16\linewidth}|r|p{0.16\linewidth}|}
 \hline
 \textbf{Fuente} & \textbf{n} & \textbf{n<200} & \textbf{Ataques} & \textbf{Bloqueo de ataques [IC 95\,\%]} & \textbf{Benignos} & \textbf{FP [IC 95\,\%]} \\ \hline
 \texttt{capec} & 181\,486 &  & 181\,486 & 0.960 [0.959, 0.961] & 0 & — \\ \hline
-\texttt{modsec\_learn} & 84\,698 &  & 25\,962 & 0.996 [0.996, 0.997] & 58\,736 & 0.753 [0.750, 0.757] \\ \hline
-\texttt{payload\_full} & 25\,262 &  & 9\,959 & 0.740 [0.731, 0.748] & 15\,303 & 0.003 [0.002, 0.003] \\ \hline
-\texttt{payloads\_csv} & 15\,650 &  & 10\,146 & 0.908 [0.902, 0.913] & 5\,504 & 0.266 [0.255, 0.278] \\ \hline
-\texttt{xss\_dataset} & 9\,226 &  & 6\,224 & 0.995 [0.993, 0.996] & 3\,002 & 0.949 [0.941, 0.957] \\ \hline
-\texttt{owasp\_logs} & 3\,280 &  & 3\,280 & 0.917 [0.907, 0.926] & 0 & — \\ \hline
-\texttt{seclists\_cmdi} & 2\,087 &  & 2\,087 & 0.288 [0.269, 0.308] & 0 & — \\ \hline
-\texttt{command\_injection} & 1\,745 &  & 401 & 0.509 [0.460, 0.557] & 1\,344 & 0.000 [0.000, 0.003] \\ \hline
-\texttt{synthetic\_cmdi\_minimal\_context} & 709 &  & 709 & 0.635 [0.599, 0.669] & 0 & — \\ \hline
-\texttt{synthetic\_cmdi\_compound} & 425 &  & 425 & 1.000 [0.991, 1.000] & 0 & — \\ \hline
-\texttt{synthetic\_nav} & 357 &  & 0 & — & 357 & 0.739 [0.692, 0.782] \\ \hline
-\texttt{synthetic\_cmdi\_windows} & 340 &  & 340 & 1.000 [0.989, 1.000] & 0 & — \\ \hline
-\texttt{synthetic\_multifield} & 210 &  & 210 & 0.905 [0.857, 0.938] & 0 & — \\ \hline
-\texttt{synthetic\_nav\_ecommerce} & 113 & sí & 0 & — & 113 & 0.788 [0.703, 0.853] \\ \hline
-\texttt{mlops\_telemetry\_curated} & 100 & sí & 100 & 0.970 [0.915, 0.990] & 0 & — \\ \hline
+\texttt{modsec\_\allowbreak{}learn} & 84\,698 &  & 25\,962 & 0.996 [0.996, 0.997] & 58\,736 & 0.753 [0.750, 0.757] \\ \hline
+\texttt{payload\_\allowbreak{}full} & 25\,262 &  & 9\,959 & 0.740 [0.731, 0.748] & 15\,303 & 0.003 [0.002, 0.003] \\ \hline
+\texttt{payloads\_\allowbreak{}csv} & 15\,650 &  & 10\,146 & 0.908 [0.902, 0.913] & 5\,504 & 0.266 [0.255, 0.278] \\ \hline
+\texttt{xss\_\allowbreak{}dataset} & 9\,226 &  & 6\,224 & 0.995 [0.993, 0.996] & 3\,002 & 0.949 [0.941, 0.957] \\ \hline
+\texttt{owasp\_\allowbreak{}logs} & 3\,280 &  & 3\,280 & 0.917 [0.907, 0.926] & 0 & — \\ \hline
+\texttt{seclists\_\allowbreak{}cmdi} & 2\,087 &  & 2\,087 & 0.288 [0.269, 0.308] & 0 & — \\ \hline
+\texttt{command\_\allowbreak{}injection} & 1\,745 &  & 401 & 0.509 [0.460, 0.557] & 1\,344 & 0.000 [0.000, 0.003] \\ \hline
+\texttt{synthetic\_\allowbreak{}cmdi\_\allowbreak{}minimal\_\allowbreak{}context} & 709 &  & 709 & 0.635 [0.599, 0.669] & 0 & — \\ \hline
+\texttt{synthetic\_\allowbreak{}cmdi\_\allowbreak{}compound} & 425 &  & 425 & 1.000 [0.991, 1.000] & 0 & — \\ \hline
+\texttt{synthetic\_\allowbreak{}nav} & 357 &  & 0 & — & 357 & 0.739 [0.692, 0.782] \\ \hline
+\texttt{synthetic\_\allowbreak{}cmdi\_\allowbreak{}windows} & 340 &  & 340 & 1.000 [0.989, 1.000] & 0 & — \\ \hline
+\texttt{synthetic\_\allowbreak{}multifield} & 210 &  & 210 & 0.905 [0.857, 0.938] & 0 & — \\ \hline
+\texttt{synthetic\_\allowbreak{}nav\_\allowbreak{}ecommerce} & 113 & sí & 0 & — & 113 & 0.788 [0.703, 0.853] \\ \hline
+\texttt{mlops\_\allowbreak{}telemetry\_\allowbreak{}curated} & 100 & sí & 100 & 0.970 [0.915, 0.990] & 0 & — \\ \hline
 \end{tabular}
-\end{adjustbox}
 \caption{Exclusión por fuente: bloqueo de ataques y falsos positivos benignos sobre todas las filas de cada fuente (train + val), con intervalo de Wilson al 95\,\%.}
 \label{tabla:loso-fuentes}
-\par\smallskip\footnotesize Fuente: \texttt{results.json} y \texttt{tables\_v5.md} (\texttt{\_evidencia/loso-rf-v11/}, corrida \texttt{run2}). Elaboración propia.
+\par\smallskip\footnotesize Fuente: \texttt{results.json} y \texttt{tables\_\allowbreak{}v5.md} (\texttt{\_\allowbreak{}evidencia/loso-rf-v11/}, corrida \texttt{run2}). Elaboración propia.
 \end{table}
 
 El cuadro~\ref{tabla:loso-control} compara, para las ocho fuentes grandes y sobre sus filas de validación, el modelo de la exclusión (c) con el \texttt{rf.onnx} (a) y con un control (b) que quita de entrenamiento un número aleatorio de filas igual al de la fuente, con cinco semillas.
@@ -506,8 +504,8 @@ El cuadro~\ref{tabla:loso-control} compara, para las ocho fuentes grandes y sobr
 \begin{table}[htbp]
 \centering
 \footnotesize
-\begin{adjustbox}{max width=\linewidth}
-\begin{tabular}{|l|r|c|c|c|c|c|c|}
+\setlength{\tabcolsep}{2pt}
+\begin{tabular}{|p{0.22\linewidth}|p{0.09\linewidth}|p{0.10\linewidth}|p{0.10\linewidth}|p{0.10\linewidth}|p{0.10\linewidth}|p{0.10\linewidth}|p{0.10\linewidth}|}
 \hline
 \textbf{Fuente} & \textbf{n val} & \textbf{(a) bloqueo} & \textbf{(a) FP} & \textbf{(b) bloqueo} & \textbf{(b) FP} & \textbf{(c) bloqueo} & \textbf{(c) FP} \\ \hline
 \texttt{capec} & 32\,028 & 1.000 [1.000, 1.000] & — & 1.000 [1.000, 1.000] & — & 0.960 [0.958, 0.962] & — \\ \hline
@@ -519,7 +517,6 @@ El cuadro~\ref{tabla:loso-control} compara, para las ocho fuentes grandes y sobr
 \texttt{seclists\_cmdi} & 368 & 1.000 [0.990, 1.000] & — & 1.000 [1.000, 1.000] & — & 0.299 [0.254, 0.348] & — \\ \hline
 \texttt{command\_injection} & 308 & 0.958 [0.883, 0.986] & 0.000 [0.000, 0.016] & 0.952 [0.944, 0.972] & 0.000 [0.000, 0.000] & 0.563 [0.448, 0.673] & 0.000 [0.000, 0.016] \\ \hline
 \end{tabular}
-\end{adjustbox}
 \caption{Validación de cada fuente grande: (a) \texttt{rf.onnx} par C; (b) control de mismo tamaño, media [mín, máx] de 5 semillas; (c) exclusión de la fuente. Los corchetes de (a) y (c) son intervalos de Wilson al 95\,\%.}
 \label{tabla:loso-control}
 \par\smallskip\footnotesize Fuente: \texttt{tables\_v5.md}, sección 2 (\texttt{\_evidencia/loso-rf-v11/}). El control se describe en \texttt{control\_wilson\_audit.py}. Elaboración propia.
@@ -532,14 +529,13 @@ El cuadro~\ref{tabla:loso-payload-full} muestra la clase que el modelo de exclus
 \begin{table}[htbp]
 \centering
 \footnotesize
-\begin{adjustbox}{max width=\linewidth}
+\setlength{\tabcolsep}{3pt}
 \begin{tabular}{|l|r|c|c|}
 \hline
 \textbf{Clase predicha (argmax)} & \textbf{Filas} & \textbf{\% de sqli [IC]} & \textbf{Bloqueadas / predichas [IC]} \\ \hline
 \texttt{benign} & 2\,378 & 0.258 [0.249, 0.267] & 0.000 [0.000, 0.002] \\ \hline
 \texttt{cmdi} & 6\,846 & 0.742 [0.733, 0.751] & 0.994 [0.992, 0.996] \\ \hline
 \end{tabular}
-\end{adjustbox}
 \caption{\texttt{payload\_full}: filas \texttt{sqli} de train + val ($n = 9\,224$) según la clase que predice el modelo de exclusión.}
 \label{tabla:loso-payload-full}
 \par\smallskip\footnotesize Fuente: \texttt{tables\_v5.md}, sección 3. Elaboración propia.
@@ -573,32 +569,32 @@ La fuente \texttt{mlops\_\allowbreak telemetry\_\allowbreak curated} aporta 119 
 \end{itemize}
 
 \subsection{Procedencia}\label{anexo:loso-procedencia}
+El Cuadro~\ref{tabla:loso-procedencia} reúne los datos de procedencia de esta sección.
+
 
 \begin{table}[htbp]
 \centering
 \footnotesize
-\begin{adjustbox}{max width=\linewidth}
-\begin{tabular}{|l|p{0.62\linewidth}|}
+\begin{tabular}{|p{0.36\linewidth}|p{0.58\linewidth}|}
 \hline
 \textbf{Archivo} & \textbf{SHA-256} \\ \hline
-\texttt{loso\_rf\_v11.py} & \seqsplit{e9e7484715471bf35c83aabcffd5e8cc7f74a123ed34117928ca9c2bd23c4db6} \\ \hline
-\texttt{control\_wilson\_audit.py} & \seqsplit{1dbbe7db7628a11c8cfd6de79ca4f7338df06d6994a68ab0006b2f886e9a9a80} \\ \hline
-\texttt{make\_tables\_v5.py} & \seqsplit{48ac94e93436394d936d89d374e4a916892035332509d8660789c25fe57c5c29} \\ \hline
+\texttt{loso\_\allowbreak{}rf\_\allowbreak{}v11.py} & \seqsplit{e9e7484715471bf35c83aabcffd5e8cc7f74a123ed34117928ca9c2bd23c4db6} \\ \hline
+\texttt{control\_\allowbreak{}wilson\_\allowbreak{}audit.py} & \seqsplit{1dbbe7db7628a11c8cfd6de79ca4f7338df06d6994a68ab0006b2f886e9a9a80} \\ \hline
+\texttt{make\_\allowbreak{}tables\_\allowbreak{}v5.py} & \seqsplit{48ac94e93436394d936d89d374e4a916892035332509d8660789c25fe57c5c29} \\ \hline
 \texttt{results.json (salida, \texttt{run2})} & \seqsplit{192811fb4900a030da8ab602f75cb9bdcc14c782469a27a4fc145370fe6be8f4} \\ \hline
-\texttt{tables\_v5.md (salida)} & \seqsplit{574f4b2b73940f74ef705d7790fa6961b2a2735dce8ad5bd46441278cef1bd4e} \\ \hline
-\texttt{sha256\_outputs\_v5.txt} & \seqsplit{03bd017abcf9236253561e4ddd1c4e8842b440fa7b947e8aa96e41d7f56ebecb} \\ \hline
-\texttt{sha256\_inputs.txt} & \seqsplit{53dc7a69695c36885bf7846d4843162ab5a2707f75a3179bdc924f5b57e2a2be} \\ \hline
+\texttt{tables\_\allowbreak{}v5.md (salida)} & \seqsplit{574f4b2b73940f74ef705d7790fa6961b2a2735dce8ad5bd46441278cef1bd4e} \\ \hline
+\texttt{sha256\_\allowbreak{}outputs\_\allowbreak{}v5.txt} & \seqsplit{03bd017abcf9236253561e4ddd1c4e8842b440fa7b947e8aa96e41d7f56ebecb} \\ \hline
+\texttt{sha256\_\allowbreak{}inputs.txt} & \seqsplit{53dc7a69695c36885bf7846d4843162ab5a2707f75a3179bdc924f5b57e2a2be} \\ \hline
 \texttt{train.parquet (entrada)} & \seqsplit{979ad08b629b94e974fd80e1fa9ef8f4f146fc800151ca6cb8515898045b5592} \\ \hline
 \texttt{val.parquet (entrada)} & \seqsplit{42b6a546e672d9961e45cf75895520590267bfdeeaaa8c4df95ab6e032970ad1} \\ \hline
 \texttt{rf.onnx (entrada, par C)} & \seqsplit{25b407e649283606a231665a5a8c8ea1c2c7ad4fd0374a8945b3f119651b0870} \\ \hline
-\texttt{loso\_results.json (referencia: LOSO anterior)} & \seqsplit{27672b0c7e5f78fa0fee6a602fc6dd0e9a8a9f8d0a0dc90d8ae00c6acab63646} \\ \hline
-\texttt{source\_counts.txt} (recuento por fuente, \texttt{python3 count\_sources.py}) & \seqsplit{b4f419e2ff83e1df15fc73a642b6e7b9cf1c780624cb9f9f7aed593fd9843289} \\ \hline
-\texttt{count\_sources.py} (script del recuento) & \seqsplit{83789ced7c97921aef09452278e4f80098e7477bd7d67ece227c5000ac8ea29b} \\ \hline
+\texttt{loso\_\allowbreak{}results.json (referencia: LOSO anterior)} & \seqsplit{27672b0c7e5f78fa0fee6a602fc6dd0e9a8a9f8d0a0dc90d8ae00c6acab63646} \\ \hline
+\texttt{source\_\allowbreak{}counts.txt} (recuento por fuente, \texttt{python3 count\_\allowbreak{}sources.py}) & \seqsplit{b4f419e2ff83e1df15fc73a642b6e7b9cf1c780624cb9f9f7aed593fd9843289} \\ \hline
+\texttt{count\_\allowbreak{}sources.py} (script del recuento) & \seqsplit{83789ced7c97921aef09452278e4f80098e7477bd7d67ece227c5000ac8ea29b} \\ \hline
 \end{tabular}
-\end{adjustbox}
 \caption{Sumas SHA-256 de los scripts, de las salidas y de las entradas de la auditoría por exclusión de fuente.}
 \label{tabla:loso-procedencia}
-\par\smallskip\footnotesize Fuente: hashes de \texttt{\_evidencia/loso-rf-v11/} (\texttt{sha256\_inputs.txt}, \texttt{sha256\_outputs\_v5.txt}) y de los archivos de la ejecución. Código de referencia: commit \texttt{dc380e3} de logSguarDian (\texttt{origin/develop}); la corrida repetida reproduce los valores de la corrida anterior en el commit \texttt{35b7a28}, según \texttt{tables\_v5.md}. Elaboración propia.
+\par\smallskip\footnotesize Fuente: hashes de \texttt{\_\allowbreak{}evidencia/loso-rf-v11/} (\texttt{sha256\_\allowbreak{}inputs.txt}, \texttt{sha256\_\allowbreak{}outputs\_\allowbreak{}v5.txt}) y de los archivos de la ejecución. Código de referencia: commit \texttt{dc380e3} de logSguarDian (\texttt{origin/develop}); la corrida repetida reproduce los valores de la corrida anterior en el commit \texttt{35b7a28}, según \texttt{tables\_\allowbreak{}v5.md}. Elaboración propia.
 \end{table}
 
 \section{Reconstrucción de la query en el middleware}\label{anexo:query}
@@ -616,19 +612,17 @@ El Cuadro \ref{tabla:anexo-query-versiones} enumera las versiones del middleware
 \begin{table}[htbp]
 \centering
 \footnotesize
-\begin{adjustbox}{max width=\linewidth}
-\begin{tabular}{|l|p{0.40\linewidth}|p{0.36\linewidth}|}
+\begin{tabular}{|p{0.36\linewidth}|p{0.30\linewidth}|p{0.26\linewidth}|}
 \hline
 \textbf{Versión medida} & \textbf{Identificador y SHA-256} & \textbf{Reconstrucción de la query en cada una} \\ \hline
 Paquete 0.1.0 (\texttt{c3d591a}) & \seqsplit{c5c1a1da57cfb873350ac0c8ab3e7bad395e8cbf507b18cc3272df447880dcb0} (\texttt{dist/\allowbreak middleware.js}:490--492) & \texttt{URLSearchParams} (\texttt{middleware.ts}, línea 539) \\ \hline
-\texttt{core\_worktree\_0.1.0.tgz} (commit \texttt{f15a9e8} de logSguarDian-vulnerable-project, \texttt{vendor/logsguardian-0.1.0.tgz}; ejecución de latencia en Linux) & \seqsplit{c8b975b2577fa8e532ba418fcd5c50dc68155ed25d4a8d23f5dbcc91027ad96e} & \texttt{URLSearchParams} en \texttt{dist/middleware.js} \\ \hline
-Commit \texttt{4d928b5} del mismo repositorio (\texttt{vendor/logsguardian-0.1.0.tgz}; validación; \texttt{worktree\_vendor.tgz}, Ronda 5) & \seqsplit{cf1238deb33383975e12058de71c4423b22d7c5bcba5cf47241c0d0f712b0416} & \texttt{URLSearchParams} en \texttt{dist/middleware.js} \\ \hline
-\texttt{latency\_linux.tgz} (resultados de la ejecución de latencia en Linux) & \seqsplit{b96d901408547331fb4859a5dac4810abdb1caaeb2f15f3378877c2290187cec} & Contiene resultados de medición, no código del middleware \\ \hline
+\texttt{core\_\allowbreak{}worktree\_\allowbreak{}0.1.0.tgz} (commit \texttt{f15a9e8} de logSguarDian-vulnerable-project, \texttt{vendor/logsguardian-0.1.0.tgz}; ejecución de latencia en Linux) & \seqsplit{c8b975b2577fa8e532ba418fcd5c50dc68155ed25d4a8d23f5dbcc91027ad96e} & \texttt{URLSearchParams} en \texttt{dist/middleware.js} \\ \hline
+Commit \texttt{4d928b5} del mismo repositorio (\texttt{vendor/logsguardian-0.1.0.tgz}; validación; \texttt{worktree\_\allowbreak{}vendor.tgz}, Ronda 5) & \seqsplit{cf1238deb33383975e12058de71c4423b22d7c5bcba5cf47241c0d0f712b0416} & \texttt{URLSearchParams} en \texttt{dist/middleware.js} \\ \hline
+\texttt{latency\_\allowbreak{}linux.tgz} (resultados de la ejecución de latencia en Linux) & \seqsplit{b96d901408547331fb4859a5dac4810abdb1caaeb2f15f3378877c2290187cec} & Contiene resultados de medición, no código del middleware \\ \hline
 \end{tabular}
-\end{adjustbox}
 \caption{Versiones del middleware medidas y forma de reconstrucción de la query en cada una.}
 \label{tabla:anexo-query-versiones}
-\par\smallskip\footnotesize Fuente: hashes calculados con \texttt{shasum -a 256} sobre los tarballes de \texttt{\_evidencia/query-v5/} (\texttt{SHA256SUMS.txt}); los commits \texttt{f15a9e8} y \texttt{4d928b5} se verificaron con \texttt{git -C} en logSguarDian-vulnerable-project, donde \texttt{vendor/logsguardian-0.1.0.tgz} tiene los mismos SHA-256; código de \texttt{c3d591a} verificado con \texttt{git show} en logSguarDian. Elaboración propia.
+\par\smallskip\footnotesize Fuente: hashes calculados con \texttt{shasum -a 256} sobre los tarballes de \texttt{\_\allowbreak{}evidencia/query-v5/} (\texttt{SHA256SUMS.txt}); los commits \texttt{f15a9e8} y \texttt{4d928b5} se verificaron con \texttt{git -C} en logSguarDian-vulnerable-project, donde \texttt{vendor/logsguardian-0.1.0.tgz} tiene los mismos SHA-256; código de \texttt{c3d591a} verificado con \texttt{git show} en logSguarDian. Elaboración propia.
 \end{table}
 
 \subsection{Paquetes publicados en npm}\label{anexo:query-paquetes}
@@ -638,16 +632,15 @@ El Cuadro \ref{tabla:anexo-query-paquetes} compara las dos versiones publicadas 
 \begingroup\sloppy
 \begin{table}[htbp]
 \centering
-\scriptsize
-\begin{adjustbox}{max width=\linewidth}
-\begin{tabular}{|p{0.09\linewidth}|p{0.17\linewidth}|p{0.24\linewidth}|p{0.06\linewidth}|p{0.21\linewidth}|p{0.21\linewidth}|}
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{|p{0.08\linewidth}|p{0.15\linewidth}|p{0.22\linewidth}|p{0.05\linewidth}|p{0.20\linewidth}|p{0.20\linewidth}|}
 \hline
 \textbf{Versión} & \textbf{Publicación (UTC)} & \textbf{SHA-256 del tgz} & \textbf{Par} & \textbf{Umbral de IF} & \textbf{Construcción de la query} \\ \hline
 0.1.0 & \seqsplit{2026-08-30T05:07:31Z} & \seqsplit{c5c1a1da57cfb873350ac0c8ab3e7bad395e8cbf507b18cc3272df447880dcb0} & A & \seqsplit{0.002486040118540811}, fijo (\texttt{dist/\allowbreak middleware.js}\allowbreak :95) & \texttt{URLSearchParams} (\texttt{dist/\allowbreak middleware.js}:490--492) \\ \hline
-0.1.1 & \seqsplit{2026-10-11T04:02:39Z} & \seqsplit{abf8d5c47036d9c3a289bc36158f1caaa91b9504689aa97193e51c6808258d15} & C & \seqsplit{0.004205941820353609}, leído de \texttt{models/\allowbreak parity\_report.json} (\texttt{dist/\allowbreak model-metadata.js}:20--40; \texttt{dist/\allowbreak middleware.js}:118) & \texttt{req.originalUrl} con corte en ``?'' y \texttt{URLSearchParams} solo como respaldo (\texttt{dist/\allowbreak middleware.js}:539--543 y 550--552) \\ \hline
+0.1.1 & \seqsplit{2026-10-11T04:02:39Z} & \seqsplit{abf8d5c47036d9c3a289bc36158f1caaa91b9504689aa97193e51c6808258d15} & C & \seqsplit{0.004205941820353609}, leído de \texttt{models/\allowbreak parity\_report.json} (\texttt{dist/\allowbreak model-\allowbreak metadata.js}:20--40; \texttt{dist/\allowbreak middleware.js}:118) & \texttt{req.originalUrl} con corte en ``?'' y \texttt{URLSearchParams} solo como respaldo (\texttt{dist/\allowbreak middleware.js}:539--543 y 550--552) \\ \hline
 \end{tabular}
-\end{adjustbox}
-\caption{Versiones del paquete logsguardian publicadas en npm.}
+\caption{Versiones del paquete \texttt{logsguardian} publicadas en npm.}
 \label{tabla:anexo-query-paquetes}
 \par\smallskip\footnotesize Fuente: \texttt{package\_hashes.txt} y \texttt{SHA256SUMS.txt} en \texttt{\_evidencia/paquete-y-fuentes-v7/}; líneas de código según el tarball de cada versión. Elaboración propia.
 \end{table}
@@ -665,13 +658,11 @@ Se reprodujeron las 600 peticiones de la Ronda 5 (200 por clase: \texttt{sqli}, 
 \centering
 \footnotesize
 \setlength{\tabcolsep}{3pt}
-\begin{adjustbox}{max width=\linewidth}
-\begin{tabular}{|l|r|r|r|r|r|}
+\begin{tabular}{|p{0.30\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.14\linewidth}|}
 \hline
 \textbf{Comparación} & \textbf{Filas con diferencias} & \textbf{Filas con diferencias en las 69 de RF} & \textbf{Cambios de clase} & \textbf{Cambios de decisión} & \textbf{Bloqueadas} \\ \hline
 Anterior frente a \texttt{dc380e3} & 0 & 0 & 0 & 0 & 574 de 600 en ambas versiones \\ \hline
 \end{tabular}
-\end{adjustbox}
 \caption{Réplica de la Ronda 5 (600 peticiones): diferencias en las características del vector de Random Forest, cambios de clase y de decisión con $T = 0.35$.}
 \label{tabla:anexo-query-replica}
 \par\smallskip\footnotesize Fuente: \texttt{round5\_wire\_report.json} y \texttt{round5\_wire\_stdout.txt} (salida de \texttt{requery\_dc380e3\_eval.py}). Elaboración propia.
@@ -713,31 +704,29 @@ Todas las evaluaciones de este documento son anteriores al commit \texttt{25c7e6
 \begin{table}[htbp]
 \centering
 \footnotesize
-\begin{adjustbox}{max width=\linewidth}
-\begin{tabular}{|l|p{0.62\linewidth}|}
+\begin{tabular}{|p{0.36\linewidth}|p{0.58\linewidth}|}
 \hline
 \textbf{Archivo} & \textbf{SHA-256} \\ \hline
-\texttt{requery\_dc380e3.js} (script de re-derivación) & \seqsplit{2dddcdb52ba96b0bc53c109de23bd451b675b84b480434da366bbf6048071bad} \\ \hline
-\texttt{requery\_dc380e3\_eval.py} (script de evaluación) & \seqsplit{b4dc88eabb69f08fa15a50023f84a52728f78c866241d9a2721f4cef40315066} \\ \hline
-\texttt{round5\_wire\_vectors.jsonl} (entrada) & \seqsplit{bfade2f053043003162cdd710edd99d85bdf2039a3b12b4dcaa3fea506338214} \\ \hline
-\texttt{round5\_wire\_report.json} (salida) & \seqsplit{ad2ee8e8543727c954a103de7372337a53d0063a7d24fa98455907d0e6871701} \\ \hline
-\texttt{round5\_wire\_stdout.txt} (salida) & \seqsplit{d8fe3c811fed1ff22d4c8847267821065a08e6b0a5a74f8eecd302092d6f1641} \\ \hline
-\texttt{cases\_old\_vs\_new.jsonl} (salida) & \seqsplit{4421dcc7ff2f468ae39e58fd9ccbcf11271de58f5852f2e35d045233bcb046ee} \\ \hline
-\texttt{middleware\_log.txt} (\texttt{git show} de \texttt{25c7e64}) & \seqsplit{13a3d59d580f644c4aadb6963f85730687fed32ecec36c7ef7ac33625f8cc481} \\ \hline
+\texttt{requery\_\allowbreak{}dc380e3.js} (script de re-derivación) & \seqsplit{2dddcdb52ba96b0bc53c109de23bd451b675b84b480434da366bbf6048071bad} \\ \hline
+\texttt{requery\_\allowbreak{}dc380e3\_\allowbreak{}eval.py} (script de evaluación) & \seqsplit{b4dc88eabb69f08fa15a50023f84a52728f78c866241d9a2721f4cef40315066} \\ \hline
+\texttt{round5\_\allowbreak{}wire\_\allowbreak{}vectors.jsonl} (entrada) & \seqsplit{bfade2f053043003162cdd710edd99d85bdf2039a3b12b4dcaa3fea506338214} \\ \hline
+\texttt{round5\_\allowbreak{}wire\_\allowbreak{}report.json} (salida) & \seqsplit{ad2ee8e8543727c954a103de7372337a53d0063a7d24fa98455907d0e6871701} \\ \hline
+\texttt{round5\_\allowbreak{}wire\_\allowbreak{}stdout.txt} (salida) & \seqsplit{d8fe3c811fed1ff22d4c8847267821065a08e6b0a5a74f8eecd302092d6f1641} \\ \hline
+\texttt{cases\_\allowbreak{}old\_\allowbreak{}vs\_\allowbreak{}new.jsonl} (salida) & \seqsplit{4421dcc7ff2f468ae39e58fd9ccbcf11271de58f5852f2e35d045233bcb046ee} \\ \hline
+\texttt{middleware\_\allowbreak{}log.txt} (\texttt{git show} de \texttt{25c7e64}) & \seqsplit{13a3d59d580f644c4aadb6963f85730687fed32ecec36c7ef7ac33625f8cc481} \\ \hline
 \texttt{rf.onnx} (modelo, par C) & \seqsplit{25b407e649283606a231665a5a8c8ea1c2c7ad4fd0374a8945b3f119651b0870} \\ \hline
-\texttt{package\_hashes.txt} (copia en \texttt{\_evidencia/paquete-y-fuentes-v7/}) & \seqsplit{776f334e73d5209a8049ee9372758d1f72eb3d6feae541d0b67d6350acdd376e} \\ \hline
-\texttt{owasp\_counts.txt} (copia en \texttt{\_evidencia/paquete-y-fuentes-v7/}) & \seqsplit{5ed8f7888424cd1bb555f10a196072c5b0218ab08fb71108bab5a31a54e0a475} \\ \hline
-\texttt{dedup\_full.txt} (copia en \texttt{\_evidencia/paquete-y-fuentes-v7/}) & \seqsplit{50b5229c30af62a850d2c009ad95ce611d7203a7fc2dc8a62d38d49d4b820686} \\ \hline
-\texttt{telemetry\_counts.txt} (copia en \texttt{\_evidencia/paquete-y-fuentes-v7/}) & \seqsplit{f641c77d999b6fc435da16f2cfb8c411684e223100da064fc8e660afeed5314f} \\ \hline
-\texttt{SHA256SUMS.txt} (copia en \texttt{\_evidencia/paquete-y-fuentes-v7/}) & \seqsplit{6503e6fcb08087c5cda29872bca2d0db2c5e8ee54ec9f7a1716260411d3ce22e} \\ \hline
-\texttt{count\_owasp.py} (copia en \texttt{\_evidencia/paquete-y-fuentes-v7/}) & \seqsplit{d915f0c19a919f7b40c25080f1122972e40009af4aaa513e01bd351aaa8c144c} \\ \hline
-\texttt{dedup\_full.py} (copia en \texttt{\_evidencia/paquete-y-fuentes-v7/}) & \seqsplit{3d2ae964804e83699c451fd314c72f9cc19b780c38de7d6bce3f20e1594338c6} \\ \hline
-\texttt{telemetry\_partitions.py} (copia en \texttt{\_evidencia/paquete-y-fuentes-v7/}) & \seqsplit{d86929d641755b9acdb9a69266dc567ac8aa8ebe65855a3faf9a692f6a82eff6} \\ \hline
+\texttt{package\_\allowbreak{}hashes.txt} (copia en \texttt{\_\allowbreak{}evidencia/paquete-y-fuentes-v7/}) & \seqsplit{776f334e73d5209a8049ee9372758d1f72eb3d6feae541d0b67d6350acdd376e} \\ \hline
+\texttt{owasp\_\allowbreak{}counts.txt} (copia en \texttt{\_\allowbreak{}evidencia/paquete-y-fuentes-v7/}) & \seqsplit{5ed8f7888424cd1bb555f10a196072c5b0218ab08fb71108bab5a31a54e0a475} \\ \hline
+\texttt{dedup\_\allowbreak{}full.txt} (copia en \texttt{\_\allowbreak{}evidencia/paquete-y-fuentes-v7/}) & \seqsplit{50b5229c30af62a850d2c009ad95ce611d7203a7fc2dc8a62d38d49d4b820686} \\ \hline
+\texttt{telemetry\_\allowbreak{}counts.txt} (copia en \texttt{\_\allowbreak{}evidencia/paquete-y-fuentes-v7/}) & \seqsplit{f641c77d999b6fc435da16f2cfb8c411684e223100da064fc8e660afeed5314f} \\ \hline
+\texttt{SHA256SUMS.txt} (copia en \texttt{\_\allowbreak{}evidencia/paquete-y-fuentes-v7/}) & \seqsplit{6503e6fcb08087c5cda29872bca2d0db2c5e8ee54ec9f7a1716260411d3ce22e} \\ \hline
+\texttt{count\_\allowbreak{}owasp.py} (copia en \texttt{\_\allowbreak{}evidencia/paquete-y-fuentes-v7/}) & \seqsplit{d915f0c19a919f7b40c25080f1122972e40009af4aaa513e01bd351aaa8c144c} \\ \hline
+\texttt{dedup\_\allowbreak{}full.py} (copia en \texttt{\_\allowbreak{}evidencia/paquete-y-fuentes-v7/}) & \seqsplit{3d2ae964804e83699c451fd314c72f9cc19b780c38de7d6bce3f20e1594338c6} \\ \hline
+\texttt{telemetry\_\allowbreak{}partitions.py} (copia en \texttt{\_\allowbreak{}evidencia/paquete-y-fuentes-v7/}) & \seqsplit{d86929d641755b9acdb9a69266dc567ac8aa8ebe65855a3faf9a692f6a82eff6} \\ \hline
 \end{tabular}
-\end{adjustbox}
-\caption[Sumas SHA-256 de la réplica de la Ronda 5 y de los archivos de paquete y de fuentes]{Sumas SHA-256 de los scripts, las entradas y las salidas de la réplica de la Ronda 5, y de los archivos de paquete y de fuentes copiados a \texttt{\_evidencia/paquete-y-fuentes-v7/}.}
+\caption[Sumas SHA-256 de la réplica de la Ronda 5 y de los archivos de paquete y de fuentes]{Sumas SHA-256 de los scripts, las entradas y las salidas de la réplica de la Ronda 5, y de los archivos de paquete y de fuentes copiados a \texttt{\_\allowbreak{}evidencia/paquete-y-fuentes-v7/}.}
 \label{tabla:anexo-query-procedencia}
-\par\smallskip\footnotesize Fuente: \texttt{shasum -a 256} sobre \texttt{\_evidencia/query-v5/} y \texttt{\_evidencia/paquete-y-fuentes-v7/}; verificadas contra \texttt{SHA256SUMS.txt}. Elaboración propia.
+\par\smallskip\footnotesize Fuente: \texttt{shasum -a 256} sobre \texttt{\_\allowbreak{}evidencia/query-v5/} y \texttt{\_\allowbreak{}evidencia/paquete-y-fuentes-v7/}; verificadas contra \texttt{SHA256SUMS.txt}. Elaboración propia.
 \end{table}
 
 \section{Métricas de rf\_v10 e if\_v9}\label{anexo:v10}
@@ -747,7 +736,6 @@ Este anexo presenta las métricas de la generación v10 (Random Forest \texttt{r
 \begin{table}[htbp]
 \centering
 \footnotesize
-\begin{adjustbox}{max width=\linewidth}
 \begin{tabular}{|l|r|r|r|r|}
 \hline
 \textbf{Clase} & \textbf{Precisión} & \textbf{Recall} & \textbf{F1} & \textbf{Soporte} \\ \hline
@@ -759,7 +747,6 @@ Este anexo presenta las métricas de la generación v10 (Random Forest \texttt{r
 \textbf{Macro promedio} & 0.97817 & 0.97925 & 0.97869 & 57\,308 \\ \hline
 \textbf{Exactitud} & & & 0.99361 & 57\,308 \\ \hline
 \end{tabular}
-\end{adjustbox}
 \caption{Métricas de \texttt{rf\_v10} sobre la partición de prueba (57\,308 filas).}
 \label{tabla:anexo-v10-rf}
 \par\smallskip\footnotesize Fuente: \texttt{v10\_test\_results\_dc2aaa6.json}, sección \texttt{rf\_v10\_test}. Elaboración propia.
@@ -806,7 +793,6 @@ Este anexo reúne mediciones sobre el corpus de la Ronda 5 que ejecutó Sebasti�
 \centering
 \footnotesize
 \setlength{\tabcolsep}{3pt}
-\begin{adjustbox}{max width=\linewidth}
 \begin{tabular}{|p{0.36\linewidth}|r|r|r|r|r|}
 \hline
 \textbf{Configuración} & \textbf{sqli} & \textbf{path\_traversal} & \textbf{cmdi} & \textbf{xss} & \textbf{Total (600)} \\ \hline
@@ -818,7 +804,6 @@ Configuración 3b, WAF y logSguarDian & 200/200 & 200/200 & 197/200 & 1/1 & 597/
 Paquete 0.1.1, arnés original & 199/200 & 190/200 & 192/200 & 1/1 & 581/600 \\ \hline
 Paquete 0.1.1, arnés corregido & 199/200 & 200/200 & 185/200\textsuperscript{b} & 1/1 & 584/600 \\ \hline
 \end{tabular}
-\end{adjustbox}
 \caption{Bloqueos por categoría en las mediciones del coautor sobre la Ronda 5.}
 \label{tabla:anexo-coautor-resultados}
 \par\smallskip\footnotesize Fuente: conteo propio de los campos \texttt{blocked} y \texttt{status} de los archivos \texttt{results\_\allowbreak *.\allowbreak json} de \texttt{\_evidencia/coautor-ronda5-v10/}. Bloqueado significa HTTP 403; los errores y los timeouts cuentan como no bloqueados. (a) En las filas del par A y del par C no se reporta xss: los archivos de 608 entradas de los commits \texttt{a3aada0} y \texttt{4d928b5} contienen ocho marcadores xss escritos a mano, que no se evalúan. El resultado de xss de las demás filas es el único caso hallado con ZAP (un payload, una petición por configuración). (b) Incluye un timeout (\texttt{cmdi\_7}). Elaboración propia.
@@ -842,8 +827,8 @@ El número $n = 1$ significa un payload y una petición por configuración, sin 
 
 \begin{table}[htbp]
 \centering
-\scriptsize
-\begin{adjustbox}{max width=\linewidth}
+\footnotesize
+\setlength{\tabcolsep}{3pt}
 \begin{tabular}{|p{0.34\linewidth}|p{0.20\linewidth}|p{0.40\linewidth}|}
 \hline
 \textbf{Archivo o tarball} & \textbf{Origen} & \textbf{SHA-256} \\ \hline
@@ -866,7 +851,6 @@ Tarball de validación (par C) & \texttt{4d928b5} & \seqsplit{cf1238deb33383975e
 Tgz de 0.1.0 del registro (\texttt{vendor} de \texttt{963843e}) & Registro npm & \seqsplit{c5c1a1da57cfb873350ac0c8ab3e7bad395e8cbf507b18cc3272df447880dcb0} \\ \hline
 Tgz de 0.1.1 del registro (\texttt{npm pack}) & Registro npm & \seqsplit{abf8d5c47036d9c3a289bc36158f1caaa91b9504689aa97193e51c6808258d15} \\ \hline
 \end{tabular}
-\end{adjustbox}
 \caption{Procedencia de los archivos copiados a \texttt{\_evidencia/coautor-ronda5-v10/} y de los tarballes citados.}
 \label{tabla:anexo-coautor-procedencia}
 \par\smallskip\footnotesize Fuente: \texttt{SHA256SUMS.txt} de \texttt{\_evidencia/coautor-ronda5-v10/} (\texttt{shasum -a 256}); los commits se verificaron con \texttt{git show} sobre logSguarDian-vulnerable-project. Elaboración propia.
