@@ -51,8 +51,7 @@ Las filas de Linux nativo corresponden a la ejecución 36276690236, en un ejecut
 \centering
 \footnotesize
 \setlength{\tabcolsep}{3pt}
-\begin{adjustbox}{max width=\linewidth}
-\begin{tabular}{|p{3.6cm}|p{3.4cm}|r|r|r|}
+\begin{tabular}{|p{3.4cm}|p{3.0cm}|p{1.7cm}|p{1.7cm}|p{1.9cm}|}
 \hline
 \textbf{Entorno} & \textbf{Compilación del middleware} & \textbf{p95 sin middleware (ms)} & \textbf{p95 con middleware (ms)} & \textbf{$\Delta$p95 absoluto (ms)} \\ \hline
 Node.js sobre WSL2, Artillery & Versión de julio de 2026 (modo \textit{monitor}) & 1 & 1 & 0 \\ \hline
@@ -65,7 +64,6 @@ Linux nativo (ejecución 36276690236), carga normal & Commit medido f15a9e8 & 2.
 Linux nativo (ejecución 36276690236), carga de ataque & Commit medido f15a9e8 & 4.62 & 17.47 & 12.85 \\ \hline
 Linux nativo (ejecución 36276690236), carga de volumen & Commit medido f15a9e8 & 63.84 & 6\,559.30 & 6\,495.46 \\ \hline
 \end{tabular}
-\end{adjustbox}
 \caption{Latencia p95 con y sin middleware y diferencia absoluta, por entorno medido.}
 \label{tabla:res-overhead}
 \par\smallskip\footnotesize $^{\dagger}$ Diferencia calculada como p95 con middleware menos p95 sin middleware; la fuente reporta ambos valores y no la diferencia. Las compilaciones con ventana de gracia corresponden a versiones anteriores del middleware; la versión vigente resuelve la respuesta sin esperar al Isolation Forest y actualiza el registro con su puntaje tardío (\texttt{packages/core/src/middleware.ts}, rama \texttt{develop}).\\
@@ -222,8 +220,7 @@ El Cuadro \ref{tabla:res-config2-latencia} reporta el incremento relativo del p9
 \centering
 \footnotesize
 \setlength{\tabcolsep}{3pt}
-\begin{adjustbox}{max width=\linewidth}
-\begin{tabular}{|p{4.6cm}|p{2.4cm}|r|r|r|}
+\begin{tabular}{|p{4.0cm}|p{2.2cm}|p{2.0cm}|p{2.0cm}|p{2.2cm}|}
 \hline
 \textbf{Compilación del middleware} & \textbf{Datos sembrados} & \textbf{p95 sin middleware (ms)} & \textbf{p95 con middleware (ms)} & \textbf{$\Delta$p95 relativo} \\ \hline
 Un solo \textit{worker} (\texttt{rf\_v9}/\texttt{if\_v8}) & 10 filas & 4.0 & 14.6 & +265.8\,\% \\ \hline
@@ -231,7 +228,6 @@ Un solo \textit{worker} (\texttt{rf\_v9}/\texttt{if\_v8}) & 10 filas & 4.0 & 14.
 \textit{Worker pool} (\texttt{rf\_v10}/\texttt{if\_v9}), umbral de IF corregido (6 corridas) & 10 filas & 5.0 & 12.8 & +156.7\,\% \\ \hline
 Diseño híbrido (ventana de gracia y cola de escritura por lotes) & 2\,010 filas & 13.67 & 23--28 & +70.2\,\% \\ \hline
 \end{tabular}
-\end{adjustbox}
 \caption{Incremento relativo del p95 de Config 2 (indicador complementario), por compilación del middleware. Las generaciones medidas son \texttt{rf\_v9}/\texttt{if\_v8} y \texttt{rf\_v10}/\texttt{if\_v9}; no corresponden a \texttt{rf\_v11}/\texttt{if\_v10}.}
 \label{tabla:res-config2-latencia}
 \par\smallskip\footnotesize Fuente: \texttt{docs/config2-latency-evaluation.md}, secciones \textit{Latency Results}, \textit{Comparison across iterations}, \textit{Final latency}, \textit{Definitive comparison} y \textit{Config 2 Final Status}. Elaboración propia.
@@ -253,7 +249,9 @@ En el escenario de volumen con middleware, 1\,824 de 26\,048 solicitudes (7.00\,
 
 En las Rondas 1 y 2, ejecutadas con el \textit{stack} en capas y ModSecurity\parencite{modsecurity} en modo de bloqueo, el corpus fue de 23 payloads: los 9 casos de ataque de las Configs 1 y 2 y 14 variantes diseñadas para evadir las reglas de firmas de CRS. ModSecurity respondió 403 a los 9 casos originales y a las 14 variantes (23/23), y ninguna petición llegó a la aplicación (\texttt{docs/config3b-results.md}, secciones \textit{Round 1} y \textit{Round 2}).
 
-En la Ronda 3, con \texttt{MODSEC\_RULE\_ENGINE} en \texttt{DetectionOnly}, de modo que CRS registra pero no bloquea y toda petición llega a la aplicación, los 23 payloads se reejecutaron contra logSguarDian. La auditoría de CRS registró que habría bloqueado los 23. El resultado inicial fue de 16/23 bloqueados por logSguarDian. La cifra original del documento fuente, 21/23, resultó aritméticamente inconsistente con el detalle de 7 casos no detectados que el propio documento reporta. Se corrigió a 16/23, consistente con 16+7=23, sin re-medición porque los datos crudos de esa ronda ya no existen. Los 7 no detectados eran de XSS y se habían enviado como \texttt{multipart/form-data}. Tras montar un \textit{parser} multipart global antes del middleware, 23/23 devolvieron \texttt{verdict: block}, confirmado en \texttt{detection\_events}. Dos payloads (traversal de rutas y una inyección de comandos) se bloquearon con una clase asignada distinta de la esperada (\texttt{config3b-results.md}, sección \textit{Round 3}).
+En la Ronda 3, con \texttt{MODSEC\_RULE\_ENGINE} en \texttt{DetectionOnly}, de modo que CRS registra pero no bloquea y toda petición llega a la aplicación, los 23 payloads se reejecutaron contra logSguarDian. La auditoría de CRS registró que habría bloqueado los 23. 
+
+El resultado inicial fue de 16/23 bloqueados por logSguarDian. La cifra original del documento fuente, 21/23, resultó aritméticamente inconsistente con el detalle de 7 casos no detectados que el propio documento reporta. Se corrigió a 16/23, consistente con 16+7=23, sin re-medición porque los datos crudos de esa ronda ya no existen. Los 7 no detectados eran de XSS y se habían enviado como \texttt{multipart/form-data}. Tras montar un \textit{parser} multipart global antes del middleware, 23/23 devolvieron \texttt{verdict: block}, confirmado en \texttt{detection\_events}. Dos payloads (traversal de rutas y una inyección de comandos) se bloquearon con una clase asignada distinta de la esperada (\texttt{config3b-results.md}, sección \textit{Round 3}).
 
 \subsection{Config 3a y Config 3b: corpus grande}
 
@@ -391,15 +389,13 @@ La memoria y la CPU se midieron con \texttt{docker stats} sobre el contenedor de
 \centering
 \footnotesize
 \setlength{\tabcolsep}{3pt}
-\begin{adjustbox}{max width=\linewidth}
-\begin{tabular}{|l|c|c|c|c|}
+\begin{tabular}{|p{3.0cm}|p{2.6cm}|p{2.6cm}|p{2.6cm}|p{2.6cm}|}
 \hline
 \textbf{Escenario} & \textbf{Memoria baseline / active (MiB)} & \textbf{$\Delta$Memoria (MiB)} & \textbf{CPU baseline / active (\% de un núcleo)} & \textbf{$\Delta$CPU (pp / relativo)} \\ \hline
 Ataque & 63.2 / 394.8 & 331.9 & 16.1 / 101.3 & 85.1 pp / 529.6\,\% \\ \hline
 Normal & 65.2 / 397.5 & 332.0 & 14.5 / 103.3 & 88.9 pp / 614.4\,\% \\ \hline
 Volumen & 83.3 / 459.1 & 375.9 & 82.3 / 115.3 & 33.0 pp / 40.1\,\% \\ \hline
 \end{tabular}
-\end{adjustbox}
 \caption{Memoria y CPU del contenedor con y sin middleware, por escenario (ventana A).}
 \label{tabla:res-recursos}
 \par\smallskip\footnotesize Fuente: \texttt{docs/evidence/resources\_summary.json}, rama \texttt{main}, ventana A. Medias por condición; $\Delta$Memoria y $\Delta$CPU son la media de las diferencias pareadas por repetición. Elaboración propia.
@@ -504,15 +500,13 @@ Las Figuras \ref{fig:shap-local-no-ua} y \ref{fig:shap-local-with-ua} presentan 
 \centering
 \footnotesize
 \setlength{\tabcolsep}{3pt}
-\begin{adjustbox}{max width=\linewidth}
-\begin{tabular}{|l|l|r|r|r|}
+\begin{tabular}{|p{3.0cm}|p{2.8cm}|p{2.2cm}|p{2.2cm}|p{3.2cm}|}
 \hline
-\textbf{Caso} & \textbf{Clase predicha (probabilidad)} & \textbf{Valor de \texttt{ua\_present}; SHAP} & \textbf{Valor de \texttt{ua\_length}; SHAP} & \textbf{Mayor contribución (SHAP)} \\ \hline
-\texttt{GET /profile} sin \textit{User-Agent} & \texttt{xss} (0.650) & 0; $+0.0596$ & 0; $+0.0678$ & \texttt{path\_length} ($+0.1008$) \\ \hline
-\texttt{GET /profile} con \textit{User-Agent} & \texttt{benign} (0.533) & 1; $-0.0498$ & 75; $-0.0327$ & \texttt{special\_char\_ratio} ($+0.0566$) \\ \hline
-Petición de \texttt{sqli} del conjunto de extremo a extremo & \texttt{sqli} (0.999) & 1; $+0.0485$ & 68; $+0.1136$ & \texttt{ua\_length} ($+0.1136$) \\ \hline
+\textbf{Caso} & \textbf{Clase predicha (probabilidad)} & \textbf{Valor de \texttt{ua\_\allowbreak{}present}; SHAP} & \textbf{Valor de \texttt{ua\_\allowbreak{}length}; SHAP} & \textbf{Mayor contribución (SHAP)} \\ \hline
+\texttt{GET /profile} sin \textit{User-Agent} & \texttt{xss} (0.650) & 0; $+0.0596$ & 0; $+0.0678$ & \texttt{path\_\allowbreak{}length} ($+0.1008$) \\ \hline
+\texttt{GET /profile} con \textit{User-Agent} & \texttt{benign} (0.533) & 1; $-0.0498$ & 75; $-0.0327$ & \texttt{special\_\allowbreak{}char\_\allowbreak{}ratio} ($+0.0566$) \\ \hline
+Petición de \texttt{sqli} del conjunto de extremo a extremo & \texttt{sqli} (0.999) & 1; $+0.0485$ & 68; $+0.1136$ & \texttt{ua\_\allowbreak{}length} ($+0.1136$) \\ \hline
 \end{tabular}
-\end{adjustbox}
 \caption{Valores SHAP locales de las características de \textit{User-Agent} y mayor contribución, para la clase predicha de cada caso.}
 \label{tabla:res-shap-local}
 \par\smallskip\footnotesize Fuente: valores SHAP recalculados con \path{training/results/shap_analysis.py} sobre \texttt{rf\_v11}; figuras en \texttt{training/results/shap\_local\_*.png}. Elaboración propia.
