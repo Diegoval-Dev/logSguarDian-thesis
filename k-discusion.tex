@@ -64,7 +64,7 @@ La memoria aumenta 331.9, 332.0 y 375.9~MiB en ataque, normal y volumen, más de
 
 \section{Comparación con trabajos previos}
 
-IntelliWAF \parencite{shinde2026intelliwaf} combina un Random Forest y un Isolation Forest con reglas y limitación de tasa, y opera como proxy inverso externo a la aplicación. Reporta una exactitud de 91.5\,\% del Random Forest sobre CSIC 2010 (61\,065 muestras) y no reporta latencia de detección. Este trabajo difiere en la arquitectura, embebida en el proceso de la aplicación, y en el papel del Isolation Forest, que no participa en el bloqueo. Las diferencias de conjunto de datos y de métrica impiden comparar cifras de detección.
+IntelliWAF \parencite{shinde2026intelliwaf} combina un Random Forest y un Isolation Forest con reglas y limitación de tasa, y opera como proxy inverso externo a la aplicación. Reporta una exactitud de 91.5\,\% del Random Forest sobre CSIC 2010 (61\,065 muestras) y no reporta una latencia de detección por petición; el texto menciona solo una latencia de eventos del panel, inferior a 50 ms. Este trabajo difiere en la arquitectura, embebida en el proceso de la aplicación, y en el papel del Isolation Forest, que en este trabajo no participa en el bloqueo y en IntelliWAF contribuye a una puntuación combinada que decide el bloqueo. Las diferencias de conjunto de datos y de métrica impiden comparar cifras de detección.
 
 \section{Cumplimiento de los objetivos}
 
