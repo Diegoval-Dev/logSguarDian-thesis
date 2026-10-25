@@ -6,7 +6,7 @@ Este anexo verifica si el umbral de decisión de Random Forest se mantiene estab
 
 El umbral \texttt{RF\_THRESHOLD = 0.35} se fijó sobre el conjunto de validación con \texttt{rf\_v3} y se mantuvo en las generaciones posteriores sin recalibración (\texttt{docs/decision-policy.md}, §2.2.1, del repositorio logSguarDian). Para \texttt{rf\_v11} se repitió el barrido sobre el conjunto de validación de 57\,481 filas, sin cambiar el valor desplegado. El autor definió el criterio de estabilidad antes de ejecutar el barrido; no consta registro en el repositorio. El criterio exige que la variación entre los umbrales 0.30 y 0.40 sea menor que 0.5 puntos porcentuales, tanto en la tasa de bloqueo benigno como en el recall global.
 
-Las variaciones observadas fueron de 0.0067 puntos porcentuales en la tasa de bloqueo benigno y de 0.056 puntos porcentuales en el recall global, por lo que el criterio se cumple. Esta lectura acota el resultado a estabilidad y no a optimalidad. Con un recall cercano a 99.9 \%, la validación discrimina poco entre los umbrales 0.20 y 0.40. El umbral no se recalibró, y la Configuración 2 y la Ronda 5 se mantienen con 0.35.
+Las variaciones observadas fueron de 0.0067 puntos porcentuales en la tasa de bloqueo benigno y de 0.056 puntos porcentuales en el recall global, por lo que el criterio se cumple. Esta lectura acota el resultado a estabilidad y no a optimalidad. Con un recall cercano a 99.9\,\%, la validación discrimina poco entre los umbrales 0.20 y 0.40. El umbral no se recalibró, y la Configuración 2 y la Ronda 5 se mantienen con 0.35.
 
 El Cuadro \ref{tabla:anexo-barrido-rf} presenta el barrido completo.
 
@@ -44,7 +44,7 @@ El Cuadro \ref{tabla:anexo-barrido-rf} presenta el barrido completo.
 
 Con $T = 0.35$, Random Forest deja pasar 39 de los 42\,594 ataques del conjunto de validación. Isolation Forest marca 19 de esos 39 ataques: 5 de 13 de \texttt{sqli}, 10 de 16 de \texttt{xss}, 4 de 7 de \texttt{path\_traversal} y ninguno de los 3 de \texttt{cmdi} que Random Forest dejó pasar. El Cuadro \ref{tabla:anexo-aporte-if} resume estas cifras.
 
-Se evaluó una regla hipotética que bloquea una petición si cualquiera de los dos modelos la marca. Esa regla eleva el recall global de 99.908 \% a 99.953 \%. El costo es un aumento del bloqueo benigno de 0.107 \% a 5.925 \%, es decir, 866 benignos adicionales bloqueados. El umbral de Isolation Forest (0.004206) se eligió sobre este mismo conjunto de validación, por lo que estas cifras son optimistas. La regla no se desplegó.
+Se evaluó una regla hipotética que bloquea una petición si cualquiera de los dos modelos la marca. Esa regla eleva el recall global de 99.908\,\% a 99.953\,\%. El costo es un aumento del bloqueo benigno de 0.107\,\% a 5.925\,\%, es decir, 866 benignos adicionales bloqueados. El umbral de Isolation Forest (0.004206) se eligió sobre este mismo conjunto de validación, por lo que estas cifras son optimistas. La regla no se desplegó.
 
 Estas cifras respaldan que Isolation Forest solo registre. Su aporte en detección es de 19 ataques frente a 42\,594, mientras que bloquear sus marcas agregaría 866 falsos positivos. Según el diseño del sistema, las marcas de Isolation Forest se registran con veredicto \texttt{pass\_anomaly} y no bloquean (\texttt{packages/core/src/middleware.ts}, líneas 243--244 y 333--337 del repositorio logSguarDian).
 
@@ -62,22 +62,22 @@ Ataques de esos 39 marcados por Isolation Forest & 19 de 39 & --- \\ \hline
 \hspace{0.5em}\texttt{xss} & 10 de 16 & --- \\ \hline
 \hspace{0.5em}\texttt{path\_traversal} & 4 de 7 & --- \\ \hline
 \hspace{0.5em}\texttt{cmdi} & 0 de 3 & --- \\ \hline
-Recall global, solo Random Forest & 42\,555 de 42\,594 & 99.908 \% \\ \hline
-Recall global, regla ``RF o IF'' & 42\,574 de 42\,594 & 99.953 \% \\ \hline
-Benignos bloqueados por Random Forest & 16 de 14\,887 & 0.107 \% \\ \hline
-Benignos que Random Forest no bloquea y que Isolation Forest marca & 866 de 14\,871 & 5.82 \% \\ \hline
-Benignos marcados por Isolation Forest (tasa global) & 874 de 14\,887 & 5.87 \% \\ \hline
-Benignos bloqueados por la regla ``RF o IF'' & 882 de 14\,887 & 5.925 \% \\ \hline
+Recall global, solo Random Forest & 42\,555 de 42\,594 & 99.908\,\% \\ \hline
+Recall global, regla ``RF o IF'' & 42\,574 de 42\,594 & 99.953\,\% \\ \hline
+Benignos bloqueados por Random Forest & 16 de 14\,887 & 0.107\,\% \\ \hline
+Benignos que Random Forest no bloquea y que Isolation Forest marca & 866 de 14\,871 & 5.82\,\% \\ \hline
+Benignos marcados por Isolation Forest (tasa global) & 874 de 14\,887 & 5.87\,\% \\ \hline
+Benignos bloqueados por la regla ``RF o IF'' & 882 de 14\,887 & 5.925\,\% \\ \hline
 \end{tabular}
 \end{adjustbox}
 \caption{Aporte de Isolation Forest sobre el conjunto de validación con $T = 0.35$ y regla hipotética ``RF o IF''.}
 \label{tabla:anexo-aporte-if}
-\par\smallskip\footnotesize Fuente: \texttt{\_evidencia/revalidacion-umbral-if/analysis\_out.txt}, sección 2. El numerador 874 no figura en esa salida; proviene de \texttt{\_evidencia/revalidacion-umbral-if/ua\_check\_regenerado\_out.txt} (suma de 807 y 67 marcas), y la tasa de 5.871 \% coincide con \texttt{training/models/if\_v10\_metadata.json}. Elaboración propia.
+\par\smallskip\footnotesize Fuente: \texttt{\_evidencia/revalidacion-umbral-if/analysis\_out.txt}, sección 2. El numerador 874 no figura en esa salida; proviene de \texttt{\_evidencia/revalidacion-umbral-if/ua\_check\_regenerado\_out.txt} (suma de 807 y 67 marcas), y la tasa de 5.871\,\% coincide con \texttt{training/models/if\_v10\_metadata.json}. Elaboración propia.
 \end{table}
 
 \subsection{Dependencia de Isolation Forest respecto del User-Agent}
 
-De los 874 benignos que Isolation Forest marca en validación, 807 son filas sin User-Agent y 67 son filas con User-Agent. En las 14\,818 filas benignas sin User-Agent, la tasa de marca es de 5.45 \%. En cambio, entre las 69 filas benignas con User-Agent, Isolation Forest marca 67 (97.1 \%). Este grupo es pequeño, por lo que la tasa no permite una estimación precisa. Sin embargo, es compatible con una dependencia de Isolation Forest respecto de las características de User-Agent, que conviene vigilar (\texttt{\_evidencia/revalidacion-umbral-if/ua\_check\_regenerado\_out.txt}).
+De los 874 benignos que Isolation Forest marca en validación, 807 son filas sin User-Agent y 67 son filas con User-Agent. En las 14\,818 filas benignas sin User-Agent, la tasa de marca es de 5.45\,\%. En cambio, entre las 69 filas benignas con User-Agent, Isolation Forest marca 67 (97.1\,\%). Este grupo es pequeño, por lo que la tasa no permite una estimación precisa. Sin embargo, es compatible con una dependencia de Isolation Forest respecto de las características de User-Agent, que conviene vigilar (\texttt{\_evidencia/revalidacion-umbral-if/ua\_check\_regenerado\_out.txt}).
 
 \subsection{Limitaciones}
 
@@ -223,7 +223,7 @@ Con umbral 0.8, el 59.61\,\% de las filas de validación, el 59.83\,\% de las de
 
 \subsection{Desempeño en validación según haya o no vecino en entrenamiento}\label{anexo:casi-validacion-vecino}
 
-El cuadro separa las filas de validación según tengan o no un vecino en entrenamiento con $J \geq 0.8$. Reporta la tasa de bloqueo de benignos (falsos positivos) y el recall por clase, con su intervalo de Wilson al 95\,\%. No se reporta F1.
+El cuadro separa las filas de validación según tengan o no un vecino en entrenamiento con $J \geq 0.8$ (Cuadro~\ref{tabla:anexo-casi-vecino}). Reporta la tasa de bloqueo de benignos (falsos positivos) y el recall por clase, con su intervalo de Wilson al 95\,\%. No se reporta F1.
 
 \begin{table}[htbp]
 \centering
@@ -255,7 +255,7 @@ Con tan pocos casos, la tasa de ese grupo no se estima con precisión. El grupo 
 
 \subsection{Cobertura de \texttt{cmdi} en la Ronda 5 sin los payloads con vecino}\label{anexo:casi-cobertura-cmdi}
 
-La cobertura de \texttt{cmdi} en la Ronda 5 se recalcula sin los payloads que tienen un vecino en entrenamiento. El denominador es de 200 payloads, y los timeouts, errores y respuestas HTTP 5xx cuentan como no bloqueados. El par A (tarball e09120\textellipsis{}) usa \texttt{results\_config2.json} del commit \texttt{a3aada0}, y el par C usa \texttt{results\_config2-develop-tarball-20261009.json}, añadido en el commit \texttt{4d928b5}.
+La cobertura de \texttt{cmdi} en la Ronda 5 se recalcula sin los payloads que tienen un vecino en entrenamiento (Cuadro~\ref{tabla:anexo-casi-cmdi-ronda5}). El denominador es de 200 payloads, y los timeouts, errores y respuestas HTTP 5xx cuentan como no bloqueados. El par A (tarball e09120\textellipsis{}) usa \texttt{results\_config2.json} del commit \texttt{a3aada0}, y el par C usa \texttt{results\_config2-develop-tarball-20261009.json}, añadido en el commit \texttt{4d928b5}.
 
 \begin{table}[htbp]
 \centering
@@ -558,7 +558,7 @@ La fuente \texttt{owasp\_logs} aporta 3\,860 filas al corpus. Su archivo de orig
 
 La fuente \texttt{mlops\_\allowbreak telemetry\_\allowbreak curated} aporta 119 filas: 82 de entrenamiento, 18 de validación y 19 de prueba. Proviene de la ejecución del pipeline de MLOps del 29 de agosto de 2026 sobre 244 eventos simulados, de cinco fuentes (\texttt{sim-host-1} a \texttt{sim-host-5}) y una dedicada (\texttt{sim-host-novel}), que reproducen el corpus de extremo a extremo a través del middleware; no es tráfico real. El agrupamiento (DBSCAN, \texttt{eps} 2.5, \texttt{min\_\allowbreak samples} 3) formó 17 grupos, uno de ellos de ruido con 53 eventos. Los grupos se etiquetaron a mano en la interfaz de línea de comandos; los conteos son compatibles con 16 grupos etiquetados y el de ruido sin etiquetar, pero no consta un criterio de curación escrito y el registro de decisiones no se conserva. De 130 filas etiquetadas, la deduplicación por \texttt{\_row\_\allowbreak hash} dejó 119.
 
-Fuente: \texttt{\_evidencia/\allowbreak paquete-y-fuentes-v7/} y los scripts \texttt{count\_\allowbreak owasp.py}, \texttt{dedup\_\allowbreak full.py} y \texttt{telemetry\_\allowbreak partitions.py}, con SHA-256 en el Cuadro \ref{tabla:anexo-query-procedencia}. Elaboración propia.
+{\sloppy Fuente: \texttt{\_evidencia/\allowbreak paquete-y-fuentes-v7/} y los scripts \texttt{count\_\allowbreak owasp.py}, \texttt{dedup\_\allowbreak full.py} y \texttt{telemetry\_\allowbreak partitions.py}, con SHA-256 en el Cuadro \ref{tabla:anexo-query-procedencia}. Elaboración propia.\par}
 \endgroup
 
 \subsection{Limitaciones}\label{anexo:loso-limitaciones}
@@ -643,7 +643,7 @@ El Cuadro \ref{tabla:anexo-query-paquetes} compara las dos versiones publicadas 
 \begin{tabular}{|p{0.09\linewidth}|p{0.17\linewidth}|p{0.24\linewidth}|p{0.06\linewidth}|p{0.21\linewidth}|p{0.21\linewidth}|}
 \hline
 \textbf{Versión} & \textbf{Publicación (UTC)} & \textbf{SHA-256 del tgz} & \textbf{Par} & \textbf{Umbral de IF} & \textbf{Construcción de la query} \\ \hline
-0.1.0 & \seqsplit{2026-08-30T05:07:31Z} & \seqsplit{c5c1a1da57cfb873350ac0c8ab3e7bad395e8cbf507b18cc3272df447880dcb0} & A & \seqsplit{0.002486040118540811}, fijo (\texttt{dist/\allowbreak middleware.js}\allowbreak :95) & \texttt{URLSearchParams} (\texttt{dist/middleware.js}:490--492) \\ \hline
+0.1.0 & \seqsplit{2026-08-30T05:07:31Z} & \seqsplit{c5c1a1da57cfb873350ac0c8ab3e7bad395e8cbf507b18cc3272df447880dcb0} & A & \seqsplit{0.002486040118540811}, fijo (\texttt{dist/\allowbreak middleware.js}\allowbreak :95) & \texttt{URLSearchParams} (\texttt{dist/\allowbreak middleware.js}:490--492) \\ \hline
 0.1.1 & \seqsplit{2026-10-11T04:02:39Z} & \seqsplit{abf8d5c47036d9c3a289bc36158f1caaa91b9504689aa97193e51c6808258d15} & C & \seqsplit{0.004205941820353609}, leído de \texttt{models/\allowbreak parity\_report.json} (\texttt{dist/\allowbreak model-metadata.js}:20--40; \texttt{dist/\allowbreak middleware.js}:118) & \texttt{req.originalUrl} con corte en ``?'' y \texttt{URLSearchParams} solo como respaldo (\texttt{dist/\allowbreak middleware.js}:539--543 y 550--552) \\ \hline
 \end{tabular}
 \end{adjustbox}
@@ -689,7 +689,7 @@ El Cuadro \ref{tabla:anexo-query-casos} muestra los casos en que las dos derivac
 \hline
 \textbf{Caso} & \textbf{Cadena cruda} & \textbf{Anterior} & \textbf{\texttt{dc380e3}} & \textbf{Iguales} \\ \hline
 \texttt{\%20} & \texttt{q=a\%20b} & \texttt{q=a+b} & \texttt{q=a\%20b} & No \\ \hline
-\texttt{\%21\%27\%28\%29\%2A} & \texttt{q=\%21\%27\%28\%29\%2A} & \texttt{q=\%21\%27\%28\%29*} & \texttt{q=\%21\%27\%28\%29\%2A} & No \\ \hline
+\texttt{\%21\,\%27\,\%28\,\%29\,\%2A} & \texttt{q=\%21\,\%27\,\%28\,\%29\,\%2A} & \texttt{q=\%21\,\%27\,\%28\,\%29*} & \texttt{q=\%21\,\%27\,\%28\,\%29\,\%2A} & No \\ \hline
 \texttt{\%zz} & \texttt{q=\%zz\%41} & \texttt{q=\%25zz\%2541} & \texttt{q=\%zz\%41} & No \\ \hline
 \texttt{\%7E} & \texttt{q=a\%7Eb} & \texttt{q=a\%7Eb} & \texttt{q=a\%7Eb} & Sí \\ \hline
 \texttt{\%252e} (doble codificación) & \texttt{q=\%252e\%252e\%252f} & \texttt{q=\%252e\%252e\%252f} & \texttt{q=\%252e\%252e\%252f} & Sí \\ \hline
@@ -765,7 +765,7 @@ Este anexo presenta las métricas de la generación v10 (Random Forest \texttt{r
 \par\smallskip\footnotesize Fuente: \texttt{v10\_test\_results\_dc2aaa6.json}, sección \texttt{rf\_v10\_test}. Elaboración propia.
 \end{table}
 
-El Cuadro \ref{tabla:anexo-v10-if} presenta el recall por clase de Isolation Forest, junto con las cifras de validación que registra el mensaje del commit \texttt{dc2aaa6}. El umbral de decisión de \texttt{if\_v9} es $0.002486040118540811$ (\texttt{training/models/if\_v9\_metadata.json}, clave \texttt{threshold}, del repositorio logSguarDian).
+El Cuadro \ref{tabla:anexo-v10-if} presenta el recall por clase de Isolation Forest, junto con las cifras de validación que registra el mensaje del commit \texttt{dc2aaa6}. El umbral de decisión de \texttt{if\_v9} es $0.002486040\allowbreak 118540811$ (\texttt{training/models/if\_v9\_metadata.json}, clave \texttt{threshold}, del repositorio logSguarDian).
 
 \begin{table}[htbp]
 \centering
@@ -800,7 +800,7 @@ Las métricas de v10 y las de v11 no son comparables, por tres razones:
 
 \section{Evaluaciones posteriores del coautor sobre la Ronda 5}\label{anexo:coautor}
 
-Este anexo reúne mediciones sobre el corpus de la Ronda 5 que ejecutó Sebastián Huertas Gómez en el repositorio de la aplicación vulnerable. El autor de este trabajo no las ejecutó ni las reprodujo, y no forman parte de los criterios de aceptación. Los archivos no registran la fecha de ejecución, solo la de los commits. Los commits \texttt{963843e} (18:24), \texttt{20cbd88} (20:52) y \texttt{00ea3a3} (22:37) tienen fecha del 10 de octubre de 2026 en hora local (UTC$-$6), y su autor es el usuario de Git \texttt{xtsebas}. El commit \texttt{00ea3a3} corresponde al 11 de octubre de 2026 en UTC.
+Este anexo reúne mediciones sobre el corpus de la Ronda 5 que ejecutó Sebastián Huertas Gómez en el repositorio de la aplicación vulnerable (Cuadro~\ref{tabla:anexo-coautor-resultados}). El autor de este trabajo no las ejecutó ni las reprodujo, y no forman parte de los criterios de aceptación. Los archivos no registran la fecha de ejecución, solo la de los commits. Los commits \texttt{963843e} (18:24), \texttt{20cbd88} (20:52) y \texttt{00ea3a3} (22:37) tienen fecha del 10 de octubre de 2026 en hora local (UTC$-$6), y su autor es el usuario de Git \texttt{xtsebas}. El commit \texttt{00ea3a3} corresponde al 11 de octubre de 2026 en UTC.
 
 \begin{table}[htbp]
 \centering
@@ -838,7 +838,7 @@ Los archivos \texttt{vendor/*.tgz} y \texttt{models/*} del commit \texttt{00ea3a
 
 OWASP ZAP 2.17.0 realizó un escaneo autenticado como el usuario \texttt{alice} sobre \texttt{localhost:\allowbreak 3000}, con spider y escaneo activo. El escaneo produjo 538 alertas en total. Una de ellas es una alerta de XSS reflejado en \texttt{POST /profile}, campo \texttt{bio}, con el payload \texttt{</div>\allowbreak<scrIpt>\allowbreak alert(1);\allowbreak</scRipt>\allowbreak<div>} (id \texttt{xss\_placeholder\_0} de la Ronda 5).
 
-El número $n = 1$ significa un payload y una petición por configuración, sin repeticiones. Los resultados son 0/1 sin protección y 1/1 en las configuraciones 2, 3a y 3b. El paquete que ejecutaba la aplicación no consta, y tampoco constan la política de escaneo ni el ajax spider. Un solo caso no permite afirmar el cumplimiento del criterio del 80\,\% para \texttt{xss}.
+El número $n = 1$ significa un payload y una petición por configuración, sin repeticiones. Los resultados son 0/1 sin protección y 1/1 en las configuraciones 2, 3a y 3b. El paquete que ejecutaba la aplicación no consta, y tampoco constan la política de escaneo ni el ajax spider (Cuadro~\ref{tabla:anexo-coautor-procedencia}). Un solo caso no permite afirmar el cumplimiento del criterio del 80\,\% para \texttt{xss}.
 
 \begin{table}[htbp]
 \centering

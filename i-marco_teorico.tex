@@ -34,7 +34,7 @@ Su fortaleza es la cobertura inmediata de firmas de ataque conocidas, sin requer
 
 El Cuadro \ref{cuadro:waf_vs_rasp} contrasta ambas arquitecturas en las dimensiones relevantes para la decisión de diseño de este proyecto y para la interpretación de la Configuración~3 de la evaluación, en la cual ambas arquitecturas operan en capas sobre el mismo tráfico.
 
-\begin{table}[h]
+\begin{table}[ht]
 \small
 \begin{tabular}{|p{2.6cm}|p{5.3cm}|p{5.3cm}|}
 \hline
@@ -125,7 +125,7 @@ La evaluación de un clasificador de amenazas no puede apoyarse únicamente en l
 \text{F1} = 2 \cdot \frac{\text{Precisión} \cdot \text{Recall}}{\text{Precisión} + \text{Recall}}
 \end{equation}
 
-La precisión mide qué proporción de las peticiones bloqueadas por el modelo corresponden efectivamente a un ataque. Su complemento (uno menos la precisión, ponderado por la tasa de falsos positivos) es la métrica directamente relevante para el criterio de aceptación del componente no supervisado. Es relevante porque un Isolation Forest con una tasa de falsos positivos alta bloquearía tráfico legítimo con la misma frecuencia con la que detecta anomalías reales. El recall mide qué proporción de los ataques reales el modelo efectivamente detecta, y es la métrica directamente relevante para el criterio de cobertura del 80\% por categoría de ataque establecido en el tercer objetivo específico.
+La precisión mide qué proporción de las peticiones bloqueadas por el modelo corresponden efectivamente a un ataque. Su complemento (uno menos la precisión, ponderado por la tasa de falsos positivos) es la métrica directamente relevante para el criterio de aceptación del componente no supervisado. Es relevante porque un Isolation Forest con una tasa de falsos positivos alta bloquearía tráfico legítimo con la misma frecuencia con la que detecta anomalías reales. El recall mide qué proporción de los ataques reales el modelo efectivamente detecta, y es la métrica directamente relevante para el criterio de cobertura del 80\,\% por categoría de ataque establecido en el tercer objetivo específico.
 
 El F1-score es la media armónica de ambas métricas. Penaliza a un clasificador que sacrifique una métrica para maximizar la otra. Un caso es bloquear indiscriminadamente para maximizar recall a costa de la precisión. Por esta razón, esta métrica se elige como criterio de aceptación del componente supervisado en el segundo objetivo específico. \textcite{fawcett2006} formaliza además el análisis de curvas ROC (\textit{Receiver Operating Characteristic}) y de su área bajo la curva (AUC) como herramienta complementaria para evaluar el compromiso entre tasa de verdaderos positivos y tasa de falsos positivos a través de distintos umbrales de decisión. Ese principio se aplicó en este proyecto durante la calibración del umbral de bloqueo del componente supervisado y del umbral de anomalía del componente no supervisado.
 
