@@ -37,7 +37,7 @@ Se recomienda repetir ese experimento en Linux nativo con la versión 0.1.1 del 
 
 Los incrementos de memoria (de 331.9 a 375.9~MiB) y de CPU (de +529.6\,\% a +614.4\,\% en carga normal y de ataque) superan los criterios del protocolo, y este trabajo no los atribuyó a ningún componente. Se recomienda medirlos en el mismo entorno para tres configuraciones: solo Random Forest, Random Forest con un \textit{worker} de Isolation Forest, y la configuración actual de tres \texttt{worker\_threads}. Con esas mediciones debería evaluarse también \texttt{IF\_POOL\_SIZE} igual a 1. El resultado de esas mediciones no se establece aquí.
 
-Se espera atribuir el incremento a uno o varios componentes y determinar si alguna configuración acerca el consumo a los criterios del protocolo. Se recomienda repetir con ellas el escenario de volumen y registrar los tiempos de espera agotados (subsección~\ref{sec:config2}), porque con la configuración actual el 7.00\,\% de las peticiones los agotó.
+Se espera atribuir el incremento a uno o varios componentes y determinar si alguna de esas configuraciones acerca el consumo a los criterios del protocolo. Se recomienda repetir con ellas el escenario de volumen y registrar los tiempos de espera agotados (subsección~\ref{sec:config2}), porque con la configuración actual el 7.00\,\% de las peticiones los agotó.
 
 \section{Corpus de evaluación fuera del entrenamiento}
 
