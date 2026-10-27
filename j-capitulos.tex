@@ -240,4 +240,6 @@ Esa misma ronda dejó, no obstante, un hallazgo de calibración que motivó el e
 
 Ampliar el corpus benigno queda como trabajo futuro, según se indica en el capítulo de Recomendaciones (\ref{cap:recomendaciones}). De igual manera, y como ya se estableció en el capítulo de Alcance, no se contempla dentro del alcance del proyecto un despliegue en un entorno de producción real de terceros como criterio de aceptación del sistema; esta es una restricción reconocida explícitamente, no un límite que el proyecto haya dejado sin identificar.
 
+\enlargethispage{\baselineskip}
+
 Finalmente, las cifras del componente Random Forest/Isolation Forest reportadas en el Cuadro \ref{tabla:trazabilidad} (F1 macro, F1 por clase, recall y tasa de falsos positivos de Isolation Forest) provienen de una corrección de trazabilidad de artefactos descrita en la sección de Recolección, procesamiento y validación de datos, integrada a la rama principal del repositorio del proyecto mediante el \textit{pull request} \#79. El análisis SHAP se regeneró posteriormente contra el modelo corregido (\textit{pull request} \#80), de modo que las cifras y los hallazgos de interpretabilidad de este capítulo corresponden al mismo artefacto.

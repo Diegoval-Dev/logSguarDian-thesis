@@ -8,6 +8,12 @@ readonly STANDALONE_ARG="standalone"
 readonly DISCUSION_DOCUMENT="discusion-standalone"
 readonly DISCUSION_OUTPUT="discusion.pdf"
 readonly DISCUSION_ARG="discusion"
+readonly CONCLUSIONES_DOCUMENT="conclusiones-standalone"
+readonly CONCLUSIONES_OUTPUT="conclusiones.pdf"
+readonly CONCLUSIONES_ARG="conclusiones"
+readonly RECOMENDACIONES_DOCUMENT="recomendaciones-standalone"
+readonly RECOMENDACIONES_OUTPUT="recomendaciones.pdf"
+readonly RECOMENDACIONES_ARG="recomendaciones"
 readonly TEX_BIN_DIR="/Library/TeX/texbin"
 readonly BIBER_SYSTEM="${TEX_BIN_DIR}/biber"
 readonly BIBER_ARM64="${HOME}/.local/bin/biber-arm64"
@@ -33,7 +39,15 @@ select_document() {
             MAIN="$DISCUSION_DOCUMENT"
             COPY_TARGET="$DISCUSION_OUTPUT"
             ;;
-        *) die "argumento desconocido: $1 (use '${STANDALONE_ARG}', '${DISCUSION_ARG}' o ninguno)" ;;
+        "$CONCLUSIONES_ARG")
+            MAIN="$CONCLUSIONES_DOCUMENT"
+            COPY_TARGET="$CONCLUSIONES_OUTPUT"
+            ;;
+        "$RECOMENDACIONES_ARG")
+            MAIN="$RECOMENDACIONES_DOCUMENT"
+            COPY_TARGET="$RECOMENDACIONES_OUTPUT"
+            ;;
+        *) die "argumento desconocido: $1 (use '${STANDALONE_ARG}', '${DISCUSION_ARG}', '${CONCLUSIONES_ARG}', '${RECOMENDACIONES_ARG}' o ninguno)" ;;
     esac
 }
 
