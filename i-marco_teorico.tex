@@ -49,6 +49,7 @@ Dependencia de infraestructura externa & Requiere proxy y mantenimiento de regla
 \label{cuadro:waf_vs_rasp}
 \end{table}
 
+\FloatBarrier
 \section{Ecosistema npm y seguridad en la cadena de suministro}
 
 logSguarDian se distribuye como un paquete del registro npm, la misma vía por la que la aplicación anfitriona obtiene la inmensa mayoría de sus dependencias. \textcite{zimmermann2019} documentan, mediante el análisis sistemático del grafo de dependencias de npm, que un paquete promedio confía implícitamente en 79 paquetes de terceros y 39 mantenedores distintos de forma transitiva. La ausencia de un proceso de revisión centralizado antes de la publicación permite que un único paquete comprometido se propague a decenas de miles de proyectos que dependen de él directa o indirectamente. El paquete comprometido puede serlo por una cuenta de mantenedor secuestrada o por código malicioso introducido deliberadamente. Este hallazgo tiene dos implicaciones directas para el diseño de logSguarDian.

@@ -787,6 +787,8 @@ Las métricas de v10 y las de v11 no son comparables, por tres razones:
 
 \section{Evaluaciones posteriores del coautor sobre la Ronda 5}\label{anexo:coautor}
 
+La medición del 10 de octubre (Cuadro~\ref{tabla:anexo-coautor-resultados}) la reemplaza la del 25 de octubre de 2026, que el coautor reporta como vigente y se describe al final de este anexo.
+
 Este anexo reúne mediciones sobre el corpus de la Ronda 5 que ejecutó Sebastián Huertas Gómez en el repositorio de la aplicación vulnerable (Cuadro~\ref{tabla:anexo-coautor-resultados}). El autor de este trabajo no las ejecutó ni las reprodujo, y no forman parte de los criterios de aceptación. Los archivos no registran la fecha de ejecución, solo la de los commits. Los commits \texttt{963843e} (18:24), \texttt{20cbd88} (20:52) y \texttt{00ea3a3} (22:37) tienen fecha del 10 de octubre de 2026 en hora local (UTC$-$6), y su autor es el usuario de Git \texttt{xtsebas}. El commit \texttt{00ea3a3} corresponde al 11 de octubre de 2026 en UTC.
 
 \begin{table}[htbp]
@@ -824,6 +826,28 @@ Los archivos \texttt{vendor/*.tgz} y \texttt{models/*} del commit \texttt{00ea3a
 OWASP ZAP 2.17.0 realizó un escaneo autenticado como el usuario \texttt{alice} sobre \texttt{localhost:\allowbreak 3000}, con spider y escaneo activo. El escaneo produjo 538 alertas en total. Una de ellas es una alerta de XSS reflejado en \texttt{POST /profile}, campo \texttt{bio}, con el payload \texttt{</div>\allowbreak<scrIpt>\allowbreak alert(1);\allowbreak</scRipt>\allowbreak<div>} (id \texttt{xss\_placeholder\_0} de la Ronda 5).
 
 El número $n = 1$ significa un payload y una petición por configuración, sin repeticiones. Los resultados son 0/1 sin protección y 1/1 en las configuraciones 2, 3a y 3b. El paquete que ejecutaba la aplicación no consta, y tampoco constan la política de escaneo ni el ajax spider (Cuadro~\ref{tabla:anexo-coautor-procedencia}). Un solo caso no permite afirmar el cumplimiento del criterio del 80\,\% para \texttt{xss}.
+
+El coautor repitió las cuatro configuraciones el 25 de octubre de 2026, según su trabajo, sobre el mismo árbol de la aplicación y el mismo Dockerfile, con el arnés corregido y un corpus combinado de 800 payloads, 200 por categoría (SHA-256 \texttt{f1fb0b0a\ldots}, completo en \texttt{\_evidencia/coautor-ronda5-25oct/}). Cada configuración se ejecutó en tres corridas idénticas. Según su trabajo, las Configuraciones 2 y 3b usaron el paquete 0.1.1 del registro (SHA-256 \texttt{abf8d5c4\ldots}). Según su trabajo, la columna principal de la Configuración 2 se midió sin las cuatro cabeceras \texttt{X-*} que, según su trabajo, agrega el proxy; la columna con cabeceras es un análisis posterior a conocer su efecto.
+
+Según el coautor, el corpus de \texttt{xss} se construyó después de conocer los resultados de la Ronda 5. El autor de este trabajo no ejecutó estas mediciones y recalculó los conteos a partir de los archivos de resultados (Cuadro~\ref{tabla:anexo-coautor-25oct}).
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{|p{0.20\linewidth}|r|r|r|r|r|}
+\hline
+\textbf{Categoría} & \textbf{Config. 1} & \textbf{Config. 2} & \textbf{Config. 2 con cabeceras (post hoc)} & \textbf{Config. 3a} & \textbf{Config. 3b} \\ \hline
+\texttt{sqli} & 0/200 & 199/200 & 200/200 & 199/200 & 200/200 \\ \hline
+\texttt{path\_traversal} & 0/200 & 200/200 & 200/200 & 197/200 & 200/200 \\ \hline
+\texttt{cmdi} & 0/200 & 185/200 & 194/200 & 164/200 & 197/200 \\ \hline
+\texttt{xss} & 0/200 & 200/200 & 200/200 & 189/200 & 200/200 \\ \hline
+\textbf{Total} & 0/800 & 784/800 & 794/800 & 749/800 & 797/800 \\ \hline
+\end{tabular}
+\caption{Bloqueos por categoría en la Ronda 5 ampliada del 25 de octubre de 2026.}
+\label{tabla:anexo-coautor-25oct}
+\par\smallskip\footnotesize Fuente: conteo propio de los archivos \texttt{results\_\allowbreak combined\_\allowbreak config*\_\allowbreak run1\_\allowbreak 20261025.\allowbreak json} de \texttt{\_evidencia/coautor-ronda5-25oct/}. Bloqueado significa HTTP 403; los errores y los timeouts cuentan como no bloqueados. Elaboración propia.
+\end{table}
 
 \begin{table}[htbp]
 \centering
